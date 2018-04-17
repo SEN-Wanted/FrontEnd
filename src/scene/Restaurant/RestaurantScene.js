@@ -51,10 +51,10 @@ class RestaurantScene extends PureComponent <Props, State>{
     render() {
   
         return (
-            <View style={styles.container}>
-                <LeftFlatList data={api.haidilaoInfos} />
-                <RightSectionList data={api.haidilaoInfos} />
-            </View>          
+                <View style={styles.container}>
+                    <LeftFlatList data={api.haidilaoInfos} />
+                    <RightSectionList data={api.haidilaoInfos} />
+                </View>        
         );
     }
 }
@@ -73,7 +73,10 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
     },
-
+    tabBar: {
+        backgroundColor:'white',
+        height:45,
+    },
 })
 
 export default RestaurantScene
