@@ -51,15 +51,10 @@ class RestaurantScene extends PureComponent <Props, State>{
     render() {
   
         return (
-            <View>
                 <View style={styles.container}>
                     <LeftFlatList data={api.haidilaoInfos} />
                     <RightSectionList data={api.haidilaoInfos} />
-                </View>
-                <View sytle={styles.tabBar}>
-
-                </View>
-            </View>          
+                </View>        
         );
     }
 }
