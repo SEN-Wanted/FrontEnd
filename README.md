@@ -1,3 +1,8 @@
+
+# FrontEnd
+The place to store the codes and docs for front-end
+
+
 ## 1、项目结构
 暂时如下，有好的建议可以讨论更改
 >|  
@@ -12,3 +17,4 @@
 >|&emsp;&ensp;|--widget：可复用的小组件  
 >|&emsp;&ensp;|--api.js：暂时测试用的数据存放处  
 >|&emsp;&ensp;|--RootScene.js：根场景，存放导航的定义，后期优化要升级成文件夹  
+

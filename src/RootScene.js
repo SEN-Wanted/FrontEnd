@@ -11,6 +11,7 @@ import OrderScene from './scene/Order/OrderScene'
 import MineScene from './scene/Mine/MineScene'
 //import WebScene from './scene/Web/WebScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
+import ItemOfOrder from './scene/Order/ItemOfOrder'
 
 class RootScene extends PureComponent<{}> {
     render() {
@@ -98,6 +99,7 @@ const Navigator = StackNavigator({
     Tab: {screen: Tab},
     //WebScene: {screen: WebScene},
     RestaurantScene: {screen: RestaurantScene},
+    ItemOfOrder: {screen: ItemOfOrder},
 }, {
         //设置界面跳转方式为水平跳转
         transitionConfig: () => ({
