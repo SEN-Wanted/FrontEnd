@@ -47,6 +47,19 @@ class RestaurantScene extends PureComponent <Props, State>{
 
     }
 
+    componentDidMount() {
+        this.requestData()
+    }
+
+    requestData = async() => {
+        try {
+            let response = await fetch('http://2v0683857e.iask.in:22871/foodData')
+            let json = await response.json()
+            alert('resonseData  ' + JSON.stringify(json))
+        } catch (error) {
+            alert('error' + error)
+        }
+    }
 
     render() {
   
