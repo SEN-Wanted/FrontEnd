@@ -12,6 +12,7 @@
     "react-native-page-control": "^1.1.1",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-section-list-get-item-layout": "^2.2.2",
+    "react-native-star-rating": "^1.0.9",
     "react-native-swiper": "^1.5.13",
     "react-native-tab-navigator": "^0.3.4",
     "react-native-vector-icons": "^4.5.0",
