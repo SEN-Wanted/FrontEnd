@@ -4,7 +4,8 @@ import {
     StyleSheet,
     View,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native'
 import ItemOfOrder from './ItemOfOrder'
 
@@ -65,7 +66,9 @@ class OrderScene extends PureComponent<Props, State> {
 
         return (
             <View>
+            <ScrollView>
                 { orderList }
+            </ScrollView>
             </View>
         ) // return
     }

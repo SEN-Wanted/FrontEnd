@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Image,
     StyleSheet,
+    ScrollView,
 } from 'react-native'
 
 //export default class BillDetails extends Component {
@@ -35,6 +36,7 @@ export default class OrderScene extends PureComponent<Props, State> {
 		}
 		return(
 	        <View style={detailsStyle.layout}>
+	        <ScrollView>
 	        	<View style={detailsStyle.upperLayout}>
 
 			        <View style={[detailsStyle.displayColumn, detailsStyle.title]}>
@@ -102,6 +104,7 @@ export default class OrderScene extends PureComponent<Props, State> {
 					<Text style={detailsStyle.greyFont}>订单时间
 						<Text style={detailsStyle.blackFont}> {this.billInfo.billTime}</Text></Text>
 				</View>
+			</ScrollView>
 	        </View>
 		)
 	}
