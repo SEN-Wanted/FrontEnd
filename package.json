@@ -7,8 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "native-base": "^2.4.2",
+    "prop-types": "^15.6.1",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.2",
+    "react-native-badge-view": "^1.0.0",
+    "react-native-camera": "^0.6.0",
     "react-native-page-control": "^1.1.1",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-section-list-get-item-layout": "^2.2.2",
