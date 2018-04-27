@@ -26,7 +26,7 @@ class LeftFlatList extends PureComponent <Props, State>{
         return (
             <FlatList
                 ref='FlatList'
-                style={{width:80,height:height,backgroundColor:'#101010'}}
+                style={{width:80,height:height,backgroundColor:'#424242'}}
                 data = {this.state.dataAry} //数据源
                 renderItem = {(item) => this.renderRow(item)} //每一行render
                 getItemLayout = {(data, index) => ( {length: 40, offset: 40 * index, index} )}
@@ -39,7 +39,7 @@ class LeftFlatList extends PureComponent <Props, State>{
     renderRow =(item) =>{
         return(
             <TouchableOpacity style={{
-                backgroundColor: item.index == this.state.cell ? '#E51C23' : '#101010'
+                backgroundColor: item.index == this.state.cell ? '#E51C23' : '#424242'
             }} onPress={()=>this.cellAction(item)}>
                 <View style={styles.container} >      
                     <Text style={styles.textStyle}>{item.item.title}</Text>

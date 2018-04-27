@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text} from 'react-native'
 import {TabNavigator, TabBarBottom, StackNavigator} from 'react-navigation'
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
-import Swiper from 'react-native-swiper';
+import SplashScreen from 'react-native-splash-screen'
 
 import TabBarItem from './widget/TabBarItem'
 import color from './widget/color'
@@ -14,6 +14,11 @@ import RestaurantScene from './scene/Restaurant/RestaurantScene'
 import ItemOfOrder from './scene/Order/ItemOfOrder'
 
 class RootScene extends PureComponent<{}> {
+
+    componentDidMount() {
+        SplashScreen.hide()
+    }
+    
     render() {
         console.log('root scene render');
         

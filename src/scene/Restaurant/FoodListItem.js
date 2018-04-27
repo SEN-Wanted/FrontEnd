@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native'
+import {StyleSheet, View, Image, Text, TouchableOpacity, DeviceEventEmitter,} from 'react-native'
 import screen from '../../common/screen'
 import color from '../../widget/color'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -13,10 +13,15 @@ type Props = {
 type State = {
 
 }
-class FoodListItem extends PureComponent <Props, State>{
+export default class FoodListItem extends PureComponent <Props, State>{
     /*onPress = () => {
         this.props.onPressItem(this.props.id)
     }*/
+
+    _onPress = (e) => {
+        let info = this.props.info
+        DeviceEventEmitter.emit('add',e,info); //发监听
+    }
     render() {
         let info = this.props.info
   
@@ -35,7 +40,10 @@ class FoodListItem extends PureComponent <Props, State>{
                 </View>
                 
                 <View style={styles.rightContainer}>
-                    <TouchableOpacity  style={{width:30,height:30}}> 
+                    <TouchableOpacity  
+                        style={{width:30,height:30,justifyContent:'center',alignItems:'center'}} 
+                        onPress={this._onPress}
+                    > 
                         <Icon name="plus-circle" size={30} color="#E51C2A"/>
                     </TouchableOpacity>
                 </View>
@@ -84,4 +92,3 @@ const styles = StyleSheet.create({
     }
 })
 
-export default FoodListItem

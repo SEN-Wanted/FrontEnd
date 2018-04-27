@@ -20,7 +20,7 @@ class HomeFloatTopbar extends PureComponent<Props,State> {
                     <NavigationItem 
                         title='扫一扫' 
                         titleStyle={styles.titleText} 
-                        icon={require('../../img/home/scan_QR_code.png')}
+                        icon={require('../../img/home/saoyisao.png')}
                         onPress={onPress}
                     />
                   
@@ -34,7 +34,7 @@ class HomeFloatTopbar extends PureComponent<Props,State> {
                     <NavigationItem
                         title='消息'
                         titleStyle={styles.titleText} 
-                        icon={require('../../img/home/icon_navigation_item_message_white.png')}
+                        icon={require('../../img/home/message.png')}
                         onPress={onPress}
                     />
                   

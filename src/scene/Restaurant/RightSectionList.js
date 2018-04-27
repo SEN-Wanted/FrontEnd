@@ -36,9 +36,6 @@ class RightSectionList extends PureComponent <Props, State>{
     renderItem = (item) => {
         return (
             <FoodListItem info={item.item} />
-           /* <View style={{height:60,justifyContent:'center',marginLeft:15}}>
-                <Text>{item.item.name}</Text>
-            </View>*/
         )
     }
     //头
