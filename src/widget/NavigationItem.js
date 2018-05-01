@@ -2,7 +2,7 @@
 
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, TouchableOpacity, ViewPropTypes} from 'react-native'
-import {TabNavigator, TabBarBottom} from 'react-navigation'
+import PaymentScene from '../scene/payment/PaymentScreen'
 
 type Props = {
     title?:string,            // ?号表示可能传进该值，也可能不传入
@@ -30,7 +30,7 @@ class NavigationItem extends PureComponent<Props,State> {
         )
 
         return (
-            <TouchableOpacity onPress = {onPress} style={styles.container}>
+            <TouchableOpacity onPress = { onPress } style={styles.container}>
                 
                     {iconElement}
                     {titleElement}

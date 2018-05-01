@@ -5,6 +5,7 @@ import screen from '../../common/screen'
 
 type Props = {
     onPress: Function,
+    onPressofmessage?: Function,
 }
 
 type State = {
@@ -35,7 +36,7 @@ class HomeFloatTopbar extends PureComponent<Props,State> {
                         title='消息'
                         titleStyle={styles.titleText} 
                         icon={require('../../img/home/message.png')}
-                        onPress={onPress}
+                        //onPress={onPressofmessage}
                     />
                   
                 </View> 

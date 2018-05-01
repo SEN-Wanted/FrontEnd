@@ -1,7 +1,7 @@
 /*
  * 付款码界面
  */
-import React, {Component} from "react";
+import React, { PureComponent } from "react";
 import {StyleSheet, Text, Image, View, TouchableOpacity} from "react-native";
 import {Header, Left, Body, Right, Title} from "native-base";
 import PropTypes from "prop-types";
@@ -11,7 +11,7 @@ import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import Styles from '../../common/QrcodePaymentStyles';
 import Images from "../../common/Images";
 
-export default class PaymentScreen extends Component {
+export default class PaymentScreen extends PureComponent<Props, State> {
     static propTypes = {
         backIconPress: PropTypes.func,
         refreshIconPress: PropTypes.func,
@@ -19,6 +19,13 @@ export default class PaymentScreen extends Component {
         leftIconPress: PropTypes.func,
         rightIconPress: PropTypes.func,
     };
+
+    static navigationOptions = ({navigation}) => {
+        return {
+            header: null,         //将首页的导航栏取消
+          
+        }
+    }
 
     constructor(props) {
         super(props);
@@ -30,7 +37,7 @@ export default class PaymentScreen extends Component {
                 <View>
                     <Header style={styles.header}>
                         <Left>
-                            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                            <TouchableOpacity onPress={() => {this.props.navigation.goBack()}}>
                                 <Icon name="chevron-circle-left" size={25} color="#1C64C3" />
                             </TouchableOpacity>
                         </Left>

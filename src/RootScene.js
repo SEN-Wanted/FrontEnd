@@ -9,16 +9,28 @@ import color from './widget/color'
 import HomeScene from './scene/Home/HomeScene'
 import OrderScene from './scene/Order/OrderScene'
 import MineScene from './scene/Mine/MineScene'
-//import WebScene from './scene/Web/WebScene'
+
+import PaymentScreen from './scene/payment/PaymentScreen'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
 import ItemOfOrder from './scene/Order/ItemOfOrder'
+
+const TransitionConfiguration = () => ({
+    screenInterpolator: (sceneProps) => {
+      const { scene } = sceneProps;
+      const { route } = scene;
+      const params = route.params || {}
+      const transition = params.transition || 'forHorizontal'
+      return CardStackStyleInterpolator[transition](sceneProps)
+    }
+})
+
 
 class RootScene extends PureComponent<{}> {
 
     componentDidMount() {
         SplashScreen.hide()
     }
-    
+
     render() {
         console.log('root scene render');
         
@@ -105,19 +117,15 @@ const Navigator = StackNavigator({
     //WebScene: {screen: WebScene},
     RestaurantScene: {screen: RestaurantScene},
     ItemOfOrder: {screen: ItemOfOrder},
+    PaymentScreen: {screen: PaymentScreen},
 }, {
-        //设置界面跳转方式为水平跳转
-        transitionConfig: () => ({
-            screenInterpolator:CardStackStyleInterpolator.forHorizontal,
-        }),
+        //设置界面跳转方式
+        transitionConfig: TransitionConfiguration,
         
-        navigationOptions:{
-            
+        navigationOptions:{           
             headerBackTitle: null,
             headerTintColor:'red',
-
-            headerTitleStyle: {
-                
+            headerTitleStyle: {               
             }
         }   
     }
