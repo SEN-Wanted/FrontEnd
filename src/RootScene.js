@@ -1,11 +1,13 @@
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text} from 'react-native'
 import {TabNavigator, TabBarBottom, StackNavigator} from 'react-navigation'
+import {Provider} from 'mobx-react'
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 import SplashScreen from 'react-native-splash-screen'
 
 import TabBarItem from './widget/TabBarItem'
 import color from './widget/color'
+
 import HomeScene from './scene/Home/HomeScene'
 import OrderScene from './scene/Order/OrderScene'
 import MineScene from './scene/Mine/MineScene'
@@ -13,6 +15,8 @@ import MineScene from './scene/Mine/MineScene'
 import PaymentScreen from './scene/payment/PaymentScreen'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
 import ItemOfOrder from './scene/Order/ItemOfOrder'
+
+import stores from './store/index'
 
 const TransitionConfiguration = () => ({
     screenInterpolator: (sceneProps) => {
@@ -32,10 +36,11 @@ class RootScene extends PureComponent<{}> {
     }
 
     render() {
-        console.log('root scene render');
-        
+        console.log('root scene render');    
         return (
-            <Navigator/>
+            <Provider {...stores}>
+                <Navigator/>
+            </Provider>
         );
     }
 }

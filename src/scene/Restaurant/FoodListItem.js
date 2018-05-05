@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 type Props = {
     info: Object,
+    onAddPress: Function,
    // onPressItem: Function,
 }
 
@@ -14,16 +15,12 @@ type State = {
 
 }
 export default class FoodListItem extends PureComponent <Props, State>{
-    /*onPress = () => {
-        this.props.onPressItem(this.props.id)
-    }*/
-
-    _onPress = (e) => {
+    /*_onPress = (e) => {
         let info = this.props.info
         DeviceEventEmitter.emit('add',e,info); //发监听
-    }
+    }*/
     render() {
-        let info = this.props.info
+        let { info,onAddPress } = this.props
   
         return (
             <View style={styles.container}>
@@ -42,7 +39,8 @@ export default class FoodListItem extends PureComponent <Props, State>{
                 <View style={styles.rightContainer}>
                     <TouchableOpacity  
                         style={{width:30,height:30,justifyContent:'center',alignItems:'center'}} 
-                        onPress={this._onPress}
+                        //onPress={this._onPress}
+                        onPress={ (e) => onAddPress(e,info) }
                     > 
                         <Icon name="plus-circle" size={30} color="#E51C2A"/>
                     </TouchableOpacity>

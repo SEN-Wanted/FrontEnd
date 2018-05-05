@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, SectionList, DeviceEventEmitter, Dimensions,} from 'react-native'
-
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
 import screen from '../../common/screen'
 import color from '../../widget/color'
@@ -9,17 +8,16 @@ var {width,height} = Dimensions.get('window');
 
 type Props = {
     data: Array<Object>,
+    itemAddPress: Function,
 }
 
-type State = {
 
-}
-class RightSectionList extends PureComponent <Props, State>{
+export default class RightSectionList extends PureComponent <Props, State>{
     constructor(props) {
         super(props);
-        this.state = {
+        /*this.state = {
             sectionData:this.props.data
-        };
+        };*/
 
         this.getItemLayout = sectionListGetItemLayout({
             // The height of the row with rowData at the given sectionIndex and rowIndex
@@ -34,8 +32,9 @@ class RightSectionList extends PureComponent <Props, State>{
     }
 
     renderItem = (item) => {
+        let onPress = this.props.itemAddPress
         return (
-            <FoodListItem info={item.item} />
+            <FoodListItem info={ item.item } onAddPress={ onPress }/>
         )
     }
     //头
@@ -56,7 +55,7 @@ class RightSectionList extends PureComponent <Props, State>{
                 renderSectionHeader={(section)=>this.sectionComp(section)} //头
                 renderItem={(item)=>this.renderItem(item)} //行
               //  ItemSeparatorComponent = {()=>{return(<View style={{height:1,backgroundColor:'black'}}/>)}}//分隔线
-                sections={this.state.sectionData} //数据
+                sections={ this.props.data } //数据
                 onViewableItemsChanged = {(info)=>this.itemChange(info)}  //滑动时调用
              //   ListFooterComponent={() => (<Text style={styles.footerText}>没有更多啦</Text>)}
                 getItemLayout={this.getItemLayout}
@@ -84,11 +83,12 @@ class RightSectionList extends PureComponent <Props, State>{
     }
 
     itemChange = (info)=>{
-
-        let {title,id}= info.viewableItems[0].item
-        var reg = new RegExp("^[0-9]*$");
-        if (reg.test(id)) {
-            DeviceEventEmitter.emit('right',id); //发监听
+        if(info.viewableItems[0]) {
+            let {title,id}= info.viewableItems[0].item
+            let reg = new RegExp("^[0-9]*$");
+            if (reg.test(id) && title) {
+                DeviceEventEmitter.emit('right',id); //发监听
+            }
         }
     }
 }
@@ -111,5 +111,3 @@ const styles = StyleSheet.create({
     },
 
 });
-
-export default RightSectionList

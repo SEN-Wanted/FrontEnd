@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, FlatList} from 'react-native'
+
 import Swiper from 'react-native-swiper'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import FeaIcon from 'react-native-vector-icons/Feather'
@@ -16,13 +17,6 @@ import PaymentScreen from '../payment/PaymentScreen'
 
 
 const { width, height } = screen
-type Props = {
-
-}
-
-type State = {
-
-}
 
 
 export default class HomeScene extends PureComponent<Props, State> {
