@@ -3,8 +3,11 @@ import {
     Text,
     StyleSheet,
     View,
-    TouchableOpacity
+    Image,
+    TouchableOpacity,
+    ScrollView
 } from 'react-native'
+import StarRating from 'react-native-star-rating'
 import ItemOfOrder from './ItemOfOrder'
 
 type Props = {
@@ -28,20 +31,119 @@ class OrderScene extends PureComponent<Props, State> {
         headerLeft: <View></View>,
   
         headerRight:<View />,
-    })
+    });
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          starCount: 0
+        };
+    }
+
+    onStarRatingPress(rating, i) {
+        
+        this.setState({
+            starCount: rating
+        })
+    }
 
     render() {
+        let orderList = [];
+        for (i = 0; i < 4; i++) {
+            (this.orderinfo.status[i] == 0) ? 
+                tobeScored = (<Text style={orderSceneStyle.isScored}>待评价</Text>) :
+                tobeScored = (<Text style={orderSceneStyle.isScored}>已评价</Text>);
+            orderList.push(
+                <View key={i} style={orderSceneStyle.scene}>
+                    <TouchableOpacity onPress={(info)=>{
+                        this.props.navigation.navigate('ItemOfOrder',{info:info});
+                    }}>
+                        <View style={orderSceneStyle.itemTitle}>
+                            <Text> {this.orderinfo.name} </Text>
+                            {tobeScored}
+                        </View>
+                        {this.lines}
+                        <View style={orderSceneStyle.mainView}>
+                            <Image source={require("../../img/payforbill/icon.png")} style={orderSceneStyle.iconImg}/>
+                            <View>
+                                <Text>{ this.orderinfo.cost }</Text>
+                                <Text>{ this.orderinfo.time }</Text>
+                                <StarRating
+                                    starStyle={orderSceneStyle.stars}
+                                    starSize={20}
+                                    emptyStarColor={"#111111"}
+                                    fullStarColor={"gold"}
+                                    disabled={false}
+                                    maxStars={5}
+                                    rating={this.state.starCount}
+                                    selectedStar={(rating) => this.onStarRatingPress(rating)}
+                                />
+                            </View>
+                            <View style={orderSceneStyle.arrow}>
+                                <Text> > </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+
         return (
             <View>
-                <TouchableOpacity onPress={(info)=>{
-                    this.props.navigation.navigate('ItemOfOrder',{info:info});
-                }}>
-                    <Text>pay for bill</Text>
-                </TouchableOpacity>
+            <ScrollView>
+                { orderList }
+            </ScrollView>
             </View>
         ) // return
-
     }
+    orderinfo = {
+        name: "海底捞火锅(珠影广场)",
+        cost: "￥331.0",
+        time: "2017-01-08 17:05:24",
+        status: [0, 0, 0, 0]
+    }
+
+    lines = 
+        <Text style={orderSceneStyle.devideLine}></Text>;
 }
+
+var orderSceneStyle = StyleSheet.create({
+
+    scene: {
+        margin: 10,
+        padding:5
+    },
+    isScored: {
+        color: "red",
+        fontSize: 12
+    },
+    devideLine: {
+        borderWidth:1,
+        height: 1,
+        borderColor: "#cccccc",
+        marginVertical: 5
+    },
+    itemTitle: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+    },
+    iconImg: {
+        width: 60,
+        height: 60
+    },
+    mainView: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    stars:{
+        justifyContent: "flex-start",
+    },
+    arrow: {
+        width: 60,
+        height: 60,
+        alignItems: "center",
+        justifyContent: "center",
+    }
+})
 
 export default OrderScene
