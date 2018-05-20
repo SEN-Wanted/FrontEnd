@@ -4,7 +4,9 @@ import NavigationItem from '../../widget/NavigationItem'
 import screen from '../../common/screen'
 
 type Props = {
-    onPress: Function,
+    onPress1: Function,
+    onPress2: Function,
+    onPress3: Function,
 }
 
 type State = {
@@ -13,7 +15,7 @@ type State = {
 
 class HomeFloatTopbar extends PureComponent<Props,State> {
     render() {
-        let {onPress} = this.props
+        let {onPress1, onPress2, onPress3} = this.props
         return (
             <View style={styles.container}>
                    
@@ -21,11 +23,11 @@ class HomeFloatTopbar extends PureComponent<Props,State> {
                         title='扫一扫' 
                         titleStyle={styles.titleText} 
                         icon={require('../../img/home/scan_QR_code.png')}
-                        onPress={onPress}
+                        onPress={onPress1}
                     />
                   
                    
-                    <TouchableOpacity style={styles.searchBar}>
+                    <TouchableOpacity style={styles.searchBar} onPress={onPress2}>
                         <Image source={require('../../img/home/ic_search_white_36dp.png')} style={styles.searchIcon}/>
                         <Text style={{fontSize:15,color:'black'}}>海底捞(珠影星光店)</Text>
                     </TouchableOpacity>
@@ -35,7 +37,7 @@ class HomeFloatTopbar extends PureComponent<Props,State> {
                         title='消息'
                         titleStyle={styles.titleText} 
                         icon={require('../../img/home/icon_navigation_item_message_white.png')}
-                        onPress={onPress}
+                        onPress={onPress3}
                     />
                   
                 </View> 

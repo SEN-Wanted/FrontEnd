@@ -18,6 +18,17 @@ const constants = {
     info_star: '我的收藏',
     info_thanks: '我的答谢',
     info_wallet: '我的钱包',
+
+    search_keyword_1: '海底捞',
+    search_keyword_2: '星巴克',
+    search_keyword_3: '小天鹅',
+    search_keyword_4: '元气寿司',
+    search_keyword_5: '一点点奶茶',
+    search_keyword_6: '麦当劳',
+    search_keyword_7: '果汁冰',
+    search_keyword_8: '合味道',
+    search_keyword_9: 'Coddf',
+    search_keyword_10: 'Add',
 }
 
 export default constants;

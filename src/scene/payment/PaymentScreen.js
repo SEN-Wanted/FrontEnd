@@ -16,12 +16,16 @@ export default class PaymentScreen extends Component {
         backIconPress: PropTypes.func,
         refreshIconPress: PropTypes.func,
         changeIconPress: PropTypes.func,
-        leftIconPress: PropTypes.func,
-        rightIconPress: PropTypes.func,
     };
 
     constructor(props) {
         super(props);
+    }
+
+    static navigationOptions = () => {
+        return {
+            header: null,         //将首页的导航栏取消
+        }
     }
 
     render() {
@@ -74,7 +78,7 @@ export default class PaymentScreen extends Component {
                 </View>
                 <View style={Styles.view_menu_container}>
                     <View style={Styles.view_menu_item_container}>
-                        <TouchableOpacity onPress={this.props.leftIconPress}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('QRScanner')}>
                             <Icon name="qrcode" size={45} color="#CDD3DB" />
                             <Text style={Styles.text_menu_title}>扫码</Text>
                         </TouchableOpacity>

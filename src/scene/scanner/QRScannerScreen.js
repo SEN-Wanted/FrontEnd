@@ -13,13 +13,14 @@ import QRScannerView from '../../widget/QRScannerView';
 import Styles from '../../common/QrcodePaymentStyles';
 
 export default class QRScannerScreen extends Component {
-    static propTypes = {
-        leftIconPress: PropTypes.func,
-        rightIconPress: PropTypes.func,
-    };
-
     constructor(props) {
         super(props);
+    }
+
+    static navigationOptions = () => {
+        return {
+            header: null,         //将首页的导航栏取消
+        }
     }
 
     render() {
@@ -55,13 +56,13 @@ export default class QRScannerScreen extends Component {
         return (
             <View style={Styles.view_menu_container}>
                 <View style={Styles.view_menu_item_container}>
-                    <TouchableOpacity onPress={this.props.leftIconPress}>
+                    <TouchableOpacity>
                         <Icon name="qrcode" size={45} color="#03A9F4" />
                         <Text style={Styles.text_menu_title_default}>扫码</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={Styles.view_menu_item_container}>
-                    <TouchableOpacity onPress={this.props.rightIconPress}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment')}>
                         <Icon name="barcode" size={45} color="#CDD3DB" />
                         <Text style={Styles.text_menu_title}>付款码</Text>
                     </TouchableOpacity>
