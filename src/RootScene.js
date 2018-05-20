@@ -9,6 +9,10 @@ import color from './widget/color'
 import HomeScene from './scene/Home/HomeScene'
 import OrderScene from './scene/Order/OrderScene'
 import MineScene from './scene/Mine/MineScene'
+import MineDetail from './scene/Mine/MineDetailScreen'
+import SearchScene from './scene/Search/SearchScreen'
+import QRScanner from './scene/Scanner/QRScannerScreen'
+import Payment from './scene/Payment/PaymentScreen'
 //import WebScene from './scene/Web/WebScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
 import ItemOfOrder from './scene/Order/ItemOfOrder'
@@ -100,6 +104,10 @@ const Navigator = StackNavigator({
     //WebScene: {screen: WebScene},
     RestaurantScene: {screen: RestaurantScene},
     ItemOfOrder: {screen: ItemOfOrder},
+    MineDetail: {screen: MineDetail},
+    SearchScene: {screen: SearchScene},
+    QRScanner: {screen: QRScanner},
+    Payment: {screen: Payment}
 }, {
         //设置界面跳转方式为水平跳转
         transitionConfig: () => ({

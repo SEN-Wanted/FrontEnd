@@ -19,6 +19,11 @@ export default class MineScene extends Component {
           
         }
     }
+
+    jumpDetail = () => {
+        this.props.navigation.navigate('MineDetail')
+    }
+
     render() {
         return (
             <View>
@@ -42,7 +47,7 @@ export default class MineScene extends Component {
                             <TouchableOpacity>
                                 <Text style={styles.panel_body_text}>chenmy</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={this.jumpDetail}>
                                 <Text style={styles.panel_body_text}>个人信息&nbsp;&gt;</Text>
                             </TouchableOpacity>
                         </View>

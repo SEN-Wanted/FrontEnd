@@ -38,7 +38,9 @@ class HomeScene extends PureComponent<Props, State> {
             //flastList头部的容器
             <View style={styles.container}>   
                         
-                <HomeFloatTopbar onPress={()=>{alert('test1')}}/>    
+                <HomeFloatTopbar onPress1={()=>{this.props.navigation.navigate('QRScanner')}}
+                    onPress2={()=>{this.props.navigation.navigate('SearchScene')}}
+                    onPress3={()=>{alert('test')}} />
                 
                 <View style={styles.headerSwiper}>  
                     <Swiper style = {styles.wrapper} height={200} horizontal={true} 
