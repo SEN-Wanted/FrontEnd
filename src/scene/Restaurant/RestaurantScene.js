@@ -38,7 +38,7 @@ export default class RestaurantScene extends Component{
     static navigationOptions = ({navigation}) => ({
         headerStyle: { backgroundColor: '#140105', height: width * 0.15},
         headerTintColor: 'white',
-        headerTitle: navigation.state.params ? navigation.state.params.info.title : '没有数据',
+        headerTitle: navigation.state.params ? navigation.state.params.info.storeName : '没有数据',
         headerTitleStyle:{ color:'white', fontSize:22, },
         headerLeft: (
             <TouchableOpacity style={styles.backButton} onPress={()=>{
@@ -67,12 +67,11 @@ export default class RestaurantScene extends Component{
         }
         this.props.listcar.setEndPosition(thisEnd)
        // this.requestData()
-       // this.listener = DeviceEventEmitter.addListener('add', (e, info)=>this._onPressHandler(e, info));
+       
     }
 
     componentWillUnMount() {
-        this.timer && clearTimeout(this.timer)
-        this.listener && this.listener.remove()     
+        this.timer && clearTimeout(this.timer)  
     }
 
     requestData = async() => {
@@ -96,7 +95,7 @@ export default class RestaurantScene extends Component{
         this.listCarAddItem(info)
         //this.refs.listcarIcon.pulse(200)
         //this.listcarIcon.pulse(200)
-        DeviceEventEmitter.emit('pulse')
+        //DeviceEventEmitter.emit('pulse')
     }
 
     //抛物线动画函数
