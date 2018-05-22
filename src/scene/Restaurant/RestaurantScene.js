@@ -38,7 +38,7 @@ class RestaurantScene extends PureComponent <Props, State>{
             </TouchableOpacity>
         ),
   
-        headerRight:<View />,
+        headerRight: <View />,
     })
 
     constructor(props:Object) {
