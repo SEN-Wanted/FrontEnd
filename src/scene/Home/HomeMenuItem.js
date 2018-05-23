@@ -6,11 +6,11 @@ import FeaIcon from 'react-native-vector-icons/Feather'
 type Props = {
     title:string,
     icon:any,
-    color:string,
+    color:any,
     onPress:Function,
 
 }
-
+//<FeaIcon name='circle' color={color} size={36} />
 type State = {
 
 }
@@ -22,12 +22,10 @@ class HomeMenuItem extends PureComponent <Props, State>{
         return (
             <TouchableOpacity style={styles.container} onPress={onPress}>
                 <View style={styles.childContainer} >
-                <FeaIcon name='circle' color={color} size={36} />
-                <Image source={icon} style={styles.icon}/>
+                    <Image source={color} style={styles.colorIcon} />
+                    <Image source={icon} style={styles.icon}/>
                 </View>
-                <Text >{title}</Text>
-                
-               
+                <Text >{title}</Text>               
             </TouchableOpacity>
         );
     }
@@ -54,6 +52,12 @@ const styles = StyleSheet.create({
     icon: {
         width: screen.width / 17,
         height: screen.width / 17,
+        margin: 5,
+        position: 'absolute',
+    },
+    colorIcon: {
+        width: screen.width / 10,
+        height: screen.width / 10,
         margin: 5,
         position: 'absolute',
     }
