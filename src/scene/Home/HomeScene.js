@@ -14,7 +14,6 @@ import screen from '../../common/screen'
 import HomeMenuView from './HomeMenuView'
 import RestaurantListItem from '../Restaurant/RestaurantListItem'
 import RestaurantScene from '../Restaurant/RestaurantScene'
-import PaymentScreen from '../payment/PaymentScreen'
 
 import NetWorkFail from '../../widget/NetWorkFail'
 import wantedFetch from '../../common/WantedFetch'

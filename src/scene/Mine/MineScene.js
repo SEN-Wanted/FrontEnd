@@ -40,7 +40,8 @@ export default class MineScene extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.panel_body}>
-                        <TouchableOpacity style={styles.panel_body_avatar}>
+                        <TouchableOpacity style={styles.panel_body_avatar}
+                            onPress={this.props.navigation.navigate('LoginScene')}>
                             <Icon name="user-circle" size={40} color={Colors.white_fff} />
                         </TouchableOpacity>
                         <View>

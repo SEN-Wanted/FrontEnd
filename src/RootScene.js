@@ -16,7 +16,8 @@ import MineDetail from './scene/Mine/MineDetailScreen'
 import SearchScene from './scene/Search/SearchScreen'
 import QRScanner from './scene/Scanner/QRScannerScreen'
 import Payment from './scene/Payment/PaymentScreen'
-
+import SignUpScene from './scene/SignUp/SignUpScene'
+import LoginScene from './scene/Login/LoginScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
 import ItemOfOrder from './scene/Order/ItemOfOrder'
 
@@ -129,8 +130,9 @@ const Navigator = StackNavigator({
     MineDetail: {screen: MineDetail},
     SearchScene: {screen: SearchScene},
     QRScanner: {screen: QRScanner},
-    Payment: {screen: Payment}
-
+    Payment: {screen: Payment},
+    SignUpScene: {screen: SignUpScene},
+    LoginScene: {screen: LoginScene}
 }, {
         //设置界面跳转方式
         transitionConfig: TransitionConfiguration,
