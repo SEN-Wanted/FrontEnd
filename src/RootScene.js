@@ -19,7 +19,8 @@ import Payment from './scene/Payment/PaymentScreen'
 import SignUpScene from './scene/SignUp/SignUpScene'
 import LoginScene from './scene/Login/LoginScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
-import ItemOfOrder from './scene/Order/ItemOfOrder'
+//import ItemOfOrder from './scene/Order/ItemOfOrder'
+import OrderItemScene from './scene/Order/OrderItemScene'
 
 import stores from './store/index'
 
@@ -126,7 +127,7 @@ const Navigator = StackNavigator({
     Tab: {screen: Tab},
     //WebScene: {screen: WebScene},
     RestaurantScene: {screen: RestaurantScene},
-    ItemOfOrder: {screen: ItemOfOrder},
+    OrderItemScene: {screen: OrderItemScene},
     MineDetail: {screen: MineDetail},
     SearchScene: {screen: SearchScene},
     QRScanner: {screen: QRScanner},
@@ -139,7 +140,7 @@ const Navigator = StackNavigator({
         
         navigationOptions:{           
             headerBackTitle: null,
-            headerTintColor:'red',
+            headerTintColor:'white',
             headerTitleStyle: {               
             }
         }   

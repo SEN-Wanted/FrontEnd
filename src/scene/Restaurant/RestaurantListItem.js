@@ -13,6 +13,7 @@ type Props = {
 type State = {
 
 }
+const { width, height } = screen
 class RestaurantListItem extends PureComponent <Props, State>{
 
     render() {
@@ -75,8 +76,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     icon: {
-        width: 70,
-        height: 53,
+        width: width * 0.203,
+        height: width * 0.153,
         borderRadius: 5,
     },
     midContainer: {

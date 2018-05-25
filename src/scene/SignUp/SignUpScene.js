@@ -10,6 +10,7 @@ import {
   Image,
   ImageBackground,
   NetInfo,
+  StatusBar,
 } from 'react-native';
 
 import {observer, inject} from 'mobx-react'
@@ -23,7 +24,12 @@ const { width, height } = screen
 @inject(['user'])
 @observer
 export default class SignUpScene extends Component {
-
+    static navigationOptions = () => {
+        return {
+            header: null,         //将首页的导航栏取消
+          
+        }
+    }
     constructor(props) {
         super(props);
         form.$hooks.onSuccess = async (form) => {
@@ -46,7 +52,7 @@ export default class SignUpScene extends Component {
     }
 
     componentDidMount() {
-        alert('test')
+        this.props.user.setStatusbarHidden(true)
         NetInfo.addEventListener('connectionChange',
             (networkType) => {
                 //alert(networkType.type)
@@ -54,16 +60,24 @@ export default class SignUpScene extends Component {
             }
         )
     }
+
+    componentWillUnmount() {
+        this.props.user.setStatusbarHidden(false)
+    }
+
+    jumpLogin = () => {
+        this.props.navigation.navigate('LoginScene')
+    }
     render() {
         return (
             <ImageBackground source={require('../../img/signAndLogin/login_bg.jpeg')} style={styles.imgBackground} >
-                <StatusBar translucent={true} hidden={true}/>
+                <StatusBar translucent={true} hidden={this.props.user.isStatusbarHidden}/>
                 <View style={styles.container} >
                     <Image source={require('../../img/signAndLogin/magnifier.png')} style={styles.magnifier}/>
 
                     <Form form={form} />
                      
-                    <TouchableOpacity style={styles.navigate}>
+                    <TouchableOpacity style={styles.navigate} onPress={this.jumpLogin}>
                         <Text style={{fontSize: 15, color: 'white'}} >已注册登陆</Text>
                     </TouchableOpacity>
                 </View>

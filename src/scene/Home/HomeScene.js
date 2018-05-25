@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, FlatList, NetInfo} from 'react-native'
+import {StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, FlatList, NetInfo, StatusBar} from 'react-native'
 import {observer, inject} from 'mobx-react'
 
 import Swiper from 'react-native-swiper'
@@ -100,8 +100,7 @@ export default class HomeScene extends Component {
     renderHeader=()=> {
         return (
             //flastList头部的容器
-            <View style={styles.container}>   
-                         
+            <View style={styles.container}>           
                 <HomeFloatTopbar onPress1={()=>{this.props.navigation.navigate('QRScanner')}}
                     onPress2={()=>{this.props.navigation.navigate('SearchScene')}}
                     onPress3={()=>{alert('test')}} />
@@ -177,15 +176,17 @@ export default class HomeScene extends Component {
     render() {
         if(this.props.user.networkType === 'NONE' || this.props.user.networkType === 'none'){
             return (
-                <NetWorkFail onPress={ this.getCurrentNetConnection }/>
+                <View>
+                    <StatusBar  hidden={this.props.user.isStatusbarHidden}/>
+                    <NetWorkFail onPress={ this.getCurrentNetConnection }/>
+                </View>
             )
         } else {
         return (
             <View style={{flex: 1,backgroundColor:'white'}}>
+                <StatusBar  hidden={this.props.user.isStatusbarHidden}/>
                 <FlatList
                     ListHeaderComponent={ () => this.renderHeader() }
-                    
-                   // data={this.state.dataList}
                     /*data={[
                             {title: '海底捞(珠影星光店)'},
                             {title: '海底捞(珠影星光店)'},

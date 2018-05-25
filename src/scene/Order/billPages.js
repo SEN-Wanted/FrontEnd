@@ -18,7 +18,7 @@ type State = {
 
 }
 
-export default class OrderScene extends PureComponent<Props, State> {
+export default class BillPages extends PureComponent<Props, State> {
 
 	render(){
 

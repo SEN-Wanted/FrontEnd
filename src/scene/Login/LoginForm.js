@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { observer } from "mobx-react";
 import MobxReactForm from 'mobx-react-form';
-//import validator from 'validator';
-//const plugins = { vjf: validator };
-import validator from 'validatorjs';
-const plugins = { dvr: validator };
+import validator from 'validator';
+const plugins = { vjf: validator };
+//import validator from 'validatorjs';
+//const plugins = { dvr: validator };
 import { isEmail, isPhone, isPassword } from '../../common/validatorHelper'
 import SignORLoginTextInput from '../../widget/SignORLoginTextInput'
 import SignORLoginButton from '../../widget/SignORLoginButton'

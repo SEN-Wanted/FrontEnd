@@ -9,6 +9,7 @@ import {
   Image,
   ImageBackground,
   NetInfo,
+  StatusBar,
 } from 'react-native';
 
 import {observer, inject} from 'mobx-react'
@@ -22,27 +23,42 @@ const { width, height } = screen
 @inject(['user'])
 @observer
 export default class LoginScene extends Component {
-
+    static navigationOptions = () => {
+        return {
+            header: null,         //将首页的导航栏取消
+          
+        }
+    }
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
+        this.props.user.setStatusbarHidden(true)
         NetInfo.addEventListener('connectionChange',
             (networkType) => {
                 alert(networkType.type)
             }
         )
     }
+
+    componentWillUnmount() {
+        this.props.user.setStatusbarHidden(false)
+    }
+
+    jumpSignUp = () => {
+        this.props.navigation.navigate('SignUpScene')
+    }
+
     render() {
         return (
             <ImageBackground source={require('../../img/signAndLogin/login_bg.jpeg')} style={styles.imgBackground} >
-                <StatusBar translucent={true} hidden={true}/>
+                <StatusBar translucent={true} hidden={this.props.user.isStatusbarHidden}/>
                 <View style={styles.container} >
                     <Image source={require('../../img/signAndLogin/magnifier.png')} style={styles.magnifier}/>
 
                     <Form form={form} />
-                    <TouchableOpacity style={styles.navigate}>
+                    <TouchableOpacity style={styles.navigate} onPress={this.jumpSignUp}>
                         <Text style={{fontSize: 15, color: 'white'}} >去注册</Text>
                     </TouchableOpacity>
 

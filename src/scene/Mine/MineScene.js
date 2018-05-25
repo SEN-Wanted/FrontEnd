@@ -24,9 +24,13 @@ export default class MineScene extends Component {
         this.props.navigation.navigate('MineDetail')
     }
 
+    jumpLogin = () => {
+        this.props.navigation.navigate('LoginScene')
+    }
+
     render() {
         return (
-            <View>
+            <View style={{backgroundColor: 'white',flex:1}}>
                 <View style={styles.panel}>
                     <View style={styles.panel_header}>
                         <TouchableOpacity style={styles.panel_header_setting}>
@@ -41,7 +45,7 @@ export default class MineScene extends Component {
                     </View>
                     <View style={styles.panel_body}>
                         <TouchableOpacity style={styles.panel_body_avatar}
-                            onPress={this.props.navigation.navigate('LoginScene')}>
+                            onPress={this.jumpLogin}>
                             <Icon name="user-circle" size={40} color={Colors.white_fff} />
                         </TouchableOpacity>
                         <View>

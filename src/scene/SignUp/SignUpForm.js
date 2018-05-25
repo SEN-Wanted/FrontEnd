@@ -9,6 +9,10 @@ const plugins = { vjf: validator };
 import { isEmail, isPhone, isPassword } from '../../common/validatorHelper'
 import SignORLoginTextInput from '../../widget/SignORLoginTextInput'
 import SignORLoginButton from '../../widget/SignORLoginButton'
+import screen from '../../common/screen'
+
+const { width, height } = screen
+
 
 const fields = [{
     name: 'phone',
@@ -45,7 +49,11 @@ export default observer(({form}) => {
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
             <SignORLoginTextInput Icon={require('../../img/signAndLogin/user.png')} field={form.$('phone')}  value={form.$('phone').value} />
             <SignORLoginTextInput Icon={require('../../img/signAndLogin/password.png')} field={form.$('password')} value={form.$('password').value} />
-            <SignORLoginTextInput Icon={require('../../img/signAndLogin/verificationCode.png')} field={form.$('verificationCode')}value={form.$('verificationCode').value} />
+            <SignORLoginTextInput Icon={require('../../img/signAndLogin/verificationCode.png')} field={form.$('verificationCode')}value={form.$('verificationCode').value} >
+                <TouchableOpacity style={{justifyContent:'center',alignItems:'center',marginRight:5}}>
+                    <Text style={{fontSize: width * 0.056, color:'white'}}>获取验证码</Text>
+                </TouchableOpacity>
+            </SignORLoginTextInput>
             <SignORLoginButton text={'注册'} onPress={form.onSubmit} />
         </View>
     )

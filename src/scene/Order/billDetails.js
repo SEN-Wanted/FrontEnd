@@ -18,7 +18,7 @@ type State = {
 
 }
 
-export default class OrderScene extends PureComponent<Props, State> {
+export default class BillDetails extends PureComponent<Props, State> {
 
 	render(){
 
@@ -124,7 +124,7 @@ export default class OrderScene extends PureComponent<Props, State> {
 		<Text style={detailsStyle.devideLine}></Text>;
 }
 
-var detailsStyle = StyleSheet.create({
+const detailsStyle = StyleSheet.create({
 
 	displayColumn:{
 		flexDirection: "row",
