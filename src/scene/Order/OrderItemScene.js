@@ -52,9 +52,9 @@ export default class OrderItemScene extends PureComponent<Props, State> {
                     titles={['订单状态', '订单详情']} 
                     style={infoStyle.pageTitle}
                     trackScroll={true}
-                    itemStyle={{width: (width-30)/4}} 
+                    itemStyle={infoStyle.pageTitleItem} 
                     itemTextStyle={{fontSize: 17, color: '#969696'}}
-                    selectedItemStyle={{width: (width-30)/4}} 
+                    selectedItemStyle={infoStyle.pageTitleItem} 
                     selectedItemTextStyle={{fontSize: 17, color: '#101010'}}
                     selectedBorderStyle={{height: 3, backgroundColor: '#E51C23'}}
                 />;
@@ -92,13 +92,13 @@ const infoStyle = StyleSheet.create({
     },
     pageTitle: {
         backgroundColor: 'white', 
-        height: 40, 
+        height: width * 0.12, 
         marginHorizontal: 15,
         //borderBottomWidth: 3,
         //borderColor: '#969696',
     },
     pageTitleItem: {
         width: (width - 30) / 4,
-
+        //height: width * 0.3,
     }
 });

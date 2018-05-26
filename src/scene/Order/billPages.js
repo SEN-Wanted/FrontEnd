@@ -35,29 +35,27 @@ export default class BillPages extends PureComponent<Props, State> {
 			
 			infoItems.push(
 				<View key={i}>
-				<View style={statusStyle.items}>
-				  <View style={statusStyle.progressBar}>
-					<Text style= {statusStyle.progressBarCircle}></Text>
-					<Text style={progressLine}></Text>
-				  </View>
-				  <View style={statusStyle.itemsPhase}>
-				  	<Text style={statusStyle.itemsPhaseTitle}>{this.infoList.content[i]}</Text>
-				  	<Text style={statusStyle.itemsPhaseTips}>{this.infoList.tips[i]}</Text>
-				  </View>
-				  <View style={statusStyle.itemsTime}>
-				  	<Text>{this.infoList.time[i]}</Text>
-				  </View>
-				</View>
-				<Text style={lines}></Text>
+					<View style={statusStyle.items}>
+						<View style={statusStyle.progressBar}>
+							<View style= {circles} />
+							<View style={progressLine} />
+				  		</View>
+				  		<View style={statusStyle.itemsPhase}>
+				  			<Text style={statusStyle.itemsPhaseTitle}>{this.infoList.content[i]}</Text>
+				  			<Text style={statusStyle.itemsPhaseTips}>{this.infoList.tips[i]}</Text>
+				  		</View>
+				  		<View style={statusStyle.itemsTime}>
+				  			<Text>{this.infoList.time[i]}</Text>
+				  		</View>
+					</View>
+					<View style={lines} />
 				</View>
 			);
 		}
 		
 		return(
-			<View>
-				<View style={statusStyle.layout}>
-					{infoItems}
-				</View>
+			<View style={statusStyle.layout}>
+				{infoItems}
 			</View>
 		)
 	}
@@ -70,7 +68,7 @@ export default class BillPages extends PureComponent<Props, State> {
 }
 
 
-var statusStyle = StyleSheet.create({
+const statusStyle = StyleSheet.create({
 	centerStyle:{
 		alignItems:"center"
 	},
