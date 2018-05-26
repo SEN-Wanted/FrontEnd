@@ -1,28 +1,52 @@
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text} from 'react-native'
 import {TabNavigator, TabBarBottom, StackNavigator} from 'react-navigation'
+import {Provider} from 'mobx-react'
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
-import Swiper from 'react-native-swiper';
+import SplashScreen from 'react-native-splash-screen'
 
 import TabBarItem from './widget/TabBarItem'
 import color from './widget/color'
+
 import HomeScene from './scene/Home/HomeScene'
 import OrderScene from './scene/Order/OrderScene'
 import MineScene from './scene/Mine/MineScene'
+
 import MineDetail from './scene/Mine/MineDetailScreen'
 import SearchScene from './scene/Search/SearchScreen'
 import QRScanner from './scene/Scanner/QRScannerScreen'
 import Payment from './scene/Payment/PaymentScreen'
-//import WebScene from './scene/Web/WebScene'
+import SignUpScene from './scene/SignUp/SignUpScene'
+import LoginScene from './scene/Login/LoginScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
-import ItemOfOrder from './scene/Order/ItemOfOrder'
+//import ItemOfOrder from './scene/Order/ItemOfOrder'
+import OrderItemScene from './scene/Order/OrderItemScene'
+
+import stores from './store/index'
+
+const TransitionConfiguration = () => ({
+    screenInterpolator: (sceneProps) => {
+      const { scene } = sceneProps;
+      const { route } = scene;
+      const params = route.params || {}
+      const transition = params.transition || 'forHorizontal'
+      return CardStackStyleInterpolator[transition](sceneProps)
+    }
+})
+
 
 class RootScene extends PureComponent<{}> {
+
+    componentDidMount() {
+        SplashScreen.hide()
+    }
+
     render() {
-        console.log('root scene render');
-        
+        console.log('root scene render');    
         return (
-            <Navigator/>
+            <Provider {...stores}>
+                <Navigator/>
+            </Provider>
         );
     }
 }
@@ -103,24 +127,21 @@ const Navigator = StackNavigator({
     Tab: {screen: Tab},
     //WebScene: {screen: WebScene},
     RestaurantScene: {screen: RestaurantScene},
-    ItemOfOrder: {screen: ItemOfOrder},
+    OrderItemScene: {screen: OrderItemScene},
     MineDetail: {screen: MineDetail},
     SearchScene: {screen: SearchScene},
     QRScanner: {screen: QRScanner},
-    Payment: {screen: Payment}
+    Payment: {screen: Payment},
+    SignUpScene: {screen: SignUpScene},
+    LoginScene: {screen: LoginScene}
 }, {
-        //设置界面跳转方式为水平跳转
-        transitionConfig: () => ({
-            screenInterpolator:CardStackStyleInterpolator.forHorizontal,
-        }),
+        //设置界面跳转方式
+        transitionConfig: TransitionConfiguration,
         
-        navigationOptions:{
-            
+        navigationOptions:{           
             headerBackTitle: null,
-            headerTintColor:'red',
-
-            headerTitleStyle: {
-                
+            headerTintColor:'white',
+            headerTitleStyle: {               
             }
         }   
     }

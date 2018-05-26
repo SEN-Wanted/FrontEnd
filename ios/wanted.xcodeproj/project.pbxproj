@@ -48,6 +48,7 @@
 		1B60F8A23BEA45E9BAE3B82C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B49C3CE1E81E4C09AFB0232E /* Octicons.ttf */; };
 		1E7623B3D16B4324B772A299 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7EB5B6DBE3304EE694540AE1 /* SimpleLineIcons.ttf */; };
 		74E3CB4EDC56413BB2A6FFCF /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7C7033CFCD84DAA84583363 /* Zocial.ttf */; };
+<<<<<<< HEAD
 		54A5363498A5417BB1688AD0 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD0BD66012A4727A77A83EE /* libRCTCamera.a */; };
 		0BA989C93A2C413CABF7D9A0 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92E225641D834384A69D55D4 /* Entypo.ttf */; };
 		91E7110B91B94B218D3AC7C3 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BF92D95B64944EEAC1769A2 /* EvilIcons.ttf */; };
@@ -61,6 +62,9 @@
 		2CAC5BFD9D4641189824D37E /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44FC0436C06B4EF3BB5D7340 /* rubicon-icon-font.ttf */; };
 		51BD74E4371E467C809170AB /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B55A2533E4CE48BAAE8FF50F /* SimpleLineIcons.ttf */; };
 		1C0D5A8D6775486B93C51C6A /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F1724B4399B048DA86CEE7CE /* Zocial.ttf */; };
+=======
+		70A9D702092143CE922F1F4C /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C79F4336A54DC280B3B17E /* libSplashScreen.a */; };
+>>>>>>> testdev
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -337,6 +341,9 @@
 		44FC0436C06B4EF3BB5D7340 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B55A2533E4CE48BAAE8FF50F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		F1724B4399B048DA86CEE7CE /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C5BC2A89415945A6A48BCA80 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; name = "SplashScreen.xcodeproj"; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		82C79F4336A54DC280B3B17E /* libSplashScreen.a */ = {isa = PBXFileReference; name = "libSplashScreen.a"; path = "libSplashScreen.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,7 +373,11 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				79A7810184FD4426BCDCA9CE /* libRNVectorIcons.a in Frameworks */,
+<<<<<<< HEAD
 				54A5363498A5417BB1688AD0 /* libRCTCamera.a in Frameworks */,
+=======
+				70A9D702092143CE922F1F4C /* libSplashScreen.a in Frameworks */,
+>>>>>>> testdev
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +557,8 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				DA1B70BF2F774DDBA658B6AB /* RNVectorIcons.xcodeproj */,
 				94DC54D7CB4D4292BA4ACCCA /* RCTCamera.xcodeproj */,
+				C5BC2A89415945A6A48BCA80 /* SplashScreen.xcodeproj */,
+
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1177,7 +1190,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+<<<<<<< HEAD
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
+=======
+					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
+>>>>>>> testdev
 				);
 			};
 			name = Debug;
@@ -1204,7 +1221,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+<<<<<<< HEAD
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
+=======
+					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
+>>>>>>> testdev
 				);
 			};
 			name = Release;
@@ -1227,7 +1248,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+<<<<<<< HEAD
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
+=======
+					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
+>>>>>>> testdev
 				);
 			};
 			name = Debug;
@@ -1249,7 +1274,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+<<<<<<< HEAD
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
+=======
+					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
+>>>>>>> testdev
 				);
 			};
 			name = Release;
@@ -1285,7 +1314,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+<<<<<<< HEAD
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
+=======
+					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
+>>>>>>> testdev
 				);
 			};
 			name = Debug;
@@ -1321,7 +1354,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+<<<<<<< HEAD
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
+=======
+					"$(SRCROOT)\..\node_modules\react-native-splash-screen\ios",
+>>>>>>> testdev
 				);
 			};
 			name = Release;

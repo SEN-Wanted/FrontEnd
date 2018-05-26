@@ -1,3 +1,4 @@
+
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native'
 import NavigationItem from '../../widget/NavigationItem'
@@ -13,7 +14,7 @@ type State = {
 
 }
 
-class HomeFloatTopbar extends PureComponent<Props,State> {
+export default class HomeFloatTopbar extends PureComponent<Props,State> {
     render() {
         let {onPress1, onPress2, onPress3} = this.props
         return (
@@ -81,4 +82,3 @@ const styles = StyleSheet.create({
     },
 })
 
-export default HomeFloatTopbar

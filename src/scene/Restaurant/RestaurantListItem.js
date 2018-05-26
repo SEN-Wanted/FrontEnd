@@ -3,7 +3,7 @@ import {StyleSheet, View, Image, Text, TouchableOpacity,Dimensions} from 'react-
 import screen from '../../common/screen'
 import color from '../../widget/color'
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import pxToDp from '../../common/pxToDp'
 
 type Props = {
     info: Object,
@@ -13,6 +13,7 @@ type Props = {
 type State = {
 
 }
+const { width, height } = screen
 class RestaurantListItem extends PureComponent <Props, State>{
 
     render() {
@@ -25,34 +26,35 @@ class RestaurantListItem extends PureComponent <Props, State>{
             }}>
                 <Image source={require('../../img/home/test.png')} style={styles.icon} />
                 <View style={styles.midContainer}>
-                    <Text style={{fontSize:15,fontFamily:'Roboto',color:'#101010'}}>海底捞火锅 (珠影星光店)</Text>
+                    <Text style={{fontSize:15,fontFamily:'Roboto',color:'#101010'}}>{info.storeName}</Text>
                     <View style={{width:140,height:27,flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>
                         
-                        <Icon name="star" color='#FFD21F' size={16} />
-                        <Icon name="star" color='#FFD21F' size={16} />
-                        <Icon name="star" color='#FFD21F' size={16} />
-                        <Icon name="star" color='#FFD21F' size={16} />
-                        <Icon name="star" color='#FFD21F' size={16} />
-                        <Text style={{fontSize:14,marginLeft:10}}>月售487单</Text>
+                        <Icon name="star" color={info.starRating > 0 ? '#FFD21F':'#AAAAAA'} size={pxToDp(16)} />
+                        <Icon name="star" color={info.starRating > 1 ? '#FFD21F':'#AAAAAA'} size={pxToDp(16)} />
+                        <Icon name="star" color={info.starRating > 2 ? '#FFD21F':'#AAAAAA'} size={pxToDp(16)} />
+                        <Icon name="star" color={info.starRating > 3 ? '#FFD21F':'#AAAAAA'} size={pxToDp(16)} />
+                        <Icon name="star" color={info.starRating > 4 ? '#FFD21F':'#AAAAAA'} size={pxToDp(16)} />
+                        <Text style={{fontSize:14,marginLeft:10}}>月售{info.monthlySell}单</Text>
                     </View>
                     <View style={{width:65,height:17,justifyContent:'center',alignItems:'center'}}>
-                        <Text style={styles.textSize11}>人均￥80</Text>
+                        <Text style={styles.textSize11}>人均￥{info.price}</Text>
                     </View>
                     
                     <View style={styles.discount}>
-                        <View style={{backgroundColor: '#E51C23',width:22,height:16,
+                        <View style={{backgroundColor: info.isDiscount?'#E51C23':'white', 
+                                width:22,height:16,
                                 justifyContent:'center',alignItems:'center'}}>
                             <Text style={{color:'white',fontSize:12}}>折</Text>
                         </View>
                         <View style={{width:105, height:27,justifyContent:'center',alignItems:'center'}}>
-                            <Text style={styles.textSize11}>折扣商品6.22折起</Text>
+                            <Text style={[styles.textSize11,{color: info.isDiscount?'#ADADAD':'white'}]}>折扣商品{info.discountNumber}折起</Text>
                         </View>
                         
                     </View>
                 </View>
                 <View style={styles.rightContainer}>
-                    <Text>2.0km</Text>
-                    <View style={{backgroundColor: '#E51C23',width:70,height:17,
+                    <Text>{info.distance}km</Text>
+                    <View style={{backgroundColor: info.isDiscount?'#E51C23':'white',width:70,height:17,
                                 justifyContent:'center',alignItems:'center'}}>
                         <Text style={styles.OfferText}>APP专享优惠</Text>
                     </View>
@@ -74,8 +76,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     icon: {
-        width: 70,
-        height: 53,
+        width: width * 0.203,
+        height: width * 0.153,
         borderRadius: 5,
     },
     midContainer: {
