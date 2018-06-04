@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         height: 25,
         width: 25,
         marginBottom: 7,
+        opacity: 0.75,
     },
     text: {
         fontFamily: 'Roboto',

@@ -4,6 +4,9 @@ const host = "http://5afbc8babc1beb0014c29e31.mockapi.io/api";
 export default async function(url, method, data) {
     const fullUrl = host + url
     const data_string = JSON.stringify(data)
+    const formData = new FormData()
+    formData.append('phone', String(form.$('phone').value))
+    formData.append('password', String(form.$('password').value))
     return new Promise((resolve,reject) => {
         if (method === 'GET') {
             fetch(fullUrl, {
@@ -26,7 +29,7 @@ export default async function(url, method, data) {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: data_string
+                body: formData
             })
                 .then(res => res.json())
                 .then((res) => { resolve(res) })

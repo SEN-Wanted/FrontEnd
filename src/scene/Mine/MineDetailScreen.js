@@ -6,7 +6,7 @@ import {StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import InfoItem from "../../widget/InfoItem";
+import InfoItem from "./InfoItem";
 
 export default class MineDetailScreen extends Component {
     static propTypes = {
