@@ -101,9 +101,9 @@ export default class HomeScene extends Component {
         return (
             //flastList头部的容器
             <View style={styles.container}>           
-                <HomeFloatTopbar onPress1={()=>{this.props.navigation.navigate('QRScanner')}}
+                <HomeFloatTopbar onPress1={()=>{this.props.navigation.navigate('CodeScreen')}}
                     onPress2={()=>{this.props.navigation.navigate('SearchScene')}}
-                    onPress3={()=>{alert('test')}} />
+                    onPress3={()=>{this.props.navigation.navigate('MessageScreen')}} />
 
                 <View style={styles.headerSwiper}>  
                     <Swiper style = {styles.wrapper} height={200} horizontal={true} 

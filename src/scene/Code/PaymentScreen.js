@@ -8,8 +8,15 @@ import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Styles from '../../common/QrcodePaymentStyles';
 import Images from "../../common/Images";
+
+type Props = {
+    onPress: Function,
+}
+
+type State = {
+
+}
 
 export default class PaymentScreen extends PureComponent<Props, State> {
     static propTypes = {
@@ -36,12 +43,14 @@ export default class PaymentScreen extends PureComponent<Props, State> {
     }
 
     render() {
+        let {onPress} = this.props;
+
         return (
             <View style={styles.payment}>
                 <View>
                     <Header style={styles.header}>
                         <Left>
-                            <TouchableOpacity onPress={() => {this.props.navigation.goBack()}}>
+                            <TouchableOpacity onPress={onPress}>
                                 <Icon name="chevron-circle-left" size={25} color="#1C64C3" />
                             </TouchableOpacity>
                         </Left>
@@ -82,20 +91,6 @@ export default class PaymentScreen extends PureComponent<Props, State> {
                         <MaterialIcon name="sync" size={20} color="#FFF" />
                         <Text style={styles.refreshTip}>点击手动刷新</Text>
                     </TouchableOpacity>
-                </View>
-                <View style={Styles.view_menu_container}>
-                    <View style={Styles.view_menu_item_container}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('QRScanner')}>
-                            <Icon name="qrcode" size={45} color="#CDD3DB" />
-                            <Text style={Styles.text_menu_title}>扫码</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={Styles.view_menu_item_container}>
-                        <TouchableOpacity onPress={this.props.rightIconPress}>
-                            <Icon name="barcode" size={45} color="#03A9F4" />
-                            <Text style={Styles.text_menu_title_default}>付款码</Text>
-                        </TouchableOpacity>
-                    </View>
                 </View>
             </View>
         );

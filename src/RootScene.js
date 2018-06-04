@@ -14,13 +14,16 @@ import MineScene from './scene/Mine/MineScene'
 
 import MineDetail from './scene/Mine/MineDetailScreen'
 import SearchScene from './scene/Search/SearchScreen'
-import QRScanner from './scene/Scanner/QRScannerScreen'
-import Payment from './scene/Payment/PaymentScreen'
 import SignUpScene from './scene/SignUp/SignUpScene'
 import LoginScene from './scene/Login/LoginScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
 //import ItemOfOrder from './scene/Order/ItemOfOrder'
 import OrderItemScene from './scene/Order/OrderItemScene'
+import CodeScreen from './scene/Code/CodeScreen'
+
+import MessageScreen from './scene/Message/MessageScreen'
+import MessageDetailScreen from './scene/Message/MessageDetailScreen'
+import NoMessageScreen from './scene/Message/NoMessageScreen'
 
 import stores from './store/index'
 
@@ -130,8 +133,10 @@ const Navigator = StackNavigator({
     OrderItemScene: {screen: OrderItemScene},
     MineDetail: {screen: MineDetail},
     SearchScene: {screen: SearchScene},
-    QRScanner: {screen: QRScanner},
-    Payment: {screen: Payment},
+    CodeScreen: {screen: CodeScreen},
+    MessageScreen: {screen: MessageScreen},
+    MessageDetailScreen: {screen: MessageDetailScreen},
+    NoMessageScreen: {screen: NoMessageScreen},
     SignUpScene: {screen: SignUpScene},
     LoginScene: {screen: LoginScene}
 }, {

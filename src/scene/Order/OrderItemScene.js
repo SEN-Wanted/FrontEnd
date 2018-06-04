@@ -8,8 +8,8 @@ import {
     StyleSheet
 } from 'react-native'
 import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
-import BillPages from "./BillPages"
-import BillDetails from "./BillDetails"
+import BillPages from "./billPages"
+import BillDetails from "./billDetails"
 import pxToDp from '../../common/pxToDp'
 import screen from '../../common/screen'
 type Props = {
