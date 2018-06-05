@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Images from '../common/Images';
+import Images from '../../common/Images';
 
 export default class TitleBar extends Component {
     static propTypes = {

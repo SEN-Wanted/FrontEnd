@@ -5,7 +5,7 @@ import React, {PureComponent} from "react";
 import {StyleSheet, Text, Image, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import DivideLine from './DivideLine';
+import DivideLine from '../../widget/DivideLine';
 
 type Props = {
     info: Object,
@@ -23,7 +23,7 @@ export default class RecommendItem extends PureComponent<Props, State> {
         return(
             <View>
                 <TouchableOpacity style={styles.item} onPress={()=>{onPress(info)}}>
-                    <Image source={require('../img/payforbill/icon.png')} style={styles.image_icon} />
+                    <Image source={require('../../img/payforbill/icon.png')} style={styles.image_icon} />
                     <Text style={styles.text}>{info.title}</Text>
                     <View style={styles.forward}>
                         <Icon name="angle-right" size={18} color="#B4AAAA" />

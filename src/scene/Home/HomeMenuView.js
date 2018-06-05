@@ -3,7 +3,6 @@ import {StyleSheet, View, Image, Text, ScrollView} from 'react-native'
 import PageControl from 'react-native-page-control'
 import HomeMenuItem from './HomeMenuItem'
 import screen from '../../common/screen'
-import color from '../../widget/color'
 
 type Props = {
     menuInfos: Array<Object>,

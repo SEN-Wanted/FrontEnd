@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, TouchableOpacity, DeviceEventEmitter,} from 'react-native'
 import screen from '../../common/screen'
-import color from '../../widget/color'
+import Colors from '../../common/Colors'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
 
         borderBottomWidth: 1,
-        borderColor: color.border,
+        borderColor: Colors.gray_E0E0E0,
     },
     leftContainer: {
         width: (screen.width-80)*0.4,

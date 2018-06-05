@@ -6,7 +6,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import BadgeView from "react-native-badge-view";
 
-import IconItem from "../../widget/IconItem";
+import IconItem from "./IconItem";
 import DivideLine from "../../widget/DivideLine";
 import Colors from "../../common/Colors";
 import Images from "../../common/Images";
@@ -79,8 +79,8 @@ export default class MineScene extends Component {
                 <DivideLine style={styles.divideMajor} />
                 <View>
                     <View>
-                        <View>
-                            <Text style={[styles.item_title, styles.app]}>APP专享优惠</Text>
+                        <View style={styles.offerView}>
+                            <Text style={styles.OfferText}>APP专享优惠</Text>
                         </View>
                         <DivideLine style={styles.divideMinor} />
                         <View style={styles.myInfo}>
@@ -135,6 +135,7 @@ export default class MineScene extends Component {
 const styles = StyleSheet.create({
     panel: {
         backgroundColor: '#EC1C24',
+        opacity: 0.8,
         height: 110,
     },
     panel_header: {
@@ -158,6 +159,10 @@ const styles = StyleSheet.create({
     },
     panel_body_text: {
         color: '#FFFFFF',
+        fontFamily: 'Roboto',
+    },
+    panel_body_text_noLogin: {
+        color: '#CDD3DB',
         fontFamily: 'Roboto',
     },
     myInfo: {
@@ -192,5 +197,18 @@ const styles = StyleSheet.create({
     },
     more: {
         color: '#191919',
+    },
+    OfferText: {
+        color: '#FFFFFF',
+        fontSize: 12,
+    },
+    offerView: {
+        backgroundColor: '#E51C23', 
+        width:70, 
+        height:17,
+        justifyContent:'center',
+        alignItems:'center',
+        marginLeft: 10,
+        marginVertical: 3,
     }
 })

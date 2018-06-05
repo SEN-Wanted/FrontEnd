@@ -8,8 +8,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import DivideLine from '../../widget/DivideLine';
-import KeywordItem from '../../widget/KeywordItem';
-import RecommendItem from '../../widget/RecommendItem';
+import KeywordItem from './KeywordItem';
+import RecommendItem from './RecommendItem';
 import Constants from '../../common/Constants';
 
 export default class SearchScreen extends Component {

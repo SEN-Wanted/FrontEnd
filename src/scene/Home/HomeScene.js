@@ -8,7 +8,7 @@ import FeaIcon from 'react-native-vector-icons/Feather'
 import RefreshListView, {RefreshState} from 'react-native-refresh-list-view'
 
 import pxToDp from '../../common/pxToDp'
-import color from '../../widget/color'
+import Colors from '../../common/Colors'
 import HomeFloatTopbar from './HomeFloatTopbar'
 import * as api from '../../api'
 import screen from '../../common/screen'
@@ -116,13 +116,13 @@ export default class HomeScene extends Component {
         return (
             //flastList头部的容器
             <View style={styles.container}>           
-                <HomeFloatTopbar onPress1={()=>{this.props.navigation.navigate('QRScanner')}}
+                <HomeFloatTopbar onPress1={()=>{this.props.navigation.navigate('CodeScreen')}}
                     onPress2={()=>{this.props.navigation.navigate('SearchScene')}}
-                    onPress3={()=>{alert('test')}} />
+                    onPress3={()=>{this.props.navigation.navigate('MessageScreen')}} />
 
                 <View style={styles.headerSwiper}>  
                     <Swiper style = {styles.wrapper} height={200} horizontal={true} 
-                    autoplay={true} activeDotColor={color.gray}>
+                    autoplay={true} activeDotColor={Colors.gray_969696}>
                         <View style={styles.slide3} onPress={() => {
                         alert('test')}}>
                             <Image resizeMode='stretch' style={styles.image} source={require('../../img/home/advertising_1.png')} />
@@ -151,7 +151,7 @@ export default class HomeScene extends Component {
                 <View style={styles.spacing}/>
                 
                 <View style={styles.recommendContainer} >
-                    <Text style={{color:'#E51C23',fontSize: pxToDp(17),
+                    <Text style={{color:Colors.red_E51C23, fontSize: pxToDp(17),
                     fontFamily: 'Roboto', fontWeight: 'bold', marginLeft:14}}>为你推荐</Text>
                     
                     <Swiper style = {styles.wrapper}  height={50} horizontal={false} 
@@ -171,7 +171,7 @@ export default class HomeScene extends Component {
                 
                 <View style={styles.spacing2}/>
                 <View style={styles.NearbyBusiness}>
-                    <Text style={{color:'#101010',fontSize:pxToDp(15),fontFamily:'Roboto' }}>附近商家</Text>
+                    <Text style={{color: Colors.black_101010, fontSize:pxToDp(15),fontFamily:'Roboto' }}>附近商家</Text>
                 </View>
                 <View style={styles.spacing2}/>
             </View>

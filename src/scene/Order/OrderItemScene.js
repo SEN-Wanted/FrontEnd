@@ -10,7 +10,6 @@ import {
 import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
 import BillPages from "./BillPages"
 import BillDetails from "./BillDetails"
-import pxToDp from '../../common/pxToDp'
 import screen from '../../common/screen'
 type Props = {
 
@@ -63,9 +62,6 @@ export default class OrderItemScene extends PureComponent<Props, State> {
     }
 
 	render() {
-        let orderMessage = {
-            time: "2017-01-08 17:05",
-        }
         let orderTime = this.props.navigation.state.params.info.time
 		return(
             <View style={{flex:1}}>

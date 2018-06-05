@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, TouchableOpacity,Dimensions} from 'react-native'
 import screen from '../../common/screen'
-import color from '../../widget/color'
+import Colors from '../../common/Colors'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import pxToDp from '../../common/pxToDp'
 
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginHorizontal: 10,
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderColor: color.border,
+        borderColor: Colors.gray_E0E0E0,
         backgroundColor: 'white',
     },
     icon: {

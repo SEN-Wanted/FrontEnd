@@ -13,7 +13,9 @@ const colors = {
     gray_524D52: '#524D52',
     gray_969696: '#969696',
     gray_AAAAAA: '#AAAAAA',
+    gray_E0E0E0: '#E0E0E0',
     black_101010: '#101010',
+
 
     /*扫码界面*/
     blue_scanner: '#03A9F4',

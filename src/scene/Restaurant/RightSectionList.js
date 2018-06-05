@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, SectionList, DeviceEventEmitter, Dimensions,} from 'react-native'
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
 import screen from '../../common/screen'
-import color from '../../widget/color'
 import FoodListItem from './FoodListItem'
 var {width,height} = Dimensions.get('window');
 
