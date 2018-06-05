@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
     colorIcon: {
-        width: screen.width / 10,
-        height: screen.width / 10,
+        width: screen.width / 8,
+        height: screen.width / 8,
         margin: 5,
         position: 'absolute',
     }

@@ -22,16 +22,21 @@ class user {
 
     @observable
     orderList = [
-        {name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05:24", status: false, rating: 0},
-        {name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05:24", status: false, rating: 0},
-        {name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05:24", status: false, rating: 0},
-        {name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05:24", status: false, rating: 0},
+        {id: 1, name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05", status: false, rating: 0},
+        {id: 2, name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05", status: false, rating: 0},
+        {id: 3, name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05", status: false, rating: 0},
+        {id: 4, name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05", status: false, rating: 0},
     ]
 
     @action.bound
     evaluateOrder(index, ratingNumber){
         this.orderList[index].status = true
         this.orderList[index].rating = ratingNumber
+    }
+
+    @action.bound
+    getOrderMessage(id){
+
     }
 
     @observable

@@ -1,16 +1,15 @@
 import React, { PureComponent } from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-  NetInfo,
-  StatusBar,
+    StyleSheet,
+    View,
+    Text,
+    TouchableOpacity,
+    Image,
+    NetInfo,
+    StatusBar,
 } from 'react-native';
-
-const {width,height} = Dimensions.get('window')
+import screen from '../common/screen'
+const {width,height} = screen
 
 type Props = {
     size?: number,

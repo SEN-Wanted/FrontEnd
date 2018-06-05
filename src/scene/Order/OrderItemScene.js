@@ -45,7 +45,9 @@ export default class OrderItemScene extends PureComponent<Props, State> {
 	constructor(props) {
 		super(props);
 
-	}
+    }
+    
+    
     
     _renderTitleIndicator() {
         return <PagerTitleIndicator 
@@ -61,7 +63,10 @@ export default class OrderItemScene extends PureComponent<Props, State> {
     }
 
 	render() {
-
+        let orderMessage = {
+            time: "2017-01-08 17:05",
+        }
+        let orderTime = this.props.navigation.state.params.info.time
 		return(
             <View style={{flex:1}}>
                 <IndicatorViewPager
@@ -70,7 +75,9 @@ export default class OrderItemScene extends PureComponent<Props, State> {
                     horizontalScroll={false}
                 >
                     <View>
-                        <BillPages />
+                        <BillPages 
+                            message = {orderTime}
+                        />
                     </View>
                     <View>
                         <BillDetails />
@@ -94,8 +101,8 @@ const infoStyle = StyleSheet.create({
         backgroundColor: 'white', 
         height: width * 0.12, 
         marginHorizontal: 15,
-        //borderBottomWidth: 3,
-        //borderColor: '#969696',
+        borderBottomWidth: 1,
+        borderColor: '#969696',
     },
     pageTitleItem: {
         width: (width - 30) / 4,

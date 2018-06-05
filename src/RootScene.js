@@ -14,6 +14,7 @@ import MineScene from './scene/Mine/MineScene'
 
 import MineDetail from './scene/Mine/MineDetailScreen'
 import SearchScene from './scene/Search/SearchScreen'
+import SearchResultScene from './scene/Search/SearchResultScreen'
 import QRScanner from './scene/Scanner/QRScannerScreen'
 import Payment from './scene/Payment/PaymentScreen'
 import SignUpScene from './scene/SignUp/SignUpScene'
@@ -21,6 +22,7 @@ import LoginScene from './scene/Login/LoginScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
 //import ItemOfOrder from './scene/Order/ItemOfOrder'
 import OrderItemScene from './scene/Order/OrderItemScene'
+import SubmitOrderScene from './scene/Order/SubmitOrderScene'
 
 import stores from './store/index'
 
@@ -128,8 +130,10 @@ const Navigator = StackNavigator({
     //WebScene: {screen: WebScene},
     RestaurantScene: {screen: RestaurantScene},
     OrderItemScene: {screen: OrderItemScene},
+    SubmitOrderScene: {screen: SubmitOrderScene},
     MineDetail: {screen: MineDetail},
     SearchScene: {screen: SearchScene},
+    SearchResultScene: {screen: SearchResultScene},
     QRScanner: {screen: QRScanner},
     Payment: {screen: Payment},
     SignUpScene: {screen: SignUpScene},

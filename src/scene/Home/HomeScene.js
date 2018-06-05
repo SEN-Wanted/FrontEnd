@@ -5,6 +5,7 @@ import {observer, inject} from 'mobx-react'
 import Swiper from 'react-native-swiper'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import FeaIcon from 'react-native-vector-icons/Feather'
+import RefreshListView, {RefreshState} from 'react-native-refresh-list-view'
 
 import pxToDp from '../../common/pxToDp'
 import color from '../../widget/color'
@@ -34,7 +35,7 @@ export default class HomeScene extends Component {
         super(props)
         this.state={
             storeListdata:[],
-            refreshing: false,
+            refreshing: RefreshState.HeaderRefreshing,
         }
     }
 
@@ -50,16 +51,12 @@ export default class HomeScene extends Component {
     }
 
     componentDidMount() {
-        //let data = await wantedFetch('/stores','GET')
         this.requestData()
-        /*this.setState({
-            storeListdata: data
-        })*/
     }
 
     requestData = async() => {
         try{
-            this.setState({refreshing: true})
+            this.setState({refreshing: RefreshState.HeaderRefreshing})
             const json = await wantedFetch('/stores','GET')
             let dataList = json.res.listStoreData.map((info) => ({
                 icon: info.icon,
@@ -75,13 +72,31 @@ export default class HomeScene extends Component {
             }))
             this.setState({
                 storeListdata: dataList,
-                refreshing: false,
+                refreshing: dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
             })
         } catch (error) {
             alert('error' + error)
-            this.setState({refreshing:false})
+            this.setState({refreshing: RefreshState.Idle})
         }
 
+    }
+
+    onFooterRefresh = () => {
+        this.setState({refreshing: RefreshState.FooterRefreshing})
+
+        // 模拟网络请求
+        setTimeout(() => {
+            // 模拟网络加载失败的情况
+            if (Math.random() < 0.2) {
+                this.setState({refreshing: RefreshState.Failure})
+                return
+            }
+
+            let dataList = [1,2]
+            this.setState({
+                refreshing: dataList.length > 1 ? RefreshState.NoMoreData : RefreshState.Idle,
+            })
+        }, 2000)
     }
 
     getCurrentNetConnection = () => {
@@ -185,20 +200,28 @@ export default class HomeScene extends Component {
         return (
             <View style={{flex: 1,backgroundColor:'white'}}>
                 <StatusBar  hidden={this.props.user.isStatusbarHidden}/>
-                <FlatList
+                {/* <FlatList
                     ListHeaderComponent={ () => this.renderHeader() }
-                    /*data={[
-                            {title: '海底捞(珠影星光店)'},
-                            {title: '海底捞(珠影星光店)'},
-                            {title: '海底捞(珠影星光店)'},
-                            {title: '海底捞(珠影星光店)'},
-                     ]}*/
                     data={this.state.storeListdata}
                     renderItem={this.renderItem}
                 
                     keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
                     onRefresh={this.requestData}
                     refreshing={this.state.refreshing}
+                /> */}
+                <RefreshListView
+                    ListHeaderComponent={ () => this.renderHeader() }
+                    data={this.state.storeListdata}
+                    renderItem={this.renderItem}
+                    keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
+                    refreshState={this.state.refreshing}
+                    onHeaderRefresh={this.requestData}
+                    onFooterRefresh={this.onFooterRefresh}
+
+                    footerRefreshingText= '玩命加载中 >.<'
+                    footerFailureText = '我擦嘞，居然失败了 =.=!'
+                    footerNoMoreDataText= '-我是有底线的-'
+                    footerEmptyDataText= '-好像什么东西都没有-'
                 />
             </View>
             

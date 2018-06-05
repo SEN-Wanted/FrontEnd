@@ -14,7 +14,7 @@ type State = {
 
 }
 const { width, height } = screen
-class RestaurantListItem extends PureComponent <Props, State>{
+export default class RestaurantListItem extends PureComponent <Props, State>{
 
     render() {
         let {info, onPress} = this.props
@@ -103,5 +103,3 @@ const styles = StyleSheet.create({
         fontSize: 11,
     },
 })
-
-export default RestaurantListItem
