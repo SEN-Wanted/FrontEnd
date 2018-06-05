@@ -6,7 +6,7 @@ import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/Car
 import SplashScreen from 'react-native-splash-screen'
 
 import TabBarItem from './widget/TabBarItem'
-import color from './widget/color'
+import Colors from './common/Colors'
 
 import HomeScene from './scene/Home/HomeScene'
 import OrderScene from './scene/Order/OrderScene'
@@ -14,17 +14,19 @@ import MineScene from './scene/Mine/MineScene'
 
 import MineDetail from './scene/Mine/MineDetailScreen'
 import SearchScene from './scene/Search/SearchScreen'
+
+import SearchResultScene from './scene/Search/SearchResultScreen'
 import SignUpScene from './scene/SignUp/SignUpScene'
 import LoginScene from './scene/Login/LoginScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
-//import ItemOfOrder from './scene/Order/ItemOfOrder'
 import OrderItemScene from './scene/Order/OrderItemScene'
+
+import SubmitOrderScene from './scene/Order/SubmitOrderScene'
 import CodeScreen from './scene/Code/CodeScreen'
 
 import MessageScreen from './scene/Message/MessageScreen'
 import MessageDetailScreen from './scene/Message/MessageDetailScreen'
 import NoMessageScreen from './scene/Message/NoMessageScreen'
-
 import stores from './store/index'
 
 const TransitionConfiguration = () => ({
@@ -131,8 +133,10 @@ const Navigator = StackNavigator({
     //WebScene: {screen: WebScene},
     RestaurantScene: {screen: RestaurantScene},
     OrderItemScene: {screen: OrderItemScene},
+    SubmitOrderScene: {screen: SubmitOrderScene},
     MineDetail: {screen: MineDetail},
     SearchScene: {screen: SearchScene},
+    SearchResultScene: {screen: SearchResultScene},
     CodeScreen: {screen: CodeScreen},
     MessageScreen: {screen: MessageScreen},
     MessageDetailScreen: {screen: MessageDetailScreen},

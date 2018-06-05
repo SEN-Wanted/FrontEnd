@@ -79,8 +79,8 @@ export default class MineScene extends Component {
                 <DivideLine style={styles.divideMajor} />
                 <View>
                     <View>
-                        <View>
-                            <Text style={[styles.item_title, styles.app]}>APP专享优惠</Text>
+                        <View style={styles.offerView}>
+                            <Text style={styles.OfferText}>APP专享优惠</Text>
                         </View>
                         <DivideLine style={styles.divideMinor} />
                         <View style={styles.myInfo}>
@@ -197,5 +197,18 @@ const styles = StyleSheet.create({
     },
     more: {
         color: '#191919',
+    },
+    OfferText: {
+        color: '#FFFFFF',
+        fontSize: 12,
+    },
+    offerView: {
+        backgroundColor: '#E51C23', 
+        width:70, 
+        height:17,
+        justifyContent:'center',
+        alignItems:'center',
+        marginLeft: 10,
+        marginVertical: 3,
     }
 })

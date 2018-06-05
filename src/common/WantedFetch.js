@@ -5,8 +5,8 @@ export default async function(url, method, data) {
     const fullUrl = host + url
     const data_string = JSON.stringify(data)
     const formData = new FormData()
-    formData.append('phone', String(form.$('phone').value))
-    formData.append('password', String(form.$('password').value))
+    //formData.append('phone', String(data.phone))
+    //formData.append('password', String(data.password))
     return new Promise((resolve,reject) => {
         if (method === 'GET') {
             fetch(fullUrl, {

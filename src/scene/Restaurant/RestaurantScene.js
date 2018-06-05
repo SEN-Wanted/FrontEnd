@@ -60,19 +60,21 @@ export default class RestaurantScene extends Component{
     }*/
 
     componentDidMount() {
+        this.props.listcar.clearListCar()
+        this.props.listcar.setStoreName(this.props.navigation.state.params.info.storeName)
         this.props.listcar.setTriggerDown()
         let thisEnd =  {
             x: width * 0.06,
             y: screenHeight * 0.90 - width * 0.065 - width * 0.15,
         }
         this.props.listcar.setEndPosition(thisEnd)
-       // this.requestData()
-       
     }
 
     componentWillUnMount() {
         this.timer && clearTimeout(this.timer)  
     }
+
+
 
     requestData = async() => {
         try {
@@ -185,6 +187,13 @@ export default class RestaurantScene extends Component{
         this.props.listcar.clearListCar()
     }
 
+    jumpSubmitOrder = () => {
+        this.hidePopover()
+        if(this.props.listcar.states.listCount != 0) {
+            this.props.navigation.navigate('SubmitOrderScene')
+        }
+    }
+
 
     render() {
         let lightColor =  this.props.listcar.states.listCount == 0 ? colors.gray_AAAAAA : colors.red_E51C23
@@ -229,6 +238,7 @@ export default class RestaurantScene extends Component{
                         containerStyle={ styles.bottomContainer }
                         lightColor={ lightColor }
                         totalPrice={ this.props.listcar.states.totalPrice }
+                        onPress={ this.jumpSubmitOrder }
                     />
                 </Modal>
 
@@ -244,6 +254,7 @@ export default class RestaurantScene extends Component{
                     containerStyle={ styles.bottomContainer }
                     lightColor={ lightColor }
                     totalPrice={ this.props.listcar.states.totalPrice }
+                    onPress={ this.jumpSubmitOrder }
                 />
         
                 <Parabola

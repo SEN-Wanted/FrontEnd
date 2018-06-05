@@ -15,6 +15,14 @@ class listcar {
     cell = 0
 
     @observable
+    storeName = null
+
+    @action.bound
+    setStoreName(name) {
+        this.storeName = name
+    }
+
+    @observable
     states = {
         isVisible: false,
         modalVisible: false,

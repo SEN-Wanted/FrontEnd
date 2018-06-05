@@ -29,7 +29,7 @@ export default class ListcarBottom extends PureComponent <Props, State>{
 
     render() {
         
-        let { containerStyle, lightColor, totalPrice } = this.props
+        let { containerStyle, lightColor, totalPrice, onPress } = this.props
         return (
             <View style={containerStyle}>
                 <View style={{width:width*0.3, marginLeft:width * 0.07, justifyContent:'center', alignItems:'flex-start'}}>
@@ -37,9 +37,9 @@ export default class ListcarBottom extends PureComponent <Props, State>{
                 </View>
                 <TouchableOpacity 
                     style={[styles.settleButton,{backgroundColor:lightColor}]} 
-                    onPress={()=>{alert('结算测试！')}}
+                    onPress={onPress}
                 >
-                    <Text style={{color:'white', fontSize:width * 0.045}}>去结算</Text>
+                    <Text style={{color:'white', fontSize:width * 0.05}}>去结算</Text>
                 </TouchableOpacity>
             </View>    
         )      
@@ -48,7 +48,7 @@ export default class ListcarBottom extends PureComponent <Props, State>{
 
 const styles = StyleSheet.create({
     settleButton: {
-        backgroundColor: 'red',
+        backgroundColor: '#E51C23',
         borderRadius: 10,
         width: width * 0.283,
         height: botBarHeight,

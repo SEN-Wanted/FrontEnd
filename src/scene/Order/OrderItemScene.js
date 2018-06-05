@@ -8,9 +8,8 @@ import {
     StyleSheet
 } from 'react-native'
 import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
-import BillPages from "./billPages"
-import BillDetails from "./billDetails"
-import pxToDp from '../../common/pxToDp'
+import BillPages from "./BillPages"
+import BillDetails from "./BillDetails"
 import screen from '../../common/screen'
 type Props = {
 
@@ -45,7 +44,9 @@ export default class OrderItemScene extends PureComponent<Props, State> {
 	constructor(props) {
 		super(props);
 
-	}
+    }
+    
+    
     
     _renderTitleIndicator() {
         return <PagerTitleIndicator 
@@ -61,7 +62,7 @@ export default class OrderItemScene extends PureComponent<Props, State> {
     }
 
 	render() {
-
+        let orderTime = this.props.navigation.state.params.info.time
 		return(
             <View style={{flex:1}}>
                 <IndicatorViewPager
@@ -70,7 +71,9 @@ export default class OrderItemScene extends PureComponent<Props, State> {
                     horizontalScroll={false}
                 >
                     <View>
-                        <BillPages />
+                        <BillPages 
+                            message = {orderTime}
+                        />
                     </View>
                     <View>
                         <BillDetails />
@@ -94,8 +97,8 @@ const infoStyle = StyleSheet.create({
         backgroundColor: 'white', 
         height: width * 0.12, 
         marginHorizontal: 15,
-        //borderBottomWidth: 3,
-        //borderColor: '#969696',
+        borderBottomWidth: 1,
+        borderColor: '#969696',
     },
     pageTitleItem: {
         width: (width - 30) / 4,

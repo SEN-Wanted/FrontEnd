@@ -31,7 +31,7 @@ export default class SearchScreen extends Component {
             </TouchableOpacity>
         ),
         headerRight: (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>{navigation.navigate('SearchResultScene')}}>
                 <Text style={styles.search}>搜索</Text>
             </TouchableOpacity>
         ),
