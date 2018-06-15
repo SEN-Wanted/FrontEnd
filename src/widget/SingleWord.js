@@ -5,6 +5,7 @@ import {
     Text,
 } from 'react-native';
 import screen from '../common/screen'
+import pxToDp from '../common/pxToDp'
 const {width,height} = screen
 
 type Props = {
@@ -23,7 +24,7 @@ export default class SingleWord extends PureComponent {
                 {backgroundColor: bgColor ? bgColor:'#E51C23',width:22,height:16,
                 justifyContent:'center',alignItems:'center'}}
             >
-                <Text style={{color:'white',fontSize:12}}>{text}</Text>
+                <Text style={{color:'white',fontSize: pxToDp(9)}}>{text}</Text>
             </View>
         )
     }

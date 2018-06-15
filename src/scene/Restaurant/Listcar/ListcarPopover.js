@@ -12,7 +12,7 @@ import FontIcon from 'react-native-vector-icons/FontAwesome'
 import * as Animatable from 'react-native-animatable'
 import screen from '../../../common/screen'
 import colors from '../../../common/Colors'
-
+import pxToDp from '../../../common/pxToDp'
 const { width, height, screenHeight, titleHeight, listItemHeight } = screen
 const maxPlacedListCount = 5
 
@@ -58,7 +58,7 @@ export default class ListcarPopover extends PureComponent <Props, State>{
                     <View style={styles.titleView}>
                         <TouchableOpacity style={styles.clearCarTouchable} onPress={this.props.clearListCar}>
                             <FontIcon name='trash' size={18} color={colors.gray_969696} />
-                            <Text style={{fontSize:14}}>清空购物车</Text>
+                            <Text style={{fontSize: pxToDp(12)}}>清空购物车</Text>
                         </TouchableOpacity>
                     </View>
                     {this.props.children}

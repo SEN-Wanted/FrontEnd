@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import screen from '../../common/screen'
-
+import pxToDp from '../../common/pxToDp'
 const { width, height, botBarHeight } = screen
 
 type Props = {
@@ -32,17 +32,17 @@ export default class ListcarBottom extends PureComponent <Props, State>{
         return (
             <View style={styles.container}>
 				<View style={styles.leftView}>
-					<Text style={{fontSize: 19, color: '#555555'}}>待支付</Text>
-					<Text style={{fontSize: 18, color: '#E51C23'}}>￥{totalPrice}</Text> 
+					<Text style={{fontSize: pxToDp(15), color: '#555555'}}>待支付</Text>
+					<Text style={{fontSize: pxToDp(15), color: '#E51C23'}}>￥{totalPrice}</Text> 
 				</View>
 				<View style={styles.midView}>
-					<Text>已优惠￥{offerPrice}</Text>
+					<Text style={{fontSize: pxToDp(12), color: '#555555'}}>已优惠￥{offerPrice}</Text>
 				</View>
 				<TouchableOpacity 
                     style={styles.button} 
                     onPress={onPress? onPress : ()=>{alert("提交测试！")}}
             	>
-                	<Text style={{color:'white', fontSize:width * 0.05}}>提交订单</Text>
+                	<Text style={{color:'white', fontSize: pxToDp(14)}}>提交订单</Text>
                 </TouchableOpacity>
 			</View>  
         )      

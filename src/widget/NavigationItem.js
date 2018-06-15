@@ -2,7 +2,7 @@
 
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, TouchableOpacity, ViewPropTypes} from 'react-native'
-
+import pxToDp from '../common/pxToDp'
 type Props = {
     title?:string,            // ?号表示可能传进该值，也可能不传入
     titleStyle?: ViewPropTypes.style,
@@ -42,14 +42,15 @@ class NavigationItem extends PureComponent<Props,State> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        maxWidth: 35,
-        maxHeight: 40, 
+        marginTop: 10,
+        //maxWidth: 40,
+        //maxHeight: 50, 
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
     },
     title: {
-        fontSize: 13,
+        fontSize: pxToDp(11),
         color: '#333333',
         alignSelf:'center',
     },

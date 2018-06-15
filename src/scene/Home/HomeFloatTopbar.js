@@ -5,15 +5,15 @@ import NavigationItem from '../../widget/NavigationItem'
 import screen from '../../common/screen'
 
 type Props = {
-    onPress1: Function,
-    onPress2: Function,
-    onPress3: Function,
+    onPress1?: Function,
+    onPress2?: Function,
+    onPress3?: Function,
 }
 
 type State = {
 
 }
-
+const { width, height } = screen
 export default class HomeFloatTopbar extends PureComponent<Props,State> {
     render() {
         let {onPress1, onPress2, onPress3} = this.props
@@ -23,21 +23,21 @@ export default class HomeFloatTopbar extends PureComponent<Props,State> {
                     <NavigationItem 
                         title='扫一扫' 
                         titleStyle={styles.titleText} 
-                        icon={require('../../img/home/scan_QR_code.png')}
+                        icon={require('../../img/home/saoyisao.png')}
                         onPress={onPress1}
                     />
                   
                    
                     <TouchableOpacity style={styles.searchBar} onPress={onPress2}>
                         <Image source={require('../../img/home/ic_search_white_36dp.png')} style={styles.searchIcon}/>
-                        <Text style={{fontSize:15,color:'black'}}>海底捞(珠影星光店)</Text>
+                        <Text style={{fontSize:14,color:'#191919'}}>海底捞(珠影星光店)</Text>
                     </TouchableOpacity>
                   
                     
                     <NavigationItem
                         title='消息'
                         titleStyle={styles.titleText} 
-                        icon={require('../../img/home/icon_navigation_item_message_white.png')}
+                        icon={require('../../img/home/message.png')}
                         onPress={onPress3}
                     />
                   
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         flexDirection: 'row',
-        width: screen.width,
-        height: 40,
+        width: width,
+        height: width * 0.139,
         zIndex: 1,
         backgroundColor:"transparent",
         alignItems: 'center',
@@ -59,19 +59,19 @@ const styles = StyleSheet.create({
     },
     searchBar:{
         flexDirection:'row',
-        width: screen.width * 0.7,
-        height:30,
+        width: width * 0.7,
+        height: width * 0.083,
         borderRadius: 19,
         flexDirection: 'row',
-        paddingLeft: 10,
+        //paddingLeft: 10,
         justifyContent: 'flex-start',
         alignItems:'center',
         backgroundColor: '#ffffff99',
       //  alignSelf: 'center',
     },
     searchIcon: {
-        width:20,
-        height:20,
+        width:25,
+        height:25,
         margin:5,
     },
     titleText: {

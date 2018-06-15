@@ -17,6 +17,7 @@ import * as Animatable from 'react-native-animatable'
 
 import screen from '../../common/screen'
 import colors from '../../common/Colors'
+import pxToDp from '../../common/pxToDp'
 import * as api from '../../api'
 import LeftFlatList from './LeftFlatList'
 import RightSectionList from './RightSectionList'
@@ -37,9 +38,10 @@ const { width, height, screenHeight, botBarHeight, listItemHeight } = screen
 export default class RestaurantScene extends Component{
     static navigationOptions = ({navigation}) => ({
         headerStyle: { backgroundColor: '#140105', height: width * 0.15},
+        headerTitleAllowFontScaling: false,
         headerTintColor: 'white',
         headerTitle: navigation.state.params ? navigation.state.params.info.storeName : '没有数据',
-        headerTitleStyle:{ color:'white', fontSize:22, },
+        headerTitleStyle:{ color:'white', fontSize: pxToDp(20), },
         headerLeft: (
             <TouchableOpacity style={styles.backButton} onPress={()=>{
                 navigation.goBack(null)
@@ -95,9 +97,6 @@ export default class RestaurantScene extends Component{
         }
         this.props.listcar.setStartPosition(start)
         this.listCarAddItem(info)
-        //this.refs.listcarIcon.pulse(200)
-        //this.listcarIcon.pulse(200)
-        //DeviceEventEmitter.emit('pulse')
     }
 
     //抛物线动画函数
@@ -106,7 +105,7 @@ export default class RestaurantScene extends Component{
             <View
                 key={`'parabola-ball-'${index}`}
                 style={[
-                    {position: 'absolute',},    //Don't forget to set this
+                    {position: 'absolute',},    //不要忘记设置成绝对
                     {width: 15, height: 15, borderRadius: 10, backgroundColor: 'red',},
                     {transform: [{translateX}, {translateY}]},
                 ]}
@@ -133,11 +132,11 @@ export default class RestaurantScene extends Component{
         return <Observer>{ () => (
             <View style={styles.itemView}>
                 <View style={{ width: width*0.33, alignItems: 'center' }}>
-                    <Text style={{ color: colors.gray_524D52, fontSize: width*0.045 }}>{ item.item.name }</Text>
-                    <Text style={{ color: colors.gray_969696, fontSize: width*0.035 }}>原价商品</Text>
+                    <Text style={{ color: colors.gray_524D52, fontSize: pxToDp(13) }}>{ item.item.name }</Text>
+                    <Text style={{ color: colors.gray_969696, fontSize: pxToDp(10) }}>原价商品</Text>
                 </View>
                 <View style={{ width: width*0.1 }}/>
-                <Text style={{ color: colors.gray_524D52, fontSize: width*0.045 }}>￥{ item.item.price }</Text>
+                <Text style={{ color: colors.gray_524D52, fontSize: pxToDp(13) }}>￥{ item.item.price }</Text>
                 <View style={{ 
                     width: width*0.25, 
                     flexDirection: 'row', 
@@ -147,7 +146,7 @@ export default class RestaurantScene extends Component{
                     <TouchableOpacity onPress={ () => this.listCarSubItem(item.item) }>
                         <FeatIcon name='minus-circle' size={ width*0.067 } color={ colors.black_101010 }/>
                     </TouchableOpacity>
-                    <Text style={{ fontSize: width*0.045, color: colors.gray_524D52}}>{ item.item.number }</Text>
+                    <Text style={{ fontSize: pxToDp(13), color: colors.gray_524D52}}>{ item.item.number }</Text>
                     <TouchableOpacity onPress={ () => this.listCarAddItem(item.item) }>
                         <FontIcon name="plus-circle" size={ width*0.067 } color={ colors.red_E51C23 }/>
                     </TouchableOpacity>
@@ -281,8 +280,8 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     backImage: {
-        width: 40,
-        height: 40,
+        width: width * 0.111,
+        height: width * 0.111,
     },
     listCarView: {
         width: width * 0.13,

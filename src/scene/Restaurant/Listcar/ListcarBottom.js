@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import screen from '../../../common/screen'
-
+import pxToDp from '../../../common/pxToDp'
 const { width, height, botBarHeight } = screen
 
 type Props = {
@@ -33,13 +33,13 @@ export default class ListcarBottom extends PureComponent <Props, State>{
         return (
             <View style={containerStyle}>
                 <View style={{width:width*0.3, marginLeft:width * 0.07, justifyContent:'center', alignItems:'flex-start'}}>
-                    <Text style={{color:lightColor, fontSize:width * 0.08}}>￥{totalPrice}</Text>
+                    <Text style={{color:lightColor, fontSize: pxToDp(23)}}>￥{totalPrice}</Text>
                 </View>
                 <TouchableOpacity 
                     style={[styles.settleButton,{backgroundColor:lightColor}]} 
                     onPress={onPress}
                 >
-                    <Text style={{color:'white', fontSize:width * 0.05}}>去结算</Text>
+                    <Text style={{color:'white', fontSize: pxToDp(14)}}>去结算</Text>
                 </TouchableOpacity>
             </View>    
         )      

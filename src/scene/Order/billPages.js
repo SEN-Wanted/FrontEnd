@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import screen from '../../common/screen'
 import Moment from 'moment'
+import pxToDp from '../../common/pxToDp';
 // export default class BillPages extends Component{
 
 type Props = {
@@ -51,7 +52,6 @@ export default class BillPages extends PureComponent<Props, State> {
 		let time4 = new Date(Date.parse(date) + 20 * 60 * 1000)
 		let time0 = "" + parseInt(time.substring(5,7)) + "月" + parseInt(time.substring(8,10)) + "日 " + time.substring(11,16)
 		timeList.push(time0)
-		alert(time1.getMonth())
 		timeList.push(this.timestampTotime(time1))
 		timeList.push(this.timestampTotime(time2))
 		timeList.push(this.timestampTotime(time3))
@@ -89,7 +89,7 @@ export default class BillPages extends PureComponent<Props, State> {
 				  			<Text style={statusStyle.itemsPhaseTips}>{this.infoList.tips[i]}</Text>
 				  		</View>
 				  		<View style={statusStyle.itemsTime}>
-				  			<Text>{this.state.time[i]}</Text>
+				  			<Text style={statusStyle.itemsPhaseTime}>{this.state.time[i]}</Text>
 				  		</View>
 					</View>
 					<View style={lines} />
@@ -126,15 +126,19 @@ const statusStyle = StyleSheet.create({
 	itemsPhase:{
 		marginHorizontal:10,
 		marginTop:5,
-		width: 135
+		width: 135,
 	},
 	itemsPhaseTitle:{
-		fontSize:18,
-		color:"black"
+		fontSize: pxToDp(14),
+		color: "#101010",
 	},
 	itemsPhaseTips:{
-		fontSize:13,
-		color: "#666666"
+		fontSize: pxToDp(12),
+		color: "#B0B0B0",
+	},
+	itemsPhaseTime:{
+		fontSize: pxToDp(11),
+		color: '#B0B0B0',
 	},
 	itemsTime:{
 		marginTop: 10,

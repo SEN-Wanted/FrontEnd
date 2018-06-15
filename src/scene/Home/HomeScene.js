@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, FlatList, NetInfo, StatusBar} from 'react-native'
+import {StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, FlatList, NetInfo, StatusBar, PixelRatio } from 'react-native'
 import {observer, inject} from 'mobx-react'
 
 import Swiper from 'react-native-swiper'
@@ -57,7 +57,7 @@ export default class HomeScene extends Component {
     requestData = async() => {
         try{
             this.setState({refreshing: RefreshState.HeaderRefreshing})
-            const json = await wantedFetch('/stores','GET')
+            const json = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/stores','GET')
             let dataList = json.res.listStoreData.map((info) => ({
                 icon: info.icon,
                 storeName: info.storeName,
@@ -144,14 +144,14 @@ export default class HomeScene extends Component {
                 <HomeMenuView                   
                     menuInfos={api.menuInfos}
                     onMenuSelected={(index)=>{
-                        alert('test' + index)
+                        this.props.navigation.navigate('SearchResultScene',{index: index})
                     }}
                 />
 
                 <View style={styles.spacing}/>
                 
                 <View style={styles.recommendContainer} >
-                    <Text style={{color:Colors.red_E51C23, fontSize: pxToDp(17),
+                    <Text style={{color:Colors.red_E51C23, fontSize: pxToDp(15),
                     fontFamily: 'Roboto', fontWeight: 'bold', marginLeft:14}}>为你推荐</Text>
                     
                     <Swiper style = {styles.wrapper}  height={50} horizontal={false} 
@@ -171,7 +171,7 @@ export default class HomeScene extends Component {
                 
                 <View style={styles.spacing2}/>
                 <View style={styles.NearbyBusiness}>
-                    <Text style={{color: Colors.black_101010, fontSize:pxToDp(15),fontFamily:'Roboto' }}>附近商家</Text>
+                    <Text style={{color: Colors.black_101010, fontSize:pxToDp(14),fontFamily:'Roboto' }}>附近商家</Text>
                 </View>
                 <View style={styles.spacing2}/>
             </View>
@@ -191,15 +191,15 @@ export default class HomeScene extends Component {
     render() {
         if(this.props.user.networkType === 'NONE' || this.props.user.networkType === 'none'){
             return (
-                <View>
+                <View style={{flex: 1}}>
                     <StatusBar  hidden={this.props.user.isStatusbarHidden}/>
                     <NetWorkFail onPress={ this.getCurrentNetConnection }/>
                 </View>
             )
         } else {
-        return (
-            <View style={{flex: 1,backgroundColor:'white'}}>
-                <StatusBar  hidden={this.props.user.isStatusbarHidden}/>
+            return (
+                <View style={{flex: 1,backgroundColor:'white'}}>
+                    <StatusBar  hidden={this.props.user.isStatusbarHidden}/>
                 {/* <FlatList
                     ListHeaderComponent={ () => this.renderHeader() }
                     data={this.state.storeListdata}
@@ -209,23 +209,22 @@ export default class HomeScene extends Component {
                     onRefresh={this.requestData}
                     refreshing={this.state.refreshing}
                 /> */}
-                <RefreshListView
-                    ListHeaderComponent={ () => this.renderHeader() }
-                    data={this.state.storeListdata}
-                    renderItem={this.renderItem}
-                    keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
-                    refreshState={this.state.refreshing}
-                    onHeaderRefresh={this.requestData}
-                    onFooterRefresh={this.onFooterRefresh}
+                    <RefreshListView
+                        ListHeaderComponent={ () => this.renderHeader() }
+                        data={this.state.storeListdata}
+                        renderItem={this.renderItem}
+                        keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
+                        refreshState={this.state.refreshing}
+                        onHeaderRefresh={this.requestData}
+                        onFooterRefresh={this.onFooterRefresh}
 
-                    footerRefreshingText= '玩命加载中 >.<'
-                    footerFailureText = '我擦嘞，居然失败了 =.=!'
-                    footerNoMoreDataText= '-我是有底线的-'
-                    footerEmptyDataText= '-好像什么东西都没有-'
-                />
-            </View>
-            
-        )
+                        footerRefreshingText= '玩命加载中 >.<'
+                        footerFailureText = '我擦嘞，居然失败了 =.=!'
+                        footerNoMoreDataText= '-我是有底线的-'
+                        footerEmptyDataText= '-好像什么东西都没有-'
+                    />
+                </View>      
+            )
         }
     }
 }
@@ -240,7 +239,7 @@ const styles = StyleSheet.create({
     headerSwiper: {
         //position: 'absolute',
         width: width,
-        height: pxToDp(200),
+        height: width * 0.556,
         //zIndex: 0,
     },
     
@@ -249,7 +248,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: width,
-        height: pxToDp(200),
+        height: width * 0.556,
     },
     slide3: {
       flex: 1,
@@ -262,13 +261,14 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     spacing: {
+        marginTop: 10,
         marginHorizontal: 10,
-        height: StyleSheet.hairlineWidth,
+        height: 2,
         backgroundColor:'#f3f3f3',
     },
     spacing2: {
         marginHorizontal: 10,
-        height: 2,
+        height: 1,
         backgroundColor:'#f3f3f3',
     },
     recommendContainer: {
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     },
     recomText: {
         color: '#5A5A5A',
-        fontSize: pxToDp(17),
+        fontSize: pxToDp(16),
         fontFamily: 'Roboto',
     },
 

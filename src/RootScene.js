@@ -107,6 +107,7 @@ const Tab = TabNavigator({
         lazy: true,              //点击导航按钮时，才加载对应的Scene
         animationEnabled: false,
         tabBarOptions: {
+            allowFontScaling: false,
             activeTintColor: '#FC4C5B', // 文字和图片选中颜色
             inactiveTintColor: 'black', // 文字和图片未选中颜色
             showIcon: true, // android 默认不显示 icon, 需要设置为 true 才会显示

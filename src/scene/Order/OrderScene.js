@@ -22,11 +22,12 @@ const { width, height } = screen
 export default class OrderScene extends Component {
     static navigationOptions = ({navigation}) => ({
         headerStyle:{backgroundColor:'#140105'},
+        headerTitleAllowFontScaling: false,
         headerTintColor:'white',
         headerTitle: '我的订单',
         headerTitleStyle:{
             color:'white',
-            fontSize:22,
+            fontSize: pxToDp(20),
         },
 
         headerLeft: <View></View>,
@@ -47,7 +48,7 @@ export default class OrderScene extends Component {
         return <Observer>{ () => (
             <View style={orderSceneStyle.scene}>
                 <View style={orderSceneStyle.itemTitle}>
-                    <Text style={{color:'#101010', fontSize: pxToDp(17)}}> 
+                    <Text style={{color:'#101010', fontSize: pxToDp(14)}}> 
                         {rowData.item.name} 
                     </Text>
                     <Text style={orderSceneStyle.isScored}>{rowData.item.status? '已评价':'未评价'}</Text>
@@ -57,9 +58,9 @@ export default class OrderScene extends Component {
 
                 <View style={orderSceneStyle.mainView}>
                     <Image source={require("../../img/payforbill/icon.png")} style={orderSceneStyle.iconImg}/>
-                    <View style={{marginLeft: pxToDp(10)}}>
-                        <Text style={{color: '#E51C23', marginTop: pxToDp(5), fontSize: pxToDp(20)}}>￥{ rowData.item.cost }</Text>
-                        <Text style={{color: '#050505',marginLeft: 10, marginTop: pxToDp(5)}}>{ rowData.item.time }</Text>
+                    <View style={{marginLeft: 10}}>
+                        <Text style={{color: '#E51C23', marginTop: 5, fontSize: pxToDp(15)}}>￥{ rowData.item.cost }</Text>
+                        <Text style={{color: '#050505',marginLeft: 10, marginTop: 5, fontSize: pxToDp(11)}}>{ rowData.item.time }</Text>
                         <StarRating
                             starStyle={orderSceneStyle.stars}
                             starSize={24}
@@ -116,8 +117,8 @@ const orderSceneStyle = StyleSheet.create({
     },
     isScored: {
         color: '#FC4C5B',
-        fontSize: pxToDp(14),
-        marginRight: pxToDp(15),
+        fontSize: pxToDp(12),
+        marginRight: 20,
     },
     devideLine: {
         borderWidth:1,

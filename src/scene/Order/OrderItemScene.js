@@ -11,6 +11,7 @@ import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
 import BillPages from "./BillPages"
 import BillDetails from "./BillDetails"
 import screen from '../../common/screen'
+import pxToDp from '../../common/pxToDp'
 type Props = {
 
 }
@@ -26,7 +27,7 @@ export default class OrderItemScene extends PureComponent<Props, State> {
         headerTitle: navigation.state.params.info.name ? navigation.state.params.info.name : 'error',
         headerTitleStyle:{
             color:'white',
-            fontSize:22,
+            fontSize: pxToDp(20),
         },
 
         headerLeft: (
@@ -54,9 +55,9 @@ export default class OrderItemScene extends PureComponent<Props, State> {
                     style={infoStyle.pageTitle}
                     trackScroll={true}
                     itemStyle={infoStyle.pageTitleItem} 
-                    itemTextStyle={{fontSize: 17, color: '#969696'}}
+                    itemTextStyle={{fontSize: pxToDp(14), color: '#969696'}}
                     selectedItemStyle={infoStyle.pageTitleItem} 
-                    selectedItemTextStyle={{fontSize: 17, color: '#101010'}}
+                    selectedItemTextStyle={{fontSize: pxToDp(14), color: '#101010'}}
                     selectedBorderStyle={{height: 3, backgroundColor: '#E51C23'}}
                 />;
     }
