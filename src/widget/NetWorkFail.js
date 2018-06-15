@@ -5,8 +5,6 @@ import {
     Text,
     TouchableOpacity,
     Image,
-    NetInfo,
-    StatusBar,
 } from 'react-native';
 import screen from '../common/screen'
 const {width,height} = screen
@@ -23,13 +21,12 @@ export default class NetWorkFail extends PureComponent {
     render() {
         return (
             <View style={styles.container}>
-                <StatusBar translucent={true} hidden={false}/>
-                <Image source={require('../img/other/networkFail.png')} style={{width:width*0.417,height:width*0.417}} />
+                <Image source={require('../img/other/networkFail.png')} style={{width:width*0.417,height:width*0.417,opacity: 0.7}} />
                 <Text style={{fontSize:20, color:'#101010',marginTop: height * 0.048}}>数据加载失败</Text>
                 <Text style={{fontSize:17, color:'#AAAAAA',marginTop: height * 0.016}}>请检查你的手机是否联网</Text>
 
                 <TouchableOpacity style={styles.reButton} onPress={this.props.onPress}>
-                    <Text style={{fontSize:15,color:'#101010'}}>重新加载</Text>
+                    <Text style={{fontSize:15,color:'#101010',opacity: 0.71}}>重新加载</Text>
                 </TouchableOpacity>
             </View>
         )

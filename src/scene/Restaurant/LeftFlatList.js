@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import {StyleSheet, View, Image, Text, TouchableOpacity, FlatList, DeviceEventEmitter, ScrollView, Dimensions} from 'react-native'
 //import { observer, inject } from 'mobx-react'
 import { Observer, observer, inject } from 'mobx-react/native'
-
-const {width,height} = Dimensions.get('window');
+import screen from '../../common/screen'
+import pxToDp from '../../common/pxToDp'
+const {width,height} = screen
 
 
 type Props = {
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         color: 'white',
-        fontSize: 16,
+        fontSize: pxToDp(14),
         fontFamily: 'Microsoft Yahei',
     },
 

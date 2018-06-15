@@ -3,10 +3,13 @@
  */
 import React, {Component} from "react";
 import {StyleSheet, Image, Text, View, TouchableOpacity, FlatList} from "react-native";
+import RefreshListView, {RefreshState} from 'react-native-refresh-list-view'
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import wantedFetch from '../../common/WantedFetch'
+import pxToDp from '../../common/pxToDp'
 import DivideLine from '../../widget/DivideLine';
 import RestaurantListItem from '../Restaurant/RestaurantListItem';
+
 
 export default class SearchResultScreen extends Component {
     static navigationOptions = ({navigation}) => ({
@@ -15,7 +18,7 @@ export default class SearchResultScreen extends Component {
         headerTitle: '搜索结果',
         headerTitleStyle: {
             color: 'white',
-            fontSize: 22,
+            fontSize: pxToDp(20),
             flex: 1,
             textAlign: 'center',
         },
@@ -30,6 +33,55 @@ export default class SearchResultScreen extends Component {
         headerRight: <View />,
     })
 
+    constructor(props:Object) {
+        super(props)
+        this.state={
+            storeListdata:[],
+            refreshing: RefreshState.HeaderRefreshing,
+        }
+    }
+
+    componentDidMount() {
+        let type = ''
+        if(this.props.navigation.state.params) {
+            let index = this.props.navigation.state.params.index
+            switch(index){
+                case 0:
+                    type = 'dessert'; break;
+                case 1:
+                    type = 'okokokok'; break;
+            }
+        }
+        this.requestData(type)
+    }
+
+    requestData = async(type) => {
+        try{
+            this.setState({refreshing: RefreshState.HeaderRefreshing})
+            const json = await wantedFetch('http://2v0683857e.iask.in:22871/search?type='+type,'GET')
+            let dataList = json.res.ListStoreData.map((info) => ({
+                icon: info.icon,
+                storeName: info.storeName,
+                storeID: info.storeid,
+                starRating: info.starRating,
+                price: info.price,
+                monthlySell: info.monthlySell,
+                distance: info.distance,
+                isDiscount: info.isDiscount,
+                discountNumber: info.DiscountNumber,
+                isAppOffer: info.isAppOffer,
+            }))
+            this.setState({
+                storeListdata: dataList,
+                refreshing: dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
+            })
+        } catch (error) {
+            alert('error' + error)
+            this.setState({refreshing: RefreshState.Idle})
+        }
+
+    }
+    
     onListItemSelected = (info) => {
         //this.props.navigation.navigate('RestaurantScene', {info: info})
     }
@@ -63,13 +115,7 @@ export default class SearchResultScreen extends Component {
                 </View>
                 <DivideLine style={styles.divideHorizontal} />
                 <FlatList
-                    data={[
-                        {title: '海底捞(珠影星光店)'},
-                        {title: '海底捞(珠影星光店)'},
-                        {title: '海底捞(珠影星光店)'},
-                        {title: '海底捞(珠影星光店)'},
-                        {title: '海底捞(珠影星光店)'},
-                    ]}
+                    data={this.state.storeListdata}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
                 />

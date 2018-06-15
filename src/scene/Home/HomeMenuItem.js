@@ -2,13 +2,13 @@ import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, TouchableOpacity,Dimensions} from 'react-native'
 import screen from '../../common/screen'
 import FeaIcon from 'react-native-vector-icons/Feather'
+import pxToDp from '../../common/pxToDp';
 
 type Props = {
     title:string,
     icon:any,
     color:any,
     onPress:Function,
-
 }
 //<FeaIcon name='circle' color={color} size={36} />
 type State = {
@@ -25,7 +25,7 @@ class HomeMenuItem extends PureComponent <Props, State>{
                     <Image source={color} style={styles.colorIcon} />
                     <Image source={icon} style={styles.icon}/>
                 </View>
-                <Text >{title}</Text>               
+                <Text style={styles.title}>{title}</Text>               
             </TouchableOpacity>
         );
     }
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: screen.width / 4,
         height: screen.width / 4.5,
-
     },
     childContainer: {
         width: 50,//screen.width / 9,
@@ -60,6 +59,10 @@ const styles = StyleSheet.create({
         height: screen.width / 8,
         margin: 5,
         position: 'absolute',
+    },
+    title: {
+        color: '#A6A6A6',
+        fontSize: pxToDp(13),
     }
 })
 

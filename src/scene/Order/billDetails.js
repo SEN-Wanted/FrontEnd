@@ -38,7 +38,7 @@ export default class BillDetails extends PureComponent<Props, State> {
 						<Text style={detailsStyle.blackFont}>{this.billInfo.dish[i]} </Text>
 					</View>
 					<View style={{width: width * 0.1, justifyContent: 'flex-start'}}>
-						<Text>*{this.billInfo.dishNumber[i]} </Text>
+						<Text style={detailsStyle.fontSize11}>*{this.billInfo.dishNumber[i]} </Text>
 					</View>
 					<View style={detailsStyle.priceStyle}>
 						<Text style={detailsStyle.blackFont}>￥{this.billInfo.priceFinal[i]} </Text>
@@ -92,7 +92,7 @@ export default class BillDetails extends PureComponent<Props, State> {
 						<View style={detailsStyle.ListItem}>
 							<SingleWord text={'新'} bgColor={'#3F51B5'}/>
 							<View style={detailsStyle.offerMessage}>
-								<Text>门店新客立减</Text>
+								<Text style={detailsStyle.fontSize11}>门店新客立减</Text>
 							</View>
 							<View style={{width: width * 0.15, justifyContent: 'flex-start'}}>
 								<Text style={detailsStyle.blackFont}>-￥3</Text>
@@ -101,19 +101,19 @@ export default class BillDetails extends PureComponent<Props, State> {
 						<View style={detailsStyle.ListItem}>
 							<SingleWord text={'返'} bgColor={'#FA2549'}/>
 							<View style={[detailsStyle.offerMessage,{width: width * 0.45}]}>
-								<Text>满返商家代金券优惠 </Text>
+								<Text style={detailsStyle.fontSize11}>满返商家代金券优惠 </Text>
 							</View>
 							<View style={{width: width * 0.2}}>
-								<Text>返3元商家券 </Text>
+								<Text style={detailsStyle.fontSize11}>返3元商家券 </Text>
 							</View>
 						</View>
 					</View>
 
 					{this.lines}
 
-					<View style={detailsStyle.ListItem}>
-						<Text>总计 ￥126 优惠 ￥15 </Text>
-						<Text style={{color:"#FA2549"}}>实付 ￥111</Text>
+					<View style={[detailsStyle.ListItem, {marginHorizontal: 10}]}>
+						<Text style={{color:"#878787", fontSize: pxToDp(11)}}>总计 ￥126 优惠 ￥15 </Text>
+						<Text style={{color:"#FA2549", fontSize: pxToDp(11)}}>实付 ￥111</Text>
 					</View>
 				</View>
 
@@ -177,7 +177,7 @@ const detailsStyle = StyleSheet.create({
 	},
 	OfferText: {
         color: '#FFFFFF',
-        fontSize: 12,
+        fontSize: pxToDp(10),
     },
 	title:{
 		height: 35,
@@ -189,10 +189,12 @@ const detailsStyle = StyleSheet.create({
 	},
 	greyFont:{
 		color:"#878787",
+		fontSize: pxToDp(11),
 		marginHorizontal: 10,
 	},
 	blackFont:{
-		color:"black"
+		color:"black",
+		fontSize: pxToDp(11),
 	},
 	devideLine:{
 		borderWidth:1,
@@ -209,7 +211,7 @@ const detailsStyle = StyleSheet.create({
 		marginVertical: 5,
 		backgroundColor:"#FEF5EA",
 		padding: 10,
-		fontSize: 15,
+		fontSize: pxToDp(11),
 		color: '#878787',
 	},
 	orderMessageItem: {
@@ -217,5 +219,9 @@ const detailsStyle = StyleSheet.create({
 		height: height * 0.0468,
 		flexDirection: 'row', 
 		alignItems: 'center',
+	},
+	fontSize11: {
+		fontSize: pxToDp(11),
+		color: '#878787',
 	}
 });

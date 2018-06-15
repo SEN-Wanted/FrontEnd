@@ -48,9 +48,11 @@ export default class ListcarIconBadge extends PureComponent<Props, State> {
                     <Text style={{
                             color: 'white' || badgeTextColor,
                             textAlign: 'center',
-                            fontSize: badgeSize * 0.8,
+                            fontSize: badgeSize * 0.6,
                             fontWeight: 'bold',
-                        }} numberOfLines={1}
+                            
+                        }} 
+                        numberOfLines={1}
                     >
                             {this.props.badgeText}
                     </Text>            

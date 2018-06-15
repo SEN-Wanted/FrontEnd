@@ -11,6 +11,7 @@ import DivideLine from "../../widget/DivideLine";
 import Colors from "../../common/Colors";
 import Images from "../../common/Images";
 import Constants from "../../common/Constants";
+import pxToDp from "../../common/pxToDp";
 
 export default class MineScene extends Component {
     static navigationOptions = () => {
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
     },
     OfferText: {
         color: '#FFFFFF',
-        fontSize: 12,
+        fontSize: pxToDp(10),
     },
     offerView: {
         backgroundColor: '#E51C23', 

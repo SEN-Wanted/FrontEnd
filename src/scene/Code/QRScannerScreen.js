@@ -5,7 +5,7 @@ import React, {PureComponent} from "react";
 import {Text, View, TouchableOpacity} from "react-native";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import wantedFetch from '../../common/WantedFetch'
 import Images from '../../common/Images';
 import Colors from '../../common/Colors';
 import TitleBar from './TitleBar';
@@ -66,6 +66,22 @@ export default class QRScannerScreen extends PureComponent<Props, State> {
     }
 
     barcodeReceived(e) {
-        alert(e.type + ' ' + e.data);
+        //alert(''+e.data)
+        this.requestData(e.data)
+        //if(status.status_code === '401') {
+       //     alert('asdasdas')
+        //}else {
+        //    alert('false')
+       // }
+        //alert(e.type + ' ' + e.data);
+    }
+
+    requestData = async(storeID) => {
+        const status = await wantedFetch('http://2v0683857e.iask.in:22871/index/'+storeID,'GET')
+        if(status.res.status_code||status.res.foodData){
+            alert(status.res.error_message)
+        }else {
+            alert('false')
+        }
     }
 }

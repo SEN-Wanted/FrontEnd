@@ -2,8 +2,9 @@ import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text, SectionList, DeviceEventEmitter, Dimensions,} from 'react-native'
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
 import screen from '../../common/screen'
+import pxToDp from '../../common/pxToDp'
 import FoodListItem from './FoodListItem'
-var {width,height} = Dimensions.get('window');
+const {width,height} = screen
 
 type Props = {
     data: Array<Object>,
@@ -40,7 +41,7 @@ export default class RightSectionList extends PureComponent <Props, State>{
     sectionComp = (section) => {
         return (
             <View style={styles.sectionHeader}>
-                <Text style={{color:'black',fontSize:17,paddingLeft:10}}>{section.section.title}</Text>
+                <Text style={{color:'black',fontSize: pxToDp(17), paddingLeft:10}}>{section.section.title}</Text>
             </View>
         )
     }
@@ -56,7 +57,6 @@ export default class RightSectionList extends PureComponent <Props, State>{
               //  ItemSeparatorComponent = {()=>{return(<View style={{height:1,backgroundColor:'black'}}/>)}}//分隔线
                 sections={ this.props.data } //数据
                 onViewableItemsChanged = {(info)=>this.itemChange(info)}  //滑动时调用
-             //   ListFooterComponent={() => (<Text style={styles.footerText}>没有更多啦</Text>)}
                 getItemLayout={this.getItemLayout}
                 keyExtractor={(item,index) => index+''}
             />
@@ -101,12 +101,4 @@ const styles = StyleSheet.create({
         alignItems:'center',
         paddingTop:10,
     },
-    footerText: {
-        flex:1,
-        maxHeight:200,
-        color:'black',
-        fontSize: 20,
-        backgroundColor:'white',
-    },
-
 });

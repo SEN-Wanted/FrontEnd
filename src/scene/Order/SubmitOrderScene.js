@@ -8,7 +8,7 @@ import {
     ScrollView,
 } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
-import { PasswordModal } from 'react-native-pay-password'
+import PasswordModal from './pay-password/PasswordModal'
 import screen from '../../common/screen'
 import pxToDp from '../../common/pxToDp'
 import SingleWord from '../../widget/SingleWord'
@@ -25,7 +25,7 @@ export default class SubmitOrderScene extends Component {
         headerTitle: '提交订单',
         headerTitleStyle:{
             color:'white',
-            fontSize:22,
+            fontSize: pxToDp(20),
         },
 
         headerLeft: (
@@ -68,7 +68,7 @@ export default class SubmitOrderScene extends Component {
 						<Text style={detailsStyle.blackFont}>{ listcar[i].name } </Text>
 					</View>
 					<View style={{width: width * 0.1, justifyContent: 'flex-start'}}>
-						<Text>*{ listcar[i].number }</Text>
+						<Text style={detailsStyle.fontSize11}>*{ listcar[i].number }</Text>
 					</View>
 					<View style={detailsStyle.priceStyle}>
 						<Text style={detailsStyle.blackFont}>￥{ listcar[i].number * listcar[i].price} </Text>
@@ -84,7 +84,7 @@ export default class SubmitOrderScene extends Component {
 			        	<View style={[detailsStyle.displayColumn, detailsStyle.title]}>
 			        		<View style={detailsStyle.displayColumn}>
 			        			<Image source={require("../../img/payforbill/icon.png")} style={detailsStyle.iconImg}/>
-				        		<Text style={{color: '#878787', marginLeft:10}}>{storeName}</Text>
+				        		<Text style={{color: '#878787', marginLeft: 10}}>{storeName}</Text>
 				        	</View>
 				        	<View style={{backgroundColor: '#E51C23',width:70,height:17,
                                 	justifyContent:'center',alignItems:'center'}}
@@ -123,7 +123,7 @@ export default class SubmitOrderScene extends Component {
 							<View style={detailsStyle.ListItem}>
 								<SingleWord text={'新'} bgColor={'#3F51B5'}/>
 								<View style={detailsStyle.offerMessage}>
-									<Text>门店新客立减</Text>
+									<Text style={detailsStyle.fontSize11}>门店新客立减</Text>
 								</View>
 								<View style={{width: width * 0.15, justifyContent: 'flex-start'}}>
 									<Text style={detailsStyle.blackFont}>-￥3</Text>
@@ -132,24 +132,24 @@ export default class SubmitOrderScene extends Component {
 							<View style={detailsStyle.ListItem}>
 								<SingleWord text={'返'} bgColor={'#FA2549'}/>
 								<View style={[detailsStyle.offerMessage,{width: width * 0.45}]}>
-									<Text>满返商家代金券优惠 </Text>
+									<Text style={detailsStyle.fontSize11}>满返商家代金券优惠</Text>
 								</View>
 								<View style={{width: width * 0.2}}>
-									<Text>返3元商家券 </Text>
+									<Text style={detailsStyle.fontSize11}>返3元商家券</Text>
 								</View>
 							</View>
 						</View>
 
 						{this.lines}
 
-						<View style={detailsStyle.ListItem}>
-							<Text>总计 ￥{totalPrice} 优惠 ￥15 </Text>
-							<Text style={{color:"#FA2549", fontSize: 15}}>实付 ￥{ActuallyPaid}</Text>
+						<View style={[detailsStyle.ListItem, {marginHorizontal: 10}]}>
+							<Text style={{color:"#878787", fontSize: pxToDp(11)}}>总计 ￥{totalPrice} 优惠 ￥15 </Text>
+							<Text style={{color:"#FA2549", fontSize: pxToDp(11)}}>实付 ￥{ActuallyPaid}</Text>
 						</View>
 
                     	<View style={{flexDirection:'row', justifyContent: 'space-between'}}>
-                        	<Text style={{color: '#555555', fontSize: 15}}>支付方式</Text>
-                        	<Text style={{color: '#555555', fontSize: 15}}>在线支付</Text>
+                        	<Text style={{color: '#555555', fontSize: pxToDp(12)}}>支付方式</Text>
+                        	<Text style={{color: '#555555', fontSize: pxToDp(12)}}>在线支付</Text>
                     	</View>
 					</View>
 
@@ -185,7 +185,7 @@ const detailsStyle = StyleSheet.create({
 	},
 	OfferText: {
         color: '#FFFFFF',
-        fontSize: 12,
+        fontSize: pxToDp(10),
     },
 	title:{
 		height: 35,
@@ -200,7 +200,8 @@ const detailsStyle = StyleSheet.create({
 		marginHorizontal: 10,
 	},
 	blackFont:{
-		color:"black"
+		color:"black",
+		fontSize: pxToDp(11),
 	},
 	devideLine:{
 		borderWidth:1,
@@ -213,17 +214,14 @@ const detailsStyle = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start', 
 	},
-	billInfoTitle:{
-		marginVertical: 5,
-		backgroundColor:"#FEF5EA",
-		padding: 10,
-		fontSize: 15,
-		color: '#878787',
-	},
 	orderMessageItem: {
 		marginVertical: 5,
 		height: height * 0.0468,
 		flexDirection: 'row', 
 		alignItems: 'center',
 	},
+	fontSize11: {
+		fontSize: pxToDp(11),
+		color: '#878787',
+	}
 });
