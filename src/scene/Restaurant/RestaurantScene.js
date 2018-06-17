@@ -15,9 +15,12 @@ import FeatIcon from 'react-native-vector-icons/Feather'
 import Parabola from 'react-native-smart-parabola'
 import * as Animatable from 'react-native-animatable'
 
+import wantedFetch,{RequestState} from '../../common/WantedFetch'
 import screen from '../../common/screen'
 import colors from '../../common/Colors'
 import pxToDp from '../../common/pxToDp'
+import WaitProgress from '../../widget/WaitProgress'
+import NetWorkFail from '../../widget/NetWorkFail'
 import * as api from '../../api'
 import LeftFlatList from './LeftFlatList'
 import RightSectionList from './RightSectionList'
@@ -55,13 +58,16 @@ export default class RestaurantScene extends Component{
 
     constructor(props:Object) {
         super(props)
+        this.state = {
+            foodList:[],
+            hasReqOver: RequestState.Wait,
+        }
     }
 
-    /*componentWillMount() {
-        this.props.foodData.setData(api.haidilaoInfos)
-    }*/
+
 
     componentDidMount() {
+        this.requestData()
         this.props.listcar.clearListCar()
         this.props.listcar.setStoreName(this.props.navigation.state.params.info.storeName)
         this.props.listcar.setTriggerDown()
@@ -79,13 +85,33 @@ export default class RestaurantScene extends Component{
 
 
     requestData = async() => {
+        let timeout = 2000
         try {
-            let response = await fetch('http://2v0683857e.iask.in:22871/foodData')
-            let json = await response.json()
-            alert('resonseData=' + JSON.stringify(json))
+            this.setState({hasReqOver: RequestState.Wait})
+            const response = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/food','GET',{},timeout)
+            let foodList = response.res.foodData.map((info) => ({
+                title: info.title,
+                id: info.id,
+                data: info.data
+            }))
+            this.setState({ 
+                foodList: foodList,
+                hasReqOver: RequestState.Success
+            })
         } catch (error) {
-            alert('error' + error)
+            console.log('error' + error)
+            this.setState({ hasReqOver: RequestState.Failue })
         }
+    }
+
+    backtitleFood = (List) => {
+        return List.map((info) => ({
+            name: info.name,
+            monthlySale: info.monthlySale,
+            like: info.like,
+            price: info.price,
+            icon: info.icon
+        }))
     }
 
     //添加按钮进行动画函数
@@ -197,11 +223,16 @@ export default class RestaurantScene extends Component{
     render() {
         let lightColor =  this.props.listcar.states.listCount == 0 ? colors.gray_AAAAAA : colors.red_E51C23
         let listIconSize = this.props.listcar.states.modalVisible ? 0 : width * 0.16
+        if(this.state.hasReqOver === RequestState.Wait) {
+            return  <WaitProgress />
+        }else if (this.state.hasReqOver === RequestState.Failue) {
+            return <NetWorkFail onPress={ this.requestData }/>
+        }else if(this.state.hasReqOver === RequestState.Success){
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <View style={ styles.listContainer }>
-                    <LeftFlatList data={ api.haidilaoInfos } />
-                    <RightSectionList data={ api.haidilaoInfos } itemAddPress={ this._onPressHandler }/>
+                    <LeftFlatList data={ this.state.foodList } />
+                    <RightSectionList data={ this.state.foodList } itemAddPress={ this._onPressHandler }/>
                 </View>    
 
                 <Modal
@@ -266,6 +297,7 @@ export default class RestaurantScene extends Component{
                 />
             </View>   
         );
+    }
     }
 }
 

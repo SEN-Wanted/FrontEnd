@@ -13,6 +13,7 @@ import screen from '../../common/screen'
 import pxToDp from '../../common/pxToDp'
 import SingleWord from '../../widget/SingleWord'
 import SubmitFooter from './SubmitFooter'
+import wantedFetch from '../../common/WantedFetch';
 
 const { width, height, botBarHeight } = screen
 
@@ -50,7 +51,34 @@ export default class SubmitOrderScene extends Component {
 
 	submitOnPress() {
         this.refs.modal.show();
-    }
+	}
+
+	passWordDone = (number) => {
+		if(number.toString() === '123456') {
+			this.postOrderData()
+		} else {
+			alert('密码错误，请重新提交')
+		}
+	}
+	
+	postOrderData = async() => {
+		let data = {
+			storeName: this.props.listcar.storeName,
+			foodList: this.props.listcar.states.listCar.slice(),
+			mealFee: 3,
+			serviceFee: 6,
+			totalFee: this.props.listcar.states.totalPrice + 9,
+			offer: 15,
+			paymentMethod: 1,
+			date: new Date().toLocaleString()
+		}
+		try{
+			let result = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/submitOrder','POST',data)
+			alert('OK')
+		} catch (error) {
+			alert('error' + error)
+		}
+	}
 
 	render(){
 
@@ -156,7 +184,7 @@ export default class SubmitOrderScene extends Component {
 				</ScrollView>
 
 				<SubmitFooter offerPrice={15} totalPrice={ActuallyPaid} onPress={() => { this.submitOnPress() }}/>
-				<PasswordModal ref='modal' height={height*0.9} price={ActuallyPaid} backdrop={true} onDone={(data) => { alert(data) }} />
+				<PasswordModal ref='modal' height={height*0.9} price={ActuallyPaid} backdrop={true} onDone={(data) => {this.passWordDone(data) }} />
 	        </View>
 		)
 	}
