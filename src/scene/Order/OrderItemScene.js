@@ -8,8 +8,9 @@ import {
     StyleSheet
 } from 'react-native'
 import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
-import BillPages from "./BillPages"
-import BillDetails from "./BillDetails"
+import BillPages from "./billPages"
+import BillDetails from "./billDetails"
+import wantedFetch from '../../common/WantedFetch'
 import screen from '../../common/screen'
 import pxToDp from '../../common/pxToDp'
 type Props = {
@@ -43,8 +44,24 @@ export default class OrderItemScene extends PureComponent<Props, State> {
     })
 
 	constructor(props) {
-		super(props);
+        super(props);
+        this.state = {
+            detail: {}
+        }
+    }
 
+    componentDidMount() {
+        this.requestData()
+    }
+
+    requestData = async() => {
+        try {
+            const json = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/order','GET')
+            let data = json.res
+            this.setState({detail: data})
+        }catch (error) {
+            alert('error' + error)
+        }
     }
     
     
@@ -77,7 +94,9 @@ export default class OrderItemScene extends PureComponent<Props, State> {
                         />
                     </View>
                     <View>
-                        <BillDetails />
+                        <BillDetails
+                            info = {this.state.detail}
+                        />
                     </View>
                 </IndicatorViewPager>
             </View>

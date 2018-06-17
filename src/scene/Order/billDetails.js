@@ -28,20 +28,22 @@ export default class BillDetails extends PureComponent<Props, State> {
 	
 
 	render(){
-
+		let {storeName, foodList, mealFee, serviceFee, totalFee, offer, paymentMethod, date, orderNumber} = this.props.info
 		let dishesList=[];
-		for (i = 0; i < 3; i++) {
+		let length = foodList ? foodList.length : 3
+		let isHasInfo = storeName ? true: false
+		for (i = 0; i < length; i++) {
 			dishesList.push(
 				<View style={detailsStyle.ListItem} key={i}>
 					<SingleWord text={'折'} />
 					<View style={{width: width * 0.14, justifyContent: 'center', alignItems: 'center'}}>
-						<Text style={detailsStyle.blackFont}>{this.billInfo.dish[i]} </Text>
+						<Text style={detailsStyle.blackFont}>{isHasInfo ? foodList[i].foodName : 'test'} </Text>
 					</View>
 					<View style={{width: width * 0.1, justifyContent: 'flex-start'}}>
-						<Text style={detailsStyle.fontSize11}>*{this.billInfo.dishNumber[i]} </Text>
+						<Text style={detailsStyle.fontSize11}>*{isHasInfo ? foodList[i].number : '0'} </Text>
 					</View>
 					<View style={detailsStyle.priceStyle}>
-						<Text style={detailsStyle.blackFont}>￥{this.billInfo.priceFinal[i]} </Text>
+						<Text style={detailsStyle.blackFont}>￥{isHasInfo ? foodList[i].price : '0'} </Text>
 					</View>
 				</View>
 			);
@@ -54,7 +56,7 @@ export default class BillDetails extends PureComponent<Props, State> {
 			        <View style={[detailsStyle.displayColumn, detailsStyle.title]}>
 			        	<View style={detailsStyle.displayColumn}>
 			        		<Image source={require("../../img/payforbill/icon.png")} style={detailsStyle.iconImg}/>
-				        	<Text style={{color: '#878787', marginLeft:10}}>海底捞(珠影星光店)</Text>
+				        	<Text style={{color: '#878787', marginLeft:10}}>{isHasInfo? storeName:'海底捞'}</Text>
 				        </View>
 				        <View style={{backgroundColor: '#E51C23',width:70,height:17,
                                 justifyContent:'center',alignItems:'center'}}>
@@ -74,14 +76,14 @@ export default class BillDetails extends PureComponent<Props, State> {
 			        	<View style={detailsStyle.ListItem}>
 							<Text style={detailsStyle.blackFont}>餐位费</Text>
 							<View style={detailsStyle.priceStyle}>
-								<Text style={detailsStyle.blackFont}>￥3</Text>
+								<Text style={detailsStyle.blackFont}>￥{isHasInfo? mealFee: 3}</Text>
 							</View>
 						</View>
 
 						<View style={detailsStyle.ListItem}>
 							<Text style={detailsStyle.blackFont}>服务费</Text>
 							<View style={detailsStyle.priceStyle}>
-								<Text style={detailsStyle.blackFont}>￥6</Text>
+								<Text style={detailsStyle.blackFont}>￥{isHasInfo? serviceFee : 6}</Text>
 							</View>
 						</View>
 					</View>
@@ -112,8 +114,8 @@ export default class BillDetails extends PureComponent<Props, State> {
 					{this.lines}
 
 					<View style={[detailsStyle.ListItem, {marginHorizontal: 10}]}>
-						<Text style={{color:"#878787", fontSize: pxToDp(11)}}>总计 ￥126 优惠 ￥15 </Text>
-						<Text style={{color:"#FA2549", fontSize: pxToDp(11)}}>实付 ￥111</Text>
+						<Text style={{color:"#878787", fontSize: pxToDp(11)}}>总计 ￥{isHasInfo? totalFee : 0} 优惠 ￥{isHasInfo? offer: 0} </Text>
+						<Text style={{color:"#FA2549", fontSize: pxToDp(11)}}>实付 ￥{isHasInfo?totalFee-offer: 0}</Text>
 					</View>
 				</View>
 
@@ -124,17 +126,17 @@ export default class BillDetails extends PureComponent<Props, State> {
 					{this.lines}
 					<View style={detailsStyle.orderMessageItem}>
 						<Text style={detailsStyle.greyFont}>支付方式</Text>
-						<Text style={detailsStyle.blackFont}> {this.billInfo.payMethod}</Text>
+						<Text style={detailsStyle.blackFont}> {isHasInfo? (paymentMethod?'在线支付':'线下支付') : '在线支付'}</Text>
 					</View>
 					{this.lines}
 					<View style={detailsStyle.orderMessageItem}>
 						<Text style={detailsStyle.greyFont}>订单号码</Text>
-						<Text style={detailsStyle.blackFont}> {this.billInfo.billID}</Text>
+						<Text style={detailsStyle.blackFont}> {isHasInfo?orderNumber:'123123'}</Text>
 					</View>
 					{this.lines}
 					<View style={detailsStyle.orderMessageItem}>
 						<Text style={detailsStyle.greyFont}>订单时间</Text>
-						<Text style={detailsStyle.blackFont}> {this.billInfo.billTime}</Text>
+						<Text style={detailsStyle.blackFont}> {isHasInfo?date:'asda'}</Text>
 					</View>
 				</View>
 			</ScrollView>

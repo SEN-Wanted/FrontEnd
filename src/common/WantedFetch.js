@@ -30,6 +30,13 @@ function timeout_fetch(fetch_promise,timeout = 10000) {
     return abortable_promise ;
 }
 
+export const RequestState = {
+    Wait: 0,
+    Success: 1,
+    Failue: 2,
+}
+
+
 // 请求服务器host
 const host = "http://2v0683857e.iask.in:22871/";
 
@@ -37,12 +44,12 @@ const host = "http://2v0683857e.iask.in:22871/";
  * @param {string} url 接口地址
  * @param {string} method 请求方法：GET、POST，只能大写
  * @param {JSON} [data=''] body的请求参数，默认为空
- * @param {function} finallyCB 请求结束后执行的回调函数
+ * @param {number} timeout 单位：毫秒，传给time_fetch的自设时间
  * @return 返回Promise
  */
 
 
-export default  function(url, method, data, finallyCB = () => {console.log('finally')} ) {
+export default  function(url, method, data = {} ,timeout = 10000) {
     const fullUrl = url.indexOf('http') === -1 ? (host + url) : url
     const data_string = JSON.stringify(data)
     const formData = new FormData()
@@ -55,42 +62,39 @@ export default  function(url, method, data, finallyCB = () => {console.log('fina
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'multipart/form-data',
+                    //'accesstoken': token //用户登录后返回的token，某些涉及用户数据的接口需要在header中加上token
                 }
-            })).then((res) => {
+            }),timeout).then((res) => {
                 if(res ) {
                     return res.json()
                 }
                 throw new Error('server error')
             }).then((res) => { 
-                finallyCB()
                 resolve({ res }) 
             }).catch((err) => {
                 console.log(err);
-                finallyCB()
                 reject(err);
             });
         })
     } else if (method === 'POST') {
         return new Promise((resolve,reject) => {
             timeout_fetch(fetch(fullUrl, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',//'multipart/form-data',
                 },
-                body: formData
-            })).then((res) => {
-                if(res && res.status === 200) {
+                body: data_string,
+            }),timeout).then((res) => {
+                if(res ) {
                     return res.json()
                 }
                 throw new Error('server error')
             }).then((res) => { 
-                finallyCB()
                 resolve({ res }) 
             }).catch((err) => {
-                    console.log(err);
-                    finallyCB()
-                    reject(err);
+                console.log(err);
+                reject(err);
             });
         })
     }

@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, FlatList, NetInfo, StatusBar, PixelRatio } from 'react-native'
+import {StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, FlatList, NetInfo, StatusBar, Modal } from 'react-native'
 import {observer, inject} from 'mobx-react'
 
 import Swiper from 'react-native-swiper'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import FeaIcon from 'react-native-vector-icons/Feather'
 import RefreshListView, {RefreshState} from 'react-native-refresh-list-view'
+import * as Progress from 'react-native-progress'
 
 import pxToDp from '../../common/pxToDp'
 import Colors from '../../common/Colors'
@@ -209,6 +210,7 @@ export default class HomeScene extends Component {
                     onRefresh={this.requestData}
                     refreshing={this.state.refreshing}
                 /> */}
+
                     <RefreshListView
                         ListHeaderComponent={ () => this.renderHeader() }
                         data={this.state.storeListdata}
