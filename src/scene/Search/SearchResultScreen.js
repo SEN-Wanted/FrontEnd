@@ -3,9 +3,10 @@
  */
 import React, {Component} from "react";
 import {StyleSheet, Image, Text, View, TouchableOpacity, FlatList} from "react-native";
-import RefreshListView, {RefreshState} from 'react-native-refresh-list-view'
 import Icon from "react-native-vector-icons/FontAwesome";
-import wantedFetch from '../../common/WantedFetch'
+import wantedFetch, {RequestState} from '../../common/WantedFetch'
+import WaitProgress from '../../widget/WaitProgress'
+import NetWorkFail from '../../widget/NetWorkFail'
 import pxToDp from '../../common/pxToDp'
 import DivideLine from '../../widget/DivideLine';
 import RestaurantListItem from '../Restaurant/RestaurantListItem';
@@ -37,11 +38,15 @@ export default class SearchResultScreen extends Component {
         super(props)
         this.state={
             storeListdata:[],
-            refreshing: RefreshState.HeaderRefreshing,
+            hasReqOver: RequestState.Wait,
         }
     }
 
     componentDidMount() {
+        this.paramsAnalysis()
+    }
+
+    paramsAnalysis = () => {
         let type = ''
         if(this.props.navigation.state.params) {
             let index = this.props.navigation.state.params.index
@@ -57,7 +62,7 @@ export default class SearchResultScreen extends Component {
 
     requestData = async(type) => {
         try{
-            this.setState({refreshing: RefreshState.HeaderRefreshing})
+            this.setState({hasReqOver: RequestState.Wait})
             const json = await wantedFetch('http://2v0683857e.iask.in:22871/search?type='+type,'GET')
             let dataList = json.res.ListStoreData.map((info) => ({
                 icon: info.icon,
@@ -73,11 +78,11 @@ export default class SearchResultScreen extends Component {
             }))
             this.setState({
                 storeListdata: dataList,
-                refreshing: dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
+                hasReqOver: RequestState.Success,
             })
         } catch (error) {
-            alert('error' + error)
-            this.setState({refreshing: RefreshState.Idle})
+            console.log('error' + error)
+            this.setState({hasReqOver: RequestState.Failue})
         }
 
     }
@@ -96,6 +101,11 @@ export default class SearchResultScreen extends Component {
     }
 
     render() {
+        if(this.state.hasReqOver === RequestState.Wait) {
+            return <WaitProgress />
+        } else if (this.state.hasReqOver === RequestState.Failue) {
+            return <NetWorkFail onPress={ this.paramsAnalysis } />
+        } else {
         return (
             <View style={styles.container}>
                 <View style={styles.rank}>
@@ -120,7 +130,7 @@ export default class SearchResultScreen extends Component {
                     keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
                 />
             </View>
-        )
+        )}
     }
 }
 

@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text} from 'react-native'
+import NavigationService from './common/NavigationService'
 import {TabNavigator, TabBarBottom, StackNavigator} from 'react-navigation'
 import {Provider} from 'mobx-react'
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
@@ -50,7 +51,11 @@ class RootScene extends PureComponent<{}> {
         console.log('root scene render');    
         return (
             <Provider {...stores}>
-                <Navigator/>
+                <Navigator
+                    ref={navigatorRef => {
+                        NavigationService.setTopLevelNavigator(navigatorRef);//设置顶层导航
+                    }}
+                />
             </Provider>
         );
     }

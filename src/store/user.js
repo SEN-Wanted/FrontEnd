@@ -13,7 +13,32 @@ class user {
     userPhone = '10000'
 
     @observable
-    isLogin = true
+    userID = '10000'
+
+    @observable
+    username = 'chenmy'
+
+    @action.bound
+    setUser(id, username) {
+        this.userID = id,
+        this.username = username
+    }
+
+    @action.bound
+    setUserPhone(phone) {
+        this.userPhone = phone
+    }
+
+
+    @observable
+    token = ''
+    @action.bound
+    setToken(Token) {
+        this.token = Token
+    }
+
+    @observable
+    isLogin = false
 
     @action.bound
     setLoginStatus(status) {
@@ -39,13 +64,7 @@ class user {
 
     }
 
-    @observable
-    isStatusbarHidden = false
-    
-    @action.bound
-    setStatusbarHidden(flag) {
-        this.isStatusbarHidden = flag
-    }
+
 }
 
 const store = window.store = new user()

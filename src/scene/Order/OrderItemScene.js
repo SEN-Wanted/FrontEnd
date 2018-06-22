@@ -1,5 +1,5 @@
 // import React, { Component, PropTypes } from 'react';
-import React, { PureComponent} from 'react'
+import React, { Component} from 'react'
 import { 
     View,
     Text,
@@ -8,24 +8,21 @@ import {
     StyleSheet
 } from 'react-native'
 import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
+import { observer, inject, Observer } from 'mobx-react/native'
 import BillPages from "./billPages"
 import BillDetails from "./billDetails"
 import wantedFetch from '../../common/WantedFetch'
 import screen from '../../common/screen'
 import pxToDp from '../../common/pxToDp'
-type Props = {
 
-}
-
-type State = {
-
-};
 const { width, height } = screen
-export default class OrderItemScene extends PureComponent<Props, State> {
+@inject(['user'])
+@observer
+export default class OrderItemScene extends Component {
 	static navigationOptions = ({navigation}) => ({
         headerStyle:{backgroundColor:'#140105', height: width * 0.15},
         headerTintColor:'white',
-        headerTitle: navigation.state.params.info.name ? navigation.state.params.info.name : 'error',
+        headerTitle: '我的订单',//navigation.state.params ? navigation.state.params.info.storeName : 'error',
         headerTitleStyle:{
             color:'white',
             fontSize: pxToDp(20),
@@ -55,7 +52,10 @@ export default class OrderItemScene extends PureComponent<Props, State> {
     }
 
     requestData = async() => {
+        let userID = this.props.user.userID
+        let token = this.props.user.token
         try {
+            //const json = await wantedFetch('user/110/orders/1','GET',{},10000,'application/json',token)
             const json = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/order','GET')
             let data = json.res
             this.setState({detail: data})
@@ -80,7 +80,7 @@ export default class OrderItemScene extends PureComponent<Props, State> {
     }
 
 	render() {
-        let orderTime = this.props.navigation.state.params.info.time
+        let orderTime = this.props.navigation.state.params.info.date
 		return(
             <View style={{flex:1}}>
                 <IndicatorViewPager
@@ -90,7 +90,7 @@ export default class OrderItemScene extends PureComponent<Props, State> {
                 >
                     <View>
                         <BillPages 
-                            message = {orderTime}
+                            message = {orderTime.date}
                         />
                     </View>
                     <View>

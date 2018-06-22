@@ -11,11 +11,12 @@ import {
   NetInfo,
   StatusBar,
 } from 'react-native';
-
+import NavigationService from '../../common/NavigationService'
 import {observer, inject} from 'mobx-react'
-import wantedFetch from '../../common/WantedFetch'
+import wantedFetch,{RequestState} from '../../common/WantedFetch'
 import Form, {form} from './LoginForm'
 import screen from '../../common/screen'
+import WaitLoginProgress from '../../widget/WaitLoginProgress'
 
 const { width, height } = screen
 
@@ -31,29 +32,54 @@ export default class LoginScene extends Component {
     }
     constructor(props) {
         super(props);
+        this.state = {
+            visible: false
+        }
+        form.$hooks.onSuccess = async (form) => {
+            const data = {
+                phone: form.$('phone').value,
+                password: form.$('password').value,
+            }
+            try{
+                this.setState({visible: true})
+                const result = await wantedFetch('login','POST', data,10000,'multipart/form-data')
+                if(result.res.status_code == '201') {
+                    this.props.user.setToken(result.res.token)
+                    this.props.user.setUser(result.res.user.ID, result.res.user.username)
+                    this.props.user.setLoginStatus(true)
+                    this.setState({visible: false})
+                    //alert(""+ this.props.user.userID + " "+this.props.user.token)
+                    this.jumpHome()
+                }else if(result.res.status_code == '401'){
+                    this.setState({visible: false})
+                    alert('密码错误！')
+                }
+            } catch(error) {
+                this.setState({visible: false})
+                alert(error)
+            }
+        }
     }
 
     componentDidMount() {
-        this.props.user.setStatusbarHidden(true)
-        NetInfo.addEventListener('connectionChange',
-            (networkType) => {
-                alert(networkType.type)
-            }
-        )
+        form.clear()
     }
 
-    componentWillUnmount() {
-        this.props.user.setStatusbarHidden(false)
+
+    jumpHome = () => {
+        NavigationService.popToTop()
     }
 
     jumpSignUp = () => {
+        form.clear()
         this.props.navigation.navigate('SignUpScene')
     }
 
     render() {
         return (
             <ImageBackground source={require('../../img/signAndLogin/login_bg.jpeg')} style={styles.imgBackground} >
-                <StatusBar translucent={true} hidden={this.props.user.isStatusbarHidden}/>
+                <StatusBar translucent={true} hidden={true}/>
+                <WaitLoginProgress visible={this.state.visible} />
                 <View style={styles.container} >
                     <Image source={require('../../img/signAndLogin/magnifier.png')} style={styles.magnifier}/>
 

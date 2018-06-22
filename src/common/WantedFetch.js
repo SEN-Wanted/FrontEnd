@@ -43,26 +43,32 @@ const host = "http://2v0683857e.iask.in:22871/";
 /**
  * @param {string} url 接口地址
  * @param {string} method 请求方法：GET、POST，只能大写
- * @param {JSON} [data=''] body的请求参数，默认为空
- * @param {number} timeout 单位：毫秒，传给time_fetch的自设时间
+ * @param {Object} [data=''] body的请求参数，默认为空
+ * @param {number} timeout 单位：毫秒，传给time_fetch的自设时间，默认为10000
+ * @param {string} contentType POST时的内容类型
+ * @param {string} token 用户认证信息
  * @return 返回Promise
  */
 
 
-export default  function(url, method, data = {} ,timeout = 10000) {
+export default  function(url, method, data = {} ,timeout = 10000, contentType='application/json',token='') {
     const fullUrl = url.indexOf('http') === -1 ? (host + url) : url
     const data_string = JSON.stringify(data)
-    const formData = new FormData()
-    //formData.append('phone', String(data.phone))
-    //formData.append('password', String(data.password))
+    let bodyData = data_string
+    if(contentType === 'multipart/form-data') {
+        const formData = new FormData()
+        formData.append('username', String(data.phone))
+        formData.append('password', String(data.password))
+        bodyData = formData
+    }
     if (method === 'GET') {
         return new Promise((resolve,reject) => {
             timeout_fetch(fetch(fullUrl, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'multipart/form-data',
-                    //'accesstoken': token //用户登录后返回的token，某些涉及用户数据的接口需要在header中加上token
+                    'Content-Type': contentType,
+                    'accesstoken': token //用户登录后返回的token，某些涉及用户数据的接口需要在header中加上token
                 }
             }),timeout).then((res) => {
                 if(res ) {
@@ -82,9 +88,10 @@ export default  function(url, method, data = {} ,timeout = 10000) {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json',//'multipart/form-data',
+                    'Content-Type': contentType,
+                    'accesstoken': token //用户登录后返回的token，某些涉及用户数据的接口需要在header中加上token
                 },
-                body: data_string,
+                body: bodyData,
             }),timeout).then((res) => {
                 if(res ) {
                     return res.json()

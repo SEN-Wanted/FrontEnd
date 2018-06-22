@@ -14,9 +14,11 @@ import {
 } from 'react-native';
 
 import {observer, inject} from 'mobx-react'
+import NavigationService from '../../common/NavigationService'
 import wantedFetch from '../../common/WantedFetch'
 import Form, {form} from './SignUpForm'
 import screen from '../../common/screen'
+import WaitLoginProgress from '../../widget/WaitLoginProgress'
 
 const { width, height } = screen
 
@@ -32,27 +34,36 @@ export default class SignUpScene extends Component {
     }
     constructor(props) {
         super(props);
+        this.state = {
+            visible: false
+        }
         form.$hooks.onSuccess = async (form) => {
-            alert(form.$('phone').value+'  '+form.$('password').value)
-            let formData = new FormData()
-            formData.append('phone', String(form.$('phone').value))
-            formData.append('password', String(form.$('password').value))
-            //http://2v0683857e.iask.in:22871/sign_up http://5afbc8babc1beb0014c29e31.mockapi.io/api/user/
             const data = {
                 phone: form.$('phone').value,
                 password: form.$('password').value,
             }
-            const result = await wantedFetch('sign_up','POST', data)
-            if(result.status_code == 201) {
-                alert('ok')
-            }else {
-                alert(result+'')
+            try{
+                this.setState({visible: true})
+                const result = await wantedFetch('sign_up','POST', data,10000,'multipart/form-data')
+                if(result.res.status_code == '201') {
+                    this.props.user.setToken(result.res.token)
+                    this.props.user.setUser(result.res.user.ID, result.res.user.username)
+                    this.props.user.setLoginStatus(true)
+                    this.setState({visible: false})
+                    this.jumpHome()
+                }else if(result.res.status_code == '401'){
+                    this.setState({visible: false})
+                    alert('该手机号已注册，请直接登录！')
+                }
+            } catch(error) {
+                this.setState({visible: false})
+                alert(error)
             }
         }
     }
 
     componentDidMount() {
-        this.props.user.setStatusbarHidden(true)
+        form.clear()
         NetInfo.addEventListener('connectionChange',
             (networkType) => {
                 //alert(networkType.type)
@@ -61,17 +72,20 @@ export default class SignUpScene extends Component {
         )
     }
 
-    componentWillUnmount() {
-        this.props.user.setStatusbarHidden(false)
+
+    jumpHome = () => {
+        NavigationService.popToTop()
     }
 
     jumpLogin = () => {
+        form.clear()
         this.props.navigation.navigate('LoginScene')
     }
     render() {
         return (
             <ImageBackground source={require('../../img/signAndLogin/login_bg.jpeg')} style={styles.imgBackground} >
-                <StatusBar translucent={true} hidden={this.props.user.isStatusbarHidden}/>
+                <StatusBar translucent={true} hidden={true}/>
+                <WaitLoginProgress visible={this.state.visible} />
                 <View style={styles.container} >
                     <Image source={require('../../img/signAndLogin/magnifier.png')} style={styles.magnifier}/>
 
