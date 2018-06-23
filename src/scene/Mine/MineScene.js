@@ -3,6 +3,8 @@
  */
 import React, {Component} from "react";
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native";
+import NavigationService from '../../common/NavigationService'
+import { observer, inject } from 'mobx-react/native'
 import Icon from "react-native-vector-icons/FontAwesome";
 import BadgeView from "react-native-badge-view";
 
@@ -13,6 +15,8 @@ import Images from "../../common/Images";
 import Constants from "../../common/Constants";
 import pxToDp from "../../common/pxToDp";
 
+@inject(['user'])
+@observer
 export default class MineScene extends Component {
     static navigationOptions = () => {
         return {
@@ -26,10 +30,13 @@ export default class MineScene extends Component {
     }
 
     jumpLogin = () => {
-        this.props.navigation.navigate('LoginScene')
+        //this.props.navigation.navigate('LoginScene')
+        NavigationService.navigate('LoginScene')
     }
 
     render() {
+        let isLogin = this.props.user.isLogin
+        let username = this.props.user.username
         return (
             <View style={{backgroundColor: 'white',flex:1}}>
                 <View style={styles.panel}>
@@ -51,10 +58,10 @@ export default class MineScene extends Component {
                         </TouchableOpacity>
                         <View>
                             <TouchableOpacity>
-                                <Text style={styles.panel_body_text}>chenmy</Text>
+                                <Text style={styles.panel_body_text}>{isLogin? username: '临时用户'}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={this.jumpDetail}>
-                                <Text style={styles.panel_body_text}>个人信息&nbsp;&gt;</Text>
+                            <TouchableOpacity onPress={isLogin? this.jumpDetail : null}>
+                                <Text style={styles.panel_body_text}>{isLogin? '个人信息 >' : '未登陆'}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

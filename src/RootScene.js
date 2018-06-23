@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import {StyleSheet, View, Image, Text} from 'react-native'
+import NavigationService from './common/NavigationService'
 import {TabNavigator, TabBarBottom, StackNavigator} from 'react-navigation'
 import {Provider} from 'mobx-react'
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
@@ -18,6 +19,7 @@ import SearchScene from './scene/Search/SearchScreen'
 import SearchResultScene from './scene/Search/SearchResultScreen'
 import SignUpScene from './scene/SignUp/SignUpScene'
 import LoginScene from './scene/Login/LoginScene'
+import ForgetScene from './scene/Login/ForgetScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
 import OrderItemScene from './scene/Order/OrderItemScene'
 
@@ -50,7 +52,11 @@ class RootScene extends PureComponent<{}> {
         console.log('root scene render');    
         return (
             <Provider {...stores}>
-                <Navigator/>
+                <Navigator
+                    ref={navigatorRef => {
+                        NavigationService.setTopLevelNavigator(navigatorRef);//设置顶层导航
+                    }}
+                />
             </Provider>
         );
     }
@@ -143,7 +149,8 @@ const Navigator = StackNavigator({
     MessageDetailScreen: {screen: MessageDetailScreen},
     NoMessageScreen: {screen: NoMessageScreen},
     SignUpScene: {screen: SignUpScene},
-    LoginScene: {screen: LoginScene}
+    LoginScene: {screen: LoginScene},
+    ForgetScene: {screen: ForgetScene}
 }, {
         //设置界面跳转方式
         transitionConfig: TransitionConfiguration,

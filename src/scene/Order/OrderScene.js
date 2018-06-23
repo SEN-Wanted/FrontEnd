@@ -9,9 +9,13 @@ import {
     FlatList
 } from 'react-native'
 import { observer, inject, Observer } from 'mobx-react/native'
-
 import FontIcon from 'react-native-vector-icons/FontAwesome'
 import StarRating from 'react-native-star-rating'
+
+import wantedFetch,{RequestState} from '../../common/WantedFetch'
+import WaitProgress from '../../widget/WaitProgress'
+import OrderNotLogin from './OrderNotLogin'
+import NetWorkFail from '../../widget/NetWorkFail'
 import pxToDp from '../../common/pxToDp';
 import screen from '../../common/screen'
 
@@ -37,6 +41,43 @@ export default class OrderScene extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            orderList: [],
+            hasReqOver: RequestState.Wait,
+        }
+    }
+
+    componentDidMount(){
+        if(this.props.user.isLogin) {
+            this.requestData()
+        }
+    }
+
+    requestData = async() => {
+        let userID = this.props.user.userID
+        let token = this.props.user.token
+        //alert(''+token)
+        try {
+            this.setState({hasReqOver: RequestState.Wait})
+            const response = await wantedFetch('user/110/orders','GET',{},10000,'application/json',token)
+            if(response.res.status_code === '201') {
+                let orderList = response.res.orderList.map((info) => ({
+                    orderID: info.orderID,
+                    storeName: info.storeName,
+                    isEvaluate: info.isEvaluate,
+                    evaluationGrade: info.evaluationGrade,
+                    date: info.date,
+                    cost: info.cost
+                }))
+                this.setState({ 
+                    orderList: orderList,
+                    hasReqOver: RequestState.Success
+                })
+            }
+        } catch (error) {
+            alert('' + error)
+            this.setState({ hasReqOver: RequestState.Failue })
+        }
     }
 
     onStarRatingPress(rating, index) {
@@ -45,13 +86,13 @@ export default class OrderScene extends Component {
 
 
     renderItem = (rowData) => {
-        return <Observer>{ () => (
+        return  (
             <View style={orderSceneStyle.scene}>
                 <View style={orderSceneStyle.itemTitle}>
                     <Text style={{color:'#101010', fontSize: pxToDp(14)}}> 
-                        {rowData.item.name} 
+                        {rowData.item.storeName} 
                     </Text>
-                    <Text style={orderSceneStyle.isScored}>{rowData.item.status? '已评价':'未评价'}</Text>
+                    <Text style={orderSceneStyle.isScored}>{rowData.item.isEvaluate? '已评价':'未评价'}</Text>
                 </View>
 
                 <View style={orderSceneStyle.devideLine} />
@@ -60,7 +101,7 @@ export default class OrderScene extends Component {
                     <Image source={require("../../img/payforbill/icon.png")} style={orderSceneStyle.iconImg}/>
                     <View style={{marginLeft: 10}}>
                         <Text style={{color: '#E51C23', marginTop: 5, fontSize: pxToDp(15)}}>￥{ rowData.item.cost }</Text>
-                        <Text style={{color: '#050505',marginLeft: 10, marginTop: 5, fontSize: pxToDp(11)}}>{ rowData.item.time }</Text>
+                        <Text style={{color: '#050505',marginLeft: 10, marginTop: 5, fontSize: pxToDp(11)}}>{ rowData.item.date }</Text>
                         <StarRating
                             starStyle={orderSceneStyle.stars}
                             starSize={24}
@@ -68,7 +109,7 @@ export default class OrderScene extends Component {
                             fullStarColor={"gold"}
                             disabled={rowData.item.status? true:false}
                             maxStars={5}
-                            rating={rowData.item.rating}
+                            rating={rowData.item.evaluationGrade}
                             selectedStar={(rating) => this.onStarRatingPress(rating, rowData.index)}
                         />
                     </View> 
@@ -80,27 +121,29 @@ export default class OrderScene extends Component {
                     </TouchableOpacity>
                 </View>
             </View>
-        )}</Observer>
+        )
     }
 
     render() {
         if(this.props.user.isLogin){
-            return (
-                <View style={{backgroundColor: 'white', flex: 1}}>
-                    <FlatList
-                        data={this.props.user.orderList.slice()}
-                        renderItem={this.renderItem}
-                        keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
-                    />
-                </View>
-            ) 
+            if(this.state.hasReqOver === RequestState.Wait) {
+                return <WaitProgress />
+            }else if (this.state.hasReqOver === RequestState.Failue) {
+                return <NetWorkFail onPress = {this.requestData} />
+            } else {
+                return (
+                    <View style={{backgroundColor: 'white', flex: 1}}>
+                        <FlatList
+                            data={this.state.orderList}
+                            renderItem={this.renderItem}
+                            keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
+                        />
+                    </View>
+                ) 
+            }
         } else {
             return (
-                <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{color: 'black', fontSize: 30}}>
-                        您还未登陆，请登陆后查看
-                    </Text>
-                </View>
+                <OrderNotLogin onPress={() => {this.props.navigation.navigate('LoginScene')}} />
             )
         }
     }

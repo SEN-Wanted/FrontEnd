@@ -6,8 +6,8 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native';
-import screen from '../common/screen'
-import pxToDp from '../common/pxToDp'
+import screen from '../../common/screen'
+import pxToDp from '../../common/pxToDp'
 const {width,height} = screen
 
 type Props = {
@@ -15,19 +15,19 @@ type Props = {
     onPress?: Function,
 }
 
-export default class NetWorkFail extends PureComponent {
+export default class OrderNotLogin extends PureComponent {
     constructor(props) {
         super(props);
     }
     render() {
         return (
             <View style={styles.container}>
-                <Image source={require('../img/other/networkFail.png')} style={{width:width*0.417,height:width*0.417,opacity: 0.7}} />
-                <Text style={{fontSize:pxToDp(20), color:'#101010',marginTop: height * 0.048}}>数据加载失败</Text>
-                <Text style={{fontSize:pxToDp(17), color:'#AAAAAA',marginTop: height * 0.016}}>请检查你的手机是否联网</Text>
+                <Image source={require('../../img/other/notLogin.png')} style={{width:width*0.417,height:width*0.417,opacity: 0.7}} />
+                <Text style={{fontSize:pxToDp(20), color:'#101010',marginTop: height * 0.048}}>暂未登陆</Text>
+                <Text style={{fontSize:pxToDp(17), color:'#AAAAAA',marginTop: height * 0.016}}>请登陆后再查看历史订单</Text>
 
                 <TouchableOpacity style={styles.reButton} onPress={this.props.onPress}>
-                    <Text style={{fontSize:pxToDp(15),color:'#101010',opacity: 0.71}}>重新加载</Text>
+                    <Text style={{fontSize:pxToDp(15),color:'#101010',opacity: 0.71}}>前往登陆</Text>
                 </TouchableOpacity>
             </View>
         )

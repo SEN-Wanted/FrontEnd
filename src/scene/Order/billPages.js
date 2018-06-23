@@ -38,8 +38,9 @@ export default class BillPages extends PureComponent<Props, State> {
         let M = (date.getMonth() + 1 < 10 ? ''+(date.getMonth()+1) : date.getMonth()+1)
         let D = date.getDate()
         let h = date.getHours() < 10 ?  '0'+date.getHours() + ':' : date.getHours() + ':'
-        let m = date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()
-        return ""+ M + "月" + D + "日 " + h + m 
+		let m = date.getMinutes() < 10 ? '0'+date.getMinutes() + ':' : date.getMinutes() + ':'
+		let s = date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds()
+        return ""+ M + "月" + D + "日 " + h + m + s
 	}
 
 	timeConversion(time){
@@ -50,7 +51,7 @@ export default class BillPages extends PureComponent<Props, State> {
 		let time2 = new Date(Date.parse(date) + 4 * 60 * 1000)
 		let time3 = new Date(Date.parse(date) + 10 * 60 * 1000)
 		let time4 = new Date(Date.parse(date) + 20 * 60 * 1000)
-		let time0 = "" + parseInt(time.substring(5,7)) + "月" + parseInt(time.substring(8,10)) + "日 " + time.substring(11,16)
+		let time0 = date.format('M')+'月'+ date.format('D')+'日 '+date.format('HH:mm:ss')
 		timeList.push(time0)
 		timeList.push(this.timestampTotime(time1))
 		timeList.push(this.timestampTotime(time2))

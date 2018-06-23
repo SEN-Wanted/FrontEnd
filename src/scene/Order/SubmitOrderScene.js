@@ -18,6 +18,7 @@ import wantedFetch from '../../common/WantedFetch';
 const { width, height, botBarHeight } = screen
 
 @inject(['listcar'])
+@inject(['user'])
 @observer
 export default class SubmitOrderScene extends Component {
     static navigationOptions = ({navigation}) => ({
@@ -62,6 +63,8 @@ export default class SubmitOrderScene extends Component {
 	}
 	
 	postOrderData = async() => {
+		let userID = this.props.user.userID
+        let token = this.props.user.token
 		let data = {
 			storeName: this.props.listcar.storeName,
 			foodList: this.props.listcar.states.listCar.slice(),
@@ -73,8 +76,15 @@ export default class SubmitOrderScene extends Component {
 			date: new Date().toLocaleString()
 		}
 		try{
-			let result = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/submitOrder','POST',data)
-			alert('OK')
+			//const result = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/submitOrder','POST',data)
+			const result = await wantedFetch('user/110/orders','POST',data,10000,'application/json',token)
+			if(result.res) {
+				let info = {
+					date:new Date().toLocaleString(),
+					storeName:data.storeName
+				}
+				this.props.navigation.navigate('OrderItemScene',{info: info})
+			}
 		} catch (error) {
 			alert('error' + error)
 		}

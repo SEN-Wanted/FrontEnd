@@ -22,11 +22,11 @@ export default class FoodListItem extends PureComponent <Props, State>{
     }*/
     render() {
         let { info,onAddPress } = this.props
-        const temp = '../../img/restaurant/yuanyangguodi.jpeg'
+        //const temp = '../../img/restaurant/yuanyangguodi.jpeg'
         return (
             <View style={styles.container}>
                 <View style={styles.leftContainer}>
-                    <Image source={require(temp)} style={styles.icon} />
+                    <Image source={{uri:'http://p0.meituan.net/waimaipoi/6b28d0851586128b0f29cc74355257a798875.jpg'}} style={styles.icon} />
                 </View>
                 <View style={styles.midContainer}>
                     <Text style={{color:'#101010', fontSize: pxToDp(14)}}>{info.name}</Text>

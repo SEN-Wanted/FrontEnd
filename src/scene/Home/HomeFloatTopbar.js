@@ -39,6 +39,7 @@ export default class HomeFloatTopbar extends PureComponent<Props,State> {
                         titleStyle={styles.titleText} 
                         icon={require('../../img/home/message.png')}
                         onPress={onPress3}
+                        badge={'38'}
                     />
                   
                 </View> 
