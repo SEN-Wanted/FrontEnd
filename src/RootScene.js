@@ -19,6 +19,7 @@ import SearchScene from './scene/Search/SearchScreen'
 import SearchResultScene from './scene/Search/SearchResultScreen'
 import SignUpScene from './scene/SignUp/SignUpScene'
 import LoginScene from './scene/Login/LoginScene'
+import ForgetScene from './scene/Login/ForgetScene'
 import RestaurantScene from './scene/Restaurant/RestaurantScene'
 import OrderItemScene from './scene/Order/OrderItemScene'
 
@@ -148,7 +149,8 @@ const Navigator = StackNavigator({
     MessageDetailScreen: {screen: MessageDetailScreen},
     NoMessageScreen: {screen: NoMessageScreen},
     SignUpScene: {screen: SignUpScene},
-    LoginScene: {screen: LoginScene}
+    LoginScene: {screen: LoginScene},
+    ForgetScene: {screen: ForgetScene}
 }, {
         //设置界面跳转方式
         transitionConfig: TransitionConfiguration,

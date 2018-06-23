@@ -14,6 +14,7 @@ import StarRating from 'react-native-star-rating'
 
 import wantedFetch,{RequestState} from '../../common/WantedFetch'
 import WaitProgress from '../../widget/WaitProgress'
+import OrderNotLogin from './OrderNotLogin'
 import NetWorkFail from '../../widget/NetWorkFail'
 import pxToDp from '../../common/pxToDp';
 import screen from '../../common/screen'
@@ -142,11 +143,7 @@ export default class OrderScene extends Component {
             }
         } else {
             return (
-                <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{color: 'black', fontSize: 30}}>
-                        您还未登陆，请登陆后查看
-                    </Text>
-                </View>
+                <OrderNotLogin onPress={() => {this.props.navigation.navigate('LoginScene')}} />
             )
         }
     }

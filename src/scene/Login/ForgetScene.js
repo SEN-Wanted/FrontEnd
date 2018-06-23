@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  AppRegistry,
   StyleSheet,
   View,
   Text,
@@ -11,10 +12,11 @@ import {
   NetInfo,
   StatusBar,
 } from 'react-native';
-import NavigationService from '../../common/NavigationService'
+
 import {observer, inject} from 'mobx-react'
-import wantedFetch,{RequestState} from '../../common/WantedFetch'
-import Form, {form} from './LoginForm'
+import NavigationService from '../../common/NavigationService'
+import wantedFetch from '../../common/WantedFetch'
+import Form, {form} from './ForgetForm'
 import screen from '../../common/screen'
 import WaitLoginProgress from '../../widget/WaitLoginProgress'
 
@@ -23,7 +25,7 @@ const { width, height } = screen
 
 @inject(['user'])
 @observer
-export default class LoginScene extends Component {
+export default class ForgetScene extends Component {
     static navigationOptions = () => {
         return {
             header: null,         //将首页的导航栏取消
@@ -42,17 +44,16 @@ export default class LoginScene extends Component {
             }
             try{
                 this.setState({visible: true})
-                const result = await wantedFetch('login','POST', data,10000,'multipart/form-data')
+                const result = await wantedFetch('sign_up','POST', data,10000,'multipart/form-data')
                 if(result.res.status_code == '201') {
                     this.props.user.setToken(result.res.token)
                     this.props.user.setUser(result.res.user.ID, result.res.user.username)
                     this.props.user.setLoginStatus(true)
                     this.setState({visible: false})
-                    //alert(""+ this.props.user.userID + " "+this.props.user.token)
                     this.jumpHome()
                 }else if(result.res.status_code == '401'){
                     this.setState({visible: false})
-                    alert('密码错误！')
+                    alert('该手机号已注册，请直接登录！')
                 }
             } catch(error) {
                 this.setState({visible: false})
@@ -63,6 +64,12 @@ export default class LoginScene extends Component {
 
     componentDidMount() {
         form.clear()
+        NetInfo.addEventListener('connectionChange',
+            (networkType) => {
+                //alert(networkType.type)
+                this.props.user.setNetworkType(networkType.type);
+            }
+        )
     }
 
 
@@ -70,15 +77,10 @@ export default class LoginScene extends Component {
         NavigationService.popToTop()
     }
 
-    jumpSignUp = () => {
+    jumpLogin = () => {
         form.clear()
-        this.props.navigation.navigate('SignUpScene')
+        this.props.navigation.navigate('LoginScene')
     }
-
-    jumpForget = () => {
-        this.props.navigation.navigate('ForgetScene')
-    }
-
     render() {
         return (
             <ImageBackground source={require('../../img/signAndLogin/login_bg.jpeg')} style={styles.imgBackground} >
@@ -88,15 +90,9 @@ export default class LoginScene extends Component {
                     <Image source={require('../../img/signAndLogin/magnifier.png')} style={styles.magnifier}/>
 
                     <Form form={form} />
-                    <TouchableOpacity style={styles.navigate} onPress={this.jumpSignUp}>
-                        <Text style={{fontSize: 15, color: 'white'}} >去注册</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity 
-                        style={[styles.navigate,{backgroundColor: 'transparent',top:height * 0.9,position:'absolute'}]}
-                        onPress={this.jumpForget}
-                    >
-                        <Text style={{fontSize: 17, color: 'white'}} >忘记密码</Text>
+                     
+                    <TouchableOpacity style={styles.navigate} onPress={this.jumpLogin}>
+                        <Text style={{fontSize: 15, color: 'white'}} >返回</Text>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
