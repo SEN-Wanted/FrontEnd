@@ -15,14 +15,10 @@ type State = {
 class HomeMenuView extends PureComponent <Props, State>{
     constructor(props:Object) {
         super(props)
-
-
     }
 
     render() {
         let {menuInfos, onMenuSelected} = this.props
-
-
         let menuElements = menuInfos.map((info,index)=>(
             <HomeMenuItem
                 key={index}

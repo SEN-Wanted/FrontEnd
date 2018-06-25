@@ -10,11 +10,11 @@ type Props = {
     color:any,
     onPress:Function,
 }
-//<FeaIcon name='circle' color={color} size={36} />
+
 type State = {
 
 }
-class HomeMenuItem extends PureComponent <Props, State>{
+export default class HomeMenuItem extends PureComponent <Props, State>{
 
     render() {
         let {title, icon, color, onPress} = this.props
@@ -43,10 +43,7 @@ const styles = StyleSheet.create({
         height: 50,//screen.width / 9,
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: 'yellow',
-        //borderRadius: 18,//screen.width / 18,
         borderColor:'white',
-       // borderWidth: 5,
     },
     icon: {
         width: screen.width / 17,
@@ -65,5 +62,3 @@ const styles = StyleSheet.create({
         fontSize: pxToDp(13),
     }
 })
-
-export default HomeMenuItem;

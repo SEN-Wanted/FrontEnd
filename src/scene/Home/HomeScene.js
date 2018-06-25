@@ -35,26 +35,17 @@ export default class HomeScene extends Component {
     constructor(props:Object) {
         super(props)
         this.state={
-            storeListdata:[],
-            refreshing: RefreshState.HeaderRefreshing,
+            storeListdata:[],         //店铺列表
+            refreshing: RefreshState.HeaderRefreshing,   //现在的请求等待状态
         }
     }
 
-    componentWillMount() {
-        NetInfo.addEventListener('connectionChange',
-            (networkType) => {
-                this.props.user.setNetworkType(networkType.type);
-            }
-        )
-        /*NetInfo.getConnectionInfo().done((status) => {
-            this.props.user.setNetworkType(status)
-        })*/
-    }
 
     componentDidMount() {
         this.requestData()
     }
 
+    //请求主页的店铺列表数据
     requestData = async() => {
         try{
             this.setState({refreshing: RefreshState.HeaderRefreshing})
@@ -82,6 +73,7 @@ export default class HomeScene extends Component {
 
     }
 
+    //请求更多的数据，目前是测试用
     onFooterRefresh = () => {
         this.setState({refreshing: RefreshState.FooterRefreshing})
 
@@ -100,19 +92,12 @@ export default class HomeScene extends Component {
         }, 2000)
     }
 
-    getCurrentNetConnection = () => {
-        NetInfo.addEventListener('connectionChange',
-            (networkType) => {
-                this.props.user.setNetworkType(networkType.type);
-            }
-        )
-    }
-
 
     onListItemSelected = (info) => {
         this.props.navigation.navigate('RestaurantScene',{info:info})
     }
 
+    //渲染flatlist的头部
     renderHeader=()=> {
         return (
             //flastList头部的容器
@@ -180,6 +165,7 @@ export default class HomeScene extends Component {
         )
     } 
 
+    //渲染flatlist的列表数据
     renderItem = (rowData) => {
         return (
             <RestaurantListItem
@@ -191,44 +177,25 @@ export default class HomeScene extends Component {
     }
 
     render() {
-        if(this.props.user.networkType === 'NONE' || this.props.user.networkType === 'none'){
-            return (
-                <View style={{flex: 1}}>
-                    <StatusBar  hidden={this.props.user.isStatusbarHidden}/>
-                    <NetWorkFail onPress={ this.getCurrentNetConnection }/>
-                </View>
-            )
-        } else {
-            return (
-                <View style={{flex: 1,backgroundColor:'white'}}>
-                    <StatusBar  hidden={this.props.user.isStatusbarHidden}/>
-                {/* <FlatList
+        return (
+            <View style={{flex: 1,backgroundColor:'white'}}>
+                <StatusBar  hidden={false}/>
+                <RefreshListView
                     ListHeaderComponent={ () => this.renderHeader() }
                     data={this.state.storeListdata}
                     renderItem={this.renderItem}
-                
                     keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
-                    onRefresh={this.requestData}
-                    refreshing={this.state.refreshing}
-                /> */}
+                    refreshState={this.state.refreshing}
+                    onHeaderRefresh={this.requestData}
+                    onFooterRefresh={this.onFooterRefresh}
 
-                    <RefreshListView
-                        ListHeaderComponent={ () => this.renderHeader() }
-                        data={this.state.storeListdata}
-                        renderItem={this.renderItem}
-                        keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
-                        refreshState={this.state.refreshing}
-                        onHeaderRefresh={this.requestData}
-                        onFooterRefresh={this.onFooterRefresh}
-
-                        footerRefreshingText= '玩命加载中 >.<'
-                        footerFailureText = '我擦嘞，居然失败了 =.=!'
-                        footerNoMoreDataText= '-我是有底线的-'
-                        footerEmptyDataText= '-好像什么东西都没有-'
-                    />
-                </View>      
-            )
-        }
+                    footerRefreshingText= '玩命加载中 >.<'
+                    footerFailureText = '我擦嘞，居然失败了 =.=!'
+                    footerNoMoreDataText= '-我是有底线的-'
+                    footerEmptyDataText= '-好像什么东西都没有-'
+                />
+            </View>      
+        )
     }
 }
 
@@ -237,15 +204,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
-
-
     headerSwiper: {
         //position: 'absolute',
         width: width,
         height: width * 0.556,
         //zIndex: 0,
     },
-    
     wrapper: {
 
     },
