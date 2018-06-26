@@ -34,6 +34,10 @@ export default class MineScene extends Component {
         NavigationService.navigate('LoginScene')
     }
 
+    jumpMessage = () => {
+        this.props.navigation.navigate('MessageScreen')
+    }
+
     render() {
         let isLogin = this.props.user.isLogin
         let username = this.props.user.username
@@ -44,7 +48,7 @@ export default class MineScene extends Component {
                         <TouchableOpacity style={styles.panel_header_setting}>
                             <Icon name="cog" size={20} color={Colors.white_fff} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={this.jumpMessage}>
                             <View style={styles.panel_header_message}>
                                 <BadgeView parentView={<Icon name="envelope" size={20} color={Colors.white_fff} />}
                                     badgeText={"38"} badgeTextColor={"red"} badgeBackgroundColor={"white"} />

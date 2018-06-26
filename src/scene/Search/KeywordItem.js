@@ -24,12 +24,14 @@ const styles = StyleSheet.create({
         height: 20,
         borderWidth: 1,
         borderColor: '#BBB',
+        borderRadius: 10,
         marginLeft: 10,
         marginTop: 10,
         paddingHorizontal: 3,
     },
     text: {
-        color: '#101010',
+        color: '#BBB',
         fontFamily: 'Roboto',
+        opacity: 0.7,
     }
 })
