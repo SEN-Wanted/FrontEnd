@@ -14,6 +14,7 @@ import OrderScene from './scene/Order/OrderScene'
 import MineScene from './scene/Mine/MineScene'
 
 import MineDetail from './scene/Mine/MineDetailScreen'
+import ModifyMineDetail from './scene/Mine/ModifyMineDetailScreen'
 import SearchScene from './scene/Search/SearchScreen'
 
 import SearchResultScene from './scene/Search/SearchResultScreen'
@@ -142,6 +143,7 @@ const Navigator = StackNavigator({
     OrderItemScene: {screen: OrderItemScene},
     SubmitOrderScene: {screen: SubmitOrderScene},
     MineDetail: {screen: MineDetail},
+    ModifyMineDetail: {screen: ModifyMineDetail},
     SearchScene: {screen: SearchScene},
     SearchResultScene: {screen: SearchResultScene},
     CodeScreen: {screen: CodeScreen},
