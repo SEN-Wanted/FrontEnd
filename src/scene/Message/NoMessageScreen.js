@@ -54,7 +54,9 @@ const styles = StyleSheet.create({
     },
     img: {
         width: 300,
-        height: 120
+        height: 120,
+        opacity: 0.25,
+        marginLeft: 38
     },
     text1: {
         fontFamily: 'Roboto',

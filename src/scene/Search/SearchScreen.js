@@ -11,6 +11,7 @@ import DivideLine from '../../widget/DivideLine';
 import KeywordItem from './KeywordItem';
 import RecommendItem from './RecommendItem';
 import Constants from '../../common/Constants';
+import wantedFetch from '../../common/WantedFetch';
 
 export default class SearchScreen extends Component {
     static propTypes = {
@@ -23,6 +24,22 @@ export default class SearchScreen extends Component {
         super(props);
     }
 
+    keyword = '';
+
+    search() {
+        const data = {
+            keyword: keyword
+        };
+        try{
+            const result = await wantedFetch('search','POST', data, 10000, 'application/json');
+            if(result.res.status_code == '201') {
+                this.props.navigation.navigate('SearchResultScene');
+            }
+        } catch(error) {
+            alert(error);
+        }
+    }
+
     static navigationOptions = ({navigation}) => ({
         headerTintColor: 'white',
         headerLeft: (
@@ -31,14 +48,14 @@ export default class SearchScreen extends Component {
             </TouchableOpacity>
         ),
         headerRight: (
-            <TouchableOpacity onPress={()=>{navigation.navigate('SearchResultScene')}}>
+            <TouchableOpacity onPress={this.search.bind(this)}>
                 <Text style={styles.search}>搜索</Text>
             </TouchableOpacity>
         ),
         headerTitle: (
             <View style={styles.input}>
                 <Image source={require('../../img/home/ic_search_white_36dp.png')} style={styles.searchIcon}/>
-                <TextInput placeholder="海底捞(珠影星光店)" underlineColorAndroid="transparent" style={styles.inputText}></TextInput>
+                <TextInput placeholder="海底捞(珠影星光店)" placeholderTextColor="#FFF" underlineColorAndroid="transparent" style={styles.inputText} value={keyword}></TextInput>
             </View>
         ),
     })
@@ -135,7 +152,8 @@ const styles = StyleSheet.create({
         height: 30,
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: '#B4AAAA',
+        backgroundColor: '#BBB',
+        opacity: 0.7,
         borderRadius: 30,
     },
     inputText: {

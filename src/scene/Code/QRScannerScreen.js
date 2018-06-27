@@ -5,7 +5,7 @@ import React, {PureComponent} from "react";
 import {Text, View, TouchableOpacity} from "react-native";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome";
-import wantedFetch from '../../common/WantedFetch'
+
 import Images from '../../common/Images';
 import Colors from '../../common/Colors';
 import TitleBar from './TitleBar';
@@ -44,7 +44,7 @@ export default class QRScannerScreen extends PureComponent<Props, State> {
                 hintText={'放入框内，自动扫描'}
                 hintTextStyle={{color: '#969CA5', fontSize: 17, fontFamily: 'italic',}}
                 hintTextPosition={100}
-                maskColor={Colors.black_000}
+                maskColor={"rgba(0,0,0,0.4)"}
                 onScanResultReceived={this.barcodeReceived.bind(this)}
                 bottomMenuHeight={20}
 
@@ -66,22 +66,6 @@ export default class QRScannerScreen extends PureComponent<Props, State> {
     }
 
     barcodeReceived(e) {
-        //alert(''+e.data)
-        this.requestData(e.data)
-        //if(status.status_code === '401') {
-       //     alert('asdasdas')
-        //}else {
-        //    alert('false')
-       // }
-        //alert(e.type + ' ' + e.data);
-    }
-
-    requestData = async(storeID) => {
-        const status = await wantedFetch('http://2v0683857e.iask.in:22871/index/'+storeID,'GET')
-        if(status.res.status_code||status.res.foodData){
-            alert(status.res.error_message)
-        }else {
-            alert('false')
-        }
+        alert(e.type + ' ' + e.data);
     }
 }

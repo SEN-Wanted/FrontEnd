@@ -34,6 +34,9 @@ export default class PaymentScreen extends PureComponent<Props, State> {
 
     constructor(props) {
         super(props);
+        this.state = {
+            path: null // 保存二维码SVG的path
+        };
     }
 
     static navigationOptions = () => {
