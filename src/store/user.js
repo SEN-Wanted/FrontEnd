@@ -10,13 +10,10 @@ class user {
     }
 
     @observable
-    userPhone = '10000'
-
-    @observable
     userID = '10000'
 
     @observable
-    username = 'chenmy'
+    username = 'chenmy'    
 
     @action.bound
     setUser(id, username) {
@@ -25,13 +22,39 @@ class user {
     }
 
     @action.bound
+    setUserName(username) {
+        this.username = username
+    }
+
+    @action.bound
+    getUserName() {
+        return this.username;
+    }
+
+    @observable
+    userPhone = '10000'
+
+    @action.bound
     setUserPhone(phone) {
         this.userPhone = phone
     }
 
+    @action.bound
+    getUserPhone() {
+        return this.userPhone;
+    }
+
+    @observable
+    password = ''
+
+    @action.bound
+    setPassword(password) {
+        this.password = password
+    }
 
     @observable
     token = ''
+
     @action.bound
     setToken(Token) {
         this.token = Token

@@ -5,7 +5,7 @@ import React, {PureComponent} from "react";
 import {StyleSheet, Text, TouchableOpacity, View, TextInput, Image} from "react-native";
 
 type Props = {
-    info: Object,
+    field: Object,
 }
 
 type State = {
@@ -14,13 +14,22 @@ type State = {
 
 export default class ModifyInfoItem extends PureComponent<Props, State> {
     render() {
-        let {info} = this.props;
+        let {field} = this.props;
 
         return(
             <View style={styles.container}>
-                <TextInput underlineColorAndroid="transparent" editable={false} style={styles.title}>{info.title}</TextInput>
+                <TextInput {...field.bind()} underlineColorAndroid="transparent" editable={false} style={styles.title}>{field.name}</TextInput>
                 <View style={styles.content}>
-                    <TextInput underlineColorAndroid="transparent" maxLength={info.title=='手机号'?11:16} keyboardType={info.title=='手机号'?'numeric':'default'} secureTextEntry={info.title.indexOf('密码')>-1?true:false} style={styles.inputText}>{info.detail}</TextInput>
+                    <TextInput
+                        {...field.bind()}
+                        underlineColorAndroid="transparent"
+                        maxLength={16}
+                        keyboardType={'default'}
+                        secureTextEntry={info.title.indexOf('密码')>-1?true:false}
+                        style={styles.inputText}
+                        value={field.value}
+                        onChangeText={(text) => field.set(text)}>
+                    </TextInput>
                     <Image source={require('../../img/mine/cancel.png')} style={styles.cancelIcon}/>
                 </View>
             </View>

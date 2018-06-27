@@ -4,17 +4,20 @@
 import React, {PureComponent} from "react";
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import {observer, inject} from 'mobx-react';
 
-import ModifyInfoItem from './ModifyInfoItem';
+import Form, {form} from './ModifyForm';
 
 type Props = {
-    info: Object
+    
 }
 
 type State = {
 
 }
 
+@inject(['user'])
+@observer
 export default class ModifyMineDetailScreen extends PureComponent<Props, State> {
     static navigationOptions = ({navigation}) => ({
         headerStyle: {backgroundColor:'#FFFFFF'},
@@ -34,40 +37,35 @@ export default class ModifyMineDetailScreen extends PureComponent<Props, State> 
         headerRight: <View />,
     })
 
-    modify() {
-        const data = {
-            title: info.title,
-            detail: info.detail
-        };
-        try{
-            const result = await wantedFetch('search','POST', data, 10000, 'application/json');
-            if(result.res.status_code == '201') {
-                this.props.navigation.navigate('SearchResultScene');
+    constructor(props) {
+        super(props);
+        form.$hooks.onSuccess = async (form) => {
+            const data = {
+                username: form.$('username').value,
+                password: form.$('password').value,
+                newPassword: form.$('newPassword').value,
+            };
+            try{
+                const result = await wantedFetch('users/modify','POST', data, 10000, 'application/json');
+                if(result.res.status_code == '201') {
+                    this.props.user.setUserName(result.res.user.username);
+                    this.props.user.setPassword(result.res.user.newPassword);
+                    this.props.navigation.navigate('MineDetail');
+                }
+            } catch(error) {
+                alert(error);
             }
-        } catch(error) {
-            alert(error);
         }
     }
 
-    renderItem = (rowData)=> {
-        return (
-            <ModifyInfoItem
-                info={rowData.item}
-            />
-        )
+    componentDidMount() {
+        form.clear();
     }
 
     render() {
         return(
             <View style={styles.container}>
-                <FlatList
-                    data={info}
-                    renderItem={this.renderItem}
-                    keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
-                />
-                <TouchableOpacity style={styles.modify} onPress={this.modify.bind(this)}>
-                    <Text style={styles.modifyText}>确认修改</Text>
-                </TouchableOpacity>
+                <Form form={form} />
             </View>
         )
     }

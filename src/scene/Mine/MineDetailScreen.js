@@ -6,10 +6,13 @@ import {StyleSheet, Text, View, TouchableOpacity, FlatList, Modal, Image} from "
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome";
 import ImagePicker from 'react-native-image-picker';
+import {observer, inject} from 'mobx-react';
 
 import InfoItem from "./InfoItem";
 import DivideLine from "../../widget/DivideLine";
 
+@inject(['user'])
+@observer
 export default class MineDetailScreen extends Component {
     static propTypes = {
         quitPress: PropTypes.func,
@@ -122,10 +125,9 @@ export default class MineDetailScreen extends Component {
                 </TouchableOpacity>
                 <FlatList
                     data={[
-                        {title: '用户名', detail: 'chenmy'},
+                        {title: '用户名', detail: this.props.user.getUserName()},
                         {title: '账户密码', detail: '修改'},
-                        {title: '绑定手机号', detail: '137****3146'},
-                        {title: '微信账户', detail: '解除绑定'},
+                        {title: '绑定手机号', detail: this.props.user.getUserPhone()},
                     ]}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
