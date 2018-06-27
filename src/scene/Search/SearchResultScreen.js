@@ -52,9 +52,21 @@ export default class SearchResultScreen extends Component {
             let index = this.props.navigation.state.params.index
             switch(index){
                 case 0:
-                    type = 'dessert'; break;
+                    type = '甜品'; break;
                 case 1:
-                    type = 'okokokok'; break;
+                    type = '西餐'; break;
+                case 2:
+                    type = '品牌餐饮'; break;
+                case 3:
+                    type = '自助餐'; break;
+                case 4:
+                    type = '小吃快餐'; break;
+                case 5:
+                    type = '咖啡酒吧'; break;
+                case 6:
+                    type = '生日聚会'; break;
+                case 7:
+                    type = '更多'; break;
             }
         }
         this.requestData(type)

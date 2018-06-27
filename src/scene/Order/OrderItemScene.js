@@ -52,13 +52,18 @@ export default class OrderItemScene extends Component {
     }
 
     requestData = async() => {
+        let orderID = this.props.navigation.state.params.info.orderID
+        alert(orderID)
         let userID = this.props.user.userID
         let token = this.props.user.token
         try {
-            //const json = await wantedFetch('user/110/orders/1','GET',{},10000,'application/json',token)
-            const json = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/order','GET')
-            let data = json.res
-            this.setState({detail: data})
+            const json = await wantedFetch('user/'+userID+'/orders/'+orderID,'GET',{},10000,'application/json',token)
+            //const json = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/order','GET')
+            if(json.res.status_code === '200'){
+                let data = json.res
+                this.setState({detail: data})
+                //alert('get ok!')
+            }
         }catch (error) {
             alert('error' + error)
         }
