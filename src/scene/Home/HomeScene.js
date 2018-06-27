@@ -49,7 +49,8 @@ export default class HomeScene extends Component {
     requestData = async() => {
         try{
             this.setState({refreshing: RefreshState.HeaderRefreshing})
-            const json = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/stores','GET')
+            //const json = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/stores','GET')
+            const json = await wantedFetch('index','GET')
             let dataList = json.res.listStoreData.map((info) => ({
                 icon: info.icon,
                 storeName: info.storeName,
@@ -62,6 +63,7 @@ export default class HomeScene extends Component {
                 discountNumber: info.discountNumber,
                 isAppOffer: info.isAppOffer,
             }))
+            //alert(''+dataList[0].icon)
             this.setState({
                 storeListdata: dataList,
                 refreshing: dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,

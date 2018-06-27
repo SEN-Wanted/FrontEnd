@@ -85,10 +85,12 @@ export default class RestaurantScene extends Component{
 
 
     requestData = async() => {
-        let timeout = 2000
+        let a = this.props.navigation.state.params.info.storeID
+        let timeout = 10000
         try {
             this.setState({hasReqOver: RequestState.Wait})
-            const response = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/food','GET',{},timeout)
+            //const response = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/food','GET',{},timeout)
+            const response = await wantedFetch('index/'+a,'GET',{},timeout)
             let foodList = response.res.foodData.map((info) => ({
                 title: info.title,
                 id: info.id,
@@ -99,7 +101,7 @@ export default class RestaurantScene extends Component{
                 hasReqOver: RequestState.Success
             })
         } catch (error) {
-            console.log('error' + error)
+            alert('error' + error)
             this.setState({ hasReqOver: RequestState.Failue })
         }
     }

@@ -8,6 +8,7 @@ import {
     ScrollView,
 } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
+import Moment from 'moment'
 import PasswordModal from './pay-password/PasswordModal'
 import screen from '../../common/screen'
 import pxToDp from '../../common/pxToDp'
@@ -63,8 +64,12 @@ export default class SubmitOrderScene extends Component {
 	}
 	
 	postOrderData = async() => {
+		Moment.locale('zh-cn')
+		let time = Moment()
+		let date = time.format().substring(0,10)+ time.format(' HH:mm:ss') 
 		let userID = this.props.user.userID
-        let token = this.props.user.token
+		let token = this.props.user.token
+		alert(date)
 		let data = {
 			storeName: this.props.listcar.storeName,
 			foodList: this.props.listcar.states.listCar.slice(),
@@ -73,12 +78,12 @@ export default class SubmitOrderScene extends Component {
 			totalFee: this.props.listcar.states.totalPrice + 9,
 			offer: 15,
 			paymentMethod: 1,
-			date: new Date().toLocaleString()
+			date: date
 		}
 		try{
 			//const result = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/submitOrder','POST',data)
-			const result = await wantedFetch('user/110/orders','POST',data,10000,'application/json',token)
-			if(result.res) {
+			const result = await wantedFetch('user/'+userID+'/orders','POST',data,10000,'application/json',token)
+			if(result.res.status_code === '201') {
 				let info = {
 					date:new Date().toLocaleString(),
 					storeName:data.storeName

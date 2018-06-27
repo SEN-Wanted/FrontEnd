@@ -11,12 +11,13 @@ import {
   NetInfo,
   StatusBar,
 } from 'react-native';
-import NavigationService from '../../common/NavigationService'
 import {observer, inject} from 'mobx-react'
-import wantedFetch,{RequestState} from '../../common/WantedFetch'
+import Toast, {DURATION} from 'react-native-easy-toast'
+import NavigationService from '../../common/NavigationService'
+import wantedFetch from '../../common/WantedFetch'
 import Form, {form} from './LoginForm'
 import screen from '../../common/screen'
-import WaitLoginProgress from '../../widget/WaitLoginProgress'
+import WaitModal from '../../widget/WaitModal'
 
 const { width, height } = screen
 
@@ -44,15 +45,16 @@ export default class LoginScene extends Component {
                 this.setState({visible: true})
                 const result = await wantedFetch('login','POST', data,10000,'multipart/form-data')
                 if(result.res.status_code == '201') {
+                    alert(result.res.user.id)
                     this.props.user.setToken(result.res.token)
-                    this.props.user.setUser(result.res.user.ID, result.res.user.username)
+                    this.props.user.setUser(result.res.user.id, result.res.user.username)
                     this.props.user.setLoginStatus(true)
                     this.setState({visible: false})
                     //alert(""+ this.props.user.userID + " "+this.props.user.token)
                     this.jumpHome()
                 }else if(result.res.status_code == '401'){
                     this.setState({visible: false})
-                    alert('密码错误！')
+                    this.refs.toast.show('用户名或密码错误！')
                 }
             } catch(error) {
                 this.setState({visible: false})
@@ -83,7 +85,7 @@ export default class LoginScene extends Component {
         return (
             <ImageBackground source={require('../../img/signAndLogin/login_bg.jpeg')} style={styles.imgBackground} >
                 <StatusBar translucent={true} hidden={true}/>
-                <WaitLoginProgress visible={this.state.visible} />
+                <WaitModal visible={this.state.visible} />
                 <View style={styles.container} >
                     <Image source={require('../../img/signAndLogin/magnifier.png')} style={styles.magnifier}/>
 
@@ -99,6 +101,7 @@ export default class LoginScene extends Component {
                         <Text style={{fontSize: 17, color: 'white'}} >忘记密码</Text>
                     </TouchableOpacity>
                 </View>
+                <Toast ref="toast" />
             </ImageBackground>
         );
     }
