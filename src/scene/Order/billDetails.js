@@ -28,7 +28,9 @@ export default class BillDetails extends PureComponent<Props, State> {
 	
 
 	render(){
-		let {storeName, foodList, mealFee, serviceFee, totalFee, offer, paymentMethod, date, orderNumber} = this.props.info
+		Moment.locale('zh-cn')
+		let {storeName, foodList, mealFee, ServiceFee, totalFee, offer, paymentMethod, date, orderNumber} = this.props.info
+
 		let dishesList=[];
 		let length = foodList ? foodList.length : 3
 		let isHasInfo = storeName ? true: false
@@ -37,13 +39,13 @@ export default class BillDetails extends PureComponent<Props, State> {
 				<View style={detailsStyle.ListItem} key={i}>
 					<SingleWord text={'折'} />
 					<View style={{width: width * 0.14, justifyContent: 'center', alignItems: 'center'}}>
-						<Text style={detailsStyle.blackFont}>{isHasInfo ? foodList[i].foodName : 'test'} </Text>
+						<Text style={detailsStyle.blackFont}>{isHasInfo ? foodList[i].name : 'test'} </Text>
 					</View>
 					<View style={{width: width * 0.1, justifyContent: 'flex-start'}}>
 						<Text style={detailsStyle.fontSize11}>*{isHasInfo ? foodList[i].number : '0'} </Text>
 					</View>
 					<View style={detailsStyle.priceStyle}>
-						<Text style={detailsStyle.blackFont}>￥{isHasInfo ? foodList[i].price : '0'} </Text>
+						<Text style={detailsStyle.blackFont}>￥{isHasInfo ? foodList[i].price*foodList[i].number : '0'} </Text>
 					</View>
 				</View>
 			);
@@ -83,7 +85,7 @@ export default class BillDetails extends PureComponent<Props, State> {
 						<View style={detailsStyle.ListItem}>
 							<Text style={detailsStyle.blackFont}>服务费</Text>
 							<View style={detailsStyle.priceStyle}>
-								<Text style={detailsStyle.blackFont}>￥{isHasInfo? serviceFee : 6}</Text>
+								<Text style={detailsStyle.blackFont}>￥{isHasInfo? ServiceFee : 6}</Text>
 							</View>
 						</View>
 					</View>

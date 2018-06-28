@@ -17,6 +17,7 @@ const { width, height } = screen
 export default class RestaurantListItem extends PureComponent <Props, State>{
 
     render() {
+        const host = "http://2v0683857e.iask.in:22871"
         let {info, onPress} = this.props
         //let imageUrl = info.imageUrl.replace('w.h', '160.0')
   
@@ -24,7 +25,7 @@ export default class RestaurantListItem extends PureComponent <Props, State>{
             <TouchableOpacity style={styles.container} onPress={()=>{
                 onPress(info)
             }}>
-                <Image source={{uri:''+info.icon}} style={styles.icon} />
+                <Image source={{uri:host+info.icon}} style={styles.icon} />
                 <View style={styles.midContainer}>
                     <Text style={{fontSize:pxToDp(14),fontFamily:'Roboto',color:'#101010'}}>{info.storeName}</Text>
                     <View style={{width:140,height:27,flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>

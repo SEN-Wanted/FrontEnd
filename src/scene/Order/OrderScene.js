@@ -6,14 +6,17 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
-    FlatList
+    FlatList,
+    DeviceEventEmitter
 } from 'react-native'
 import { observer, inject, Observer } from 'mobx-react/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome'
 import StarRating from 'react-native-star-rating'
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 import wantedFetch,{RequestState} from '../../common/WantedFetch'
 import WaitProgress from '../../widget/WaitProgress'
+import WaitModal from '../../widget/WaitModal'
 import OrderNotLogin from './OrderNotLogin'
 import NetWorkFail from '../../widget/NetWorkFail'
 import pxToDp from '../../common/pxToDp';
@@ -44,6 +47,7 @@ export default class OrderScene extends Component {
         this.state = {
             orderList: [],
             hasReqOver: RequestState.Wait,
+            visible: false,
         }
     }
 
@@ -51,6 +55,13 @@ export default class OrderScene extends Component {
         if(this.props.user.isLogin) {
             this.requestData()
         }
+        this.listener = DeviceEventEmitter.addListener('submitOrder',(e)=>{
+            this.requestData()
+        });
+    }
+    componentWillUnmount(){
+        // 移除监听
+        this.listener.remove();
     }
 
     requestData = async() => {
@@ -59,19 +70,22 @@ export default class OrderScene extends Component {
         //alert(''+token)
         try {
             this.setState({hasReqOver: RequestState.Wait})
-            const response = await wantedFetch('user/110/orders','GET',{},10000,'application/json',token)
-            if(response.res.status_code === '201') {
+            const response = await wantedFetch('user/'+userID+'/orders','GET',{},10000,'application/json',token)
+            if(response.res.status_code === '200') {
                 let orderList = response.res.orderList.map((info) => ({
                     orderID: info.orderID,
                     storeName: info.storeName,
-                    isEvaluate: info.isEvaluate,
-                    evaluationGrade: info.evaluationGrade,
+                    rating: info.rating,
                     date: info.date,
                     cost: info.cost
                 }))
                 this.setState({ 
                     orderList: orderList,
                     hasReqOver: RequestState.Success
+                })
+            }else {
+                this.setState({ 
+                    hasReqOver: RequestState.Failue
                 })
             }
         } catch (error) {
@@ -80,8 +94,31 @@ export default class OrderScene extends Component {
         }
     }
 
-    onStarRatingPress(rating, index) {
-        this.props.user.evaluateOrder(index,rating)
+    onStarRatingPress(rating, id) {
+        this.props.user.evaluateOrder(id,rating)
+    }
+
+    postRatingStar = async(rating,id) => {
+        let token = this.props.user.token
+        let userID = this.props.user.userID
+        let data = {
+            rating: rating
+        }
+        this.refs.toast.show('test',DURATION.LENGTH_LONG)
+        try {
+            this.setState({visible: true})
+            const response = await wantedFetch('user/'+userID+'/orders/'+id,'POST',data,10000,'application/json',token)
+            if(response.res.status_code === '201') {
+                this.setState({visible: false})
+                this.requestData()
+            }else {
+                this.setState({visible: false})
+                this.refs.toast.show('出了点小差错，请重试',DURATION.LENGTH_LONG)
+            }
+        } catch (error) {
+            alert('' + error)
+            this.setState({visible: false})
+        }
     }
 
 
@@ -92,7 +129,7 @@ export default class OrderScene extends Component {
                     <Text style={{color:'#101010', fontSize: pxToDp(14)}}> 
                         {rowData.item.storeName} 
                     </Text>
-                    <Text style={orderSceneStyle.isScored}>{rowData.item.isEvaluate? '已评价':'未评价'}</Text>
+                    <Text style={orderSceneStyle.isScored}>{rowData.item.rating? '已评价':'待评价'}</Text>
                 </View>
 
                 <View style={orderSceneStyle.devideLine} />
@@ -107,10 +144,10 @@ export default class OrderScene extends Component {
                             starSize={24}
                             emptyStarColor={"#AAAAAA"}
                             fullStarColor={"gold"}
-                            disabled={rowData.item.status? true:false}
+                            disabled={rowData.item.rating? true:false}
                             maxStars={5}
-                            rating={rowData.item.evaluationGrade}
-                            selectedStar={(rating) => this.onStarRatingPress(rating, rowData.index)}
+                            rating={rowData.item.rating}
+                            selectedStar={(rating) => this.postRatingStar(rating, rowData.item.orderID)}
                         />
                     </View> 
                     <TouchableOpacity 
@@ -133,11 +170,13 @@ export default class OrderScene extends Component {
             } else {
                 return (
                     <View style={{backgroundColor: 'white', flex: 1}}>
+                        <WaitModal visible={this.state.visible} />
                         <FlatList
                             data={this.state.orderList}
                             renderItem={this.renderItem}
                             keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
                         />
+                        <Toast ref="toast" />
                     </View>
                 ) 
             }

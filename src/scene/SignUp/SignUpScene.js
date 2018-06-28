@@ -14,11 +14,12 @@ import {
 } from 'react-native';
 
 import {observer, inject} from 'mobx-react'
+import Toast, {DURATION} from 'react-native-easy-toast'
 import NavigationService from '../../common/NavigationService'
 import wantedFetch from '../../common/WantedFetch'
 import Form, {form} from './SignUpForm'
 import screen from '../../common/screen'
-import WaitLoginProgress from '../../widget/WaitLoginProgress'
+import WaitModal from '../../widget/WaitModal'
 
 const { width, height } = screen
 
@@ -47,13 +48,13 @@ export default class SignUpScene extends Component {
                 const result = await wantedFetch('sign_up','POST', data,10000,'multipart/form-data')
                 if(result.res.status_code == '201') {
                     this.props.user.setToken(result.res.token)
-                    this.props.user.setUser(result.res.user.ID, result.res.user.username)
+                    this.props.user.setUser(result.res.user.id, result.res.user.username)
                     this.props.user.setLoginStatus(true)
                     this.setState({visible: false})
                     this.jumpHome()
                 }else if(result.res.status_code == '401'){
                     this.setState({visible: false})
-                    alert('该手机号已注册，请直接登录！')
+                    this.refs.toast.show('该手机号已注册，请直接登录！')
                 }
             } catch(error) {
                 this.setState({visible: false})
@@ -85,16 +86,17 @@ export default class SignUpScene extends Component {
         return (
             <ImageBackground source={require('../../img/signAndLogin/login_bg.jpeg')} style={styles.imgBackground} >
                 <StatusBar translucent={true} hidden={true}/>
-                <WaitLoginProgress visible={this.state.visible} />
+                <WaitModal visible={this.state.visible} />
                 <View style={styles.container} >
                     <Image source={require('../../img/signAndLogin/magnifier.png')} style={styles.magnifier}/>
 
-                    <Form form={form} />
+                    <Form form={form} onPress={()=>{alert(''+form.$('phone').value)}}/>
                      
                     <TouchableOpacity style={styles.navigate} onPress={this.jumpLogin}>
                         <Text style={{fontSize: 15, color: 'white'}} >已注册登陆</Text>
                     </TouchableOpacity>
                 </View>
+                <Toast ref="toast" />
             </ImageBackground>
         );
     }

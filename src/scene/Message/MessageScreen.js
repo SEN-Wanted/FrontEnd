@@ -1,22 +1,18 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {View, Text, Image, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
-
+import { observer, inject} from 'mobx-react/native'
+import pxToDp from '../../common/pxToDp'
 import MessageItem from './MessageItem';
+import screen from '../../common/screen'
 import WaitProgress from '../../widget/WaitProgress';
 import NetWorkFail from '../../widget/NetWorkFail';
 import wantedFetch, {RequestState} from '../../common/WantedFetch';
 
-type Props = {
-
-}
-
-type State = {
-
-};
+const { width, height } = screen
 
 @inject(['user'])
 @observer
-export default class MessageScreen extends PureComponent<Props, State> {
+export default class MessageScreen extends Component {
     static navigationOptions = ({navigation}) => ({
         headerStyle: {backgroundColor:'#140105'},
         headerTintColor: 'white',
@@ -47,35 +43,8 @@ export default class MessageScreen extends PureComponent<Props, State> {
     }
 
     componentDidMount(){
-        if(this.props.user.isLogin) {
-            this.requestData()
-        }
     }
 
-    requestData = async() => {
-        let userID = this.props.user.userID;
-        let token = this.props.user.token;
-        try {
-            this.setState({hasReqOver: RequestState.Wait});
-            const response = await wantedFetch('index/message?storeId=', 'GET', {}, 10000, 'application/json', token);
-            if(response.res.status_code === '201') {
-                let messageList = response.res.messageList.map((info) => ({
-                    icon: info.icon,
-                    count: info.count,
-                    shop: info.shop,
-                    time: info.time,
-                    detail: info.detail
-                }));
-                this.setState({ 
-                    messageList: messageList,
-                    hasReqOver: RequestState.Success
-                });
-            }
-        } catch (error) {
-            alert('' + error);
-            this.setState({ hasReqOver: RequestState.Failue });
-        }
-    }
 
     onListItemSelected = (info) => {
         if(info.count > 0) {
@@ -97,25 +66,22 @@ export default class MessageScreen extends PureComponent<Props, State> {
 
     render() {
         if(this.props.user.isLogin) {
-            if(this.state.hasReqOver === RequestState.Wait) {
-                return <WaitProgress />
-            }
-            else if(this.state.hasReqOver === RequestState.Failue) {
-                return <NetWorkFail onPress = {this.requestData} />
-            }
-            else {
-                return (
-                    <View>
-                        <FlatList
-                            data={this.state.messageList}
-                            renderItem={this.renderItem}
-                            keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
-                        />
-                    </View>
+            return (
+                <View>
+                    <FlatList
+                        data={[
+                            {icon: require('../../img/message/notification.png'), count: 5, shop: '系统通知', time:'2018.5.3', detail: '全新优惠活动登场，这个“五一”给你不一样...'},
+                            {icon: require('../../img/home/test.png'), count: 2, shop: '麦当劳(GOGO新天地店)', time:'2018.5.21', detail: '您的订单已配餐完成，请前往前台取餐'},
+                            {icon: require('../../img/home/test.png'), count: 2, shop: '海底捞(珠影星光店)', time:'2018.4.11', detail: '后厨正在备餐，请稍等，一大波美食即将登场，敬请期待'},
+                            {icon: require('../../img/message/coupon.png'), count: 1, shop: '商家优惠券', time:'2018.5.21', detail: '“麦当劳(GOGO新天地店)”送您一张“满80减10元”优惠券'},
+                            {icon: require('../../img/message/service.png'), count: 0, shop: '客服消息', time:'', detail: ''}
+                        ]}
+                        renderItem={this.renderItem}
+                        keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
+                    />
+                </View>
                 ) 
-            }
-        }
-        else {
+        }else {
             return(
                 <View style={styles.container}>
                     <Image source={require('../../img/other/notLogin.png')} style={{width:width*0.417,height:width*0.417,opacity: 0.7}} />

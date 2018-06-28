@@ -1,7 +1,7 @@
 /*
  * 修改个人详细信息
  */
-import React, {PureComponent} from "react";
+import React, {Component} from "react";
 import {StyleSheet, Text, TouchableOpacity, View, TextInput, Image} from "react-native";
 
 type Props = {
@@ -12,7 +12,7 @@ type State = {
 
 }
 
-export default class ModifyInfoItem extends PureComponent<Props, State> {
+export default class ModifyInfoItem extends Component<Props, State> {
     render() {
         let {field} = this.props;
 
@@ -25,7 +25,7 @@ export default class ModifyInfoItem extends PureComponent<Props, State> {
                         underlineColorAndroid="transparent"
                         maxLength={16}
                         keyboardType={'default'}
-                        secureTextEntry={info.title.indexOf('密码')>-1?true:false}
+                        secureTextEntry={field.label.indexOf('密码')>-1?true:false}
                         style={styles.inputText}
                         value={field.value}
                         onChangeText={(text) => field.set(text)}>

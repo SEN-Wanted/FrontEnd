@@ -77,9 +77,9 @@ class user {
     ]
 
     @action.bound
-    evaluateOrder(index, ratingNumber){
-        this.orderList[index].status = true
-        this.orderList[index].rating = ratingNumber
+    evaluateOrder(id, ratingNumber){
+        this.orderList[id].status = true
+        this.orderList[id].rating = ratingNumber
     }
 
     @action.bound

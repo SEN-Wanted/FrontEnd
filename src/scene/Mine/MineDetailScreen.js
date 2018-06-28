@@ -135,7 +135,7 @@ export default class MineDetailScreen extends Component {
                 <TouchableOpacity onPress={this.props.quitPress} style={styles.quit}>
                     <Text style={styles.quitText}>退出当前账号</Text>
                 </TouchableOpacity>
-                <Modal visible={this.state.visible} transparent={this.state.transparent}>
+                <Modal visible={this.state.visible} transparent={this.state.transparent} onRequestClose={()=>{console.log('mineDetailModal close')}}>
                     <View style={[styles.modal, {backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.4)' : 'transparent'}]}>
                         <TouchableOpacity onPress={this.selectFromCarema.bind(this)} style={styles.bottomItem}>
                             <Text style={styles.bottomItemText}>拍照</Text>

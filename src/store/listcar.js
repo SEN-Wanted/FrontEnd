@@ -28,7 +28,7 @@ class listcar {
         modalVisible: false,
         isTrigger: false,
 
-        listCar : [],
+        listCar : [],    //数组存储对象，对象长这样{key:"string",name:"string",price:number,number:number}
         listCount : 0,
         totalCount: 0,
         totalPrice: 0,

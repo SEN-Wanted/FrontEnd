@@ -10,9 +10,11 @@ import Images from '../../common/Images';
 import Colors from '../../common/Colors';
 import TitleBar from './TitleBar';
 import QRScannerView from './QRScannerView';
+import wantedFetch from '../../common/WantedFetch'
 
 type Props = {
     onPress: Function,
+    scanJump: any,
 }
 
 type State = {
@@ -20,18 +22,19 @@ type State = {
 }
 
 export default class QRScannerScreen extends PureComponent<Props, State> {
-    constructor(props) {
-        super(props);
-    }
-
     static navigationOptions = () => {
         return {
             header: null,         //将首页的导航栏取消
         }
     }
 
+    constructor(props) {
+        super(props);
+    }
+
+
     render() {
-        let {onPress} = this.props;
+        let {onPress,scanJump} = this.props;
         
         return (
             <QRScannerView
@@ -45,7 +48,7 @@ export default class QRScannerScreen extends PureComponent<Props, State> {
                 hintTextStyle={{color: '#969CA5', fontSize: 17, fontFamily: 'italic',}}
                 hintTextPosition={100}
                 maskColor={"rgba(0,0,0,0.4)"}
-                onScanResultReceived={this.barcodeReceived.bind(this)}
+                onScanResultReceived={scanJump ? (e) => scanJump(e) : (e) => {console.log(e)}}
                 bottomMenuHeight={20}
 
                 renderTopBarView={() => {
@@ -65,7 +68,4 @@ export default class QRScannerScreen extends PureComponent<Props, State> {
         
     }
 
-    barcodeReceived(e) {
-        alert(e.type + ' ' + e.data);
-    }
 }

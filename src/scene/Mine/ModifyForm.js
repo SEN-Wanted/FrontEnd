@@ -24,8 +24,8 @@ export default observer(({form}) => {
             <ModifyInfoItem field={form.$('username')} />
             <ModifyInfoItem field={form.$('password')} />
             <ModifyInfoItem field={form.$('newPassword')} />
-            <TouchableOpacity style={styles.modify} onPress={form.onSubmit}>
-                <Text style={styles.modifyText}>确认修改</Text>
+            <TouchableOpacity style={{height: 45,backgroundColor: '#FFFFFF',justifyContent: 'center',}} onPress={form.onSubmit}>
+                <Text style={{fontFamily: 'Roboto',fontSize: 15,color: '#E51C23',textAlign: 'center',}}>确认修改</Text>
             </TouchableOpacity>
         </View>
     )

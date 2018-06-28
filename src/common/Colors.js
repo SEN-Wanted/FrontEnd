@@ -9,6 +9,7 @@ const colors = {
     blue_1a7fff: '#1A7FFF',
     black_0000004D: '#0000004D',
 
+    //设计常用颜色
     red_E51C23: '#E51C23',
     gray_524D52: '#524D52',
     gray_969696: '#969696',

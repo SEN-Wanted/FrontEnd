@@ -14,7 +14,7 @@ type Props = {
 }
 
 
-export default class WaitLoginProgress extends PureComponent {
+export default class WaitModal extends PureComponent {
 
     render() {
         return (

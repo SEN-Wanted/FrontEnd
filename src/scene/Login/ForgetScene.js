@@ -18,7 +18,7 @@ import NavigationService from '../../common/NavigationService'
 import wantedFetch from '../../common/WantedFetch'
 import Form, {form} from './ForgetForm'
 import screen from '../../common/screen'
-import WaitLoginProgress from '../../widget/WaitLoginProgress'
+import WaitModal from '../../widget/WaitModal'
 
 const { width, height } = screen
 
@@ -79,17 +79,17 @@ export default class ForgetScene extends Component {
 
     jumpLogin = () => {
         form.clear()
-        this.props.navigation.navigate('LoginScene')
+        this.props.navigation.goBack()
     }
     render() {
         return (
             <ImageBackground source={require('../../img/signAndLogin/login_bg.jpeg')} style={styles.imgBackground} >
                 <StatusBar translucent={true} hidden={true}/>
-                <WaitLoginProgress visible={this.state.visible} />
+                <WaitModal visible={this.state.visible} />
                 <View style={styles.container} >
                     <Image source={require('../../img/signAndLogin/magnifier.png')} style={styles.magnifier}/>
 
-                    <Form form={form} />
+                    <Form form={form} onPress={() => {alert('test!')}}/>
                      
                     <TouchableOpacity style={styles.navigate} onPress={this.jumpLogin}>
                         <Text style={{fontSize: 15, color: 'white'}} >返回</Text>

@@ -44,13 +44,13 @@ const fields = [{
     }
 }*/
 
-export default observer(({form}) => {
+export default observer(({form,onPress}) => {
     return (
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
             <SignORLoginTextInput Icon={require('../../img/signAndLogin/user.png')} field={form.$('phone')}  value={form.$('phone').value} />
             <SignORLoginTextInput Icon={require('../../img/signAndLogin/password.png')} field={form.$('password')} value={form.$('password').value} />
             <SignORLoginTextInput Icon={require('../../img/signAndLogin/verificationCode.png')} field={form.$('verificationCode')}value={form.$('verificationCode').value} >
-                <TouchableOpacity style={{justifyContent:'center',alignItems:'center',marginRight:5}}>
+                <TouchableOpacity style={{justifyContent:'center',alignItems:'center',marginRight:5}} onPress={onPress}>
                     <Text style={{fontSize: width * 0.056, color:'white'}}>获取验证码</Text>
                 </TouchableOpacity>
             </SignORLoginTextInput>

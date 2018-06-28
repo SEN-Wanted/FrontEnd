@@ -1,24 +1,18 @@
 /*
  * 修改个人详情界面
  */
-import React, {PureComponent} from "react";
+import React, {Component} from "react";
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {observer, inject} from 'mobx-react';
 
 import Form, {form} from './ModifyForm';
 
-type Props = {
-    
-}
 
-type State = {
-
-}
 
 @inject(['user'])
 @observer
-export default class ModifyMineDetailScreen extends PureComponent<Props, State> {
+export default class ModifyMineDetailScreen extends Component{
     static navigationOptions = ({navigation}) => ({
         headerStyle: {backgroundColor:'#FFFFFF'},
         headerTintColor: 'white',
@@ -80,15 +74,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0F0F0',
         flex: 1,
     },
-    modify: {
-        height: 45,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
-    },
-    modifyText: {
-        fontFamily: 'Roboto',
-        fontSize: 15,
-        color: '#E51C23',
-        textAlign: 'center',
-    }
 })
