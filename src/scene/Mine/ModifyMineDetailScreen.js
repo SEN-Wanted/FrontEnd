@@ -1,18 +1,21 @@
 /*
  * 修改个人详情界面
  */
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import {observer, inject} from 'mobx-react';
 
-import Form, {form} from './ModifyForm';
+import ModifyInfoItem from './ModifyInfoItem';
 
+type Props = {
 
+}
 
-@inject(['user'])
-@observer
-export default class ModifyMineDetailScreen extends Component{
+type State = {
+
+}
+
+export default class ModifyMineDetailScreen extends PureComponent<Props, State> {
     static navigationOptions = ({navigation}) => ({
         headerStyle: {backgroundColor:'#FFFFFF'},
         headerTintColor: 'white',
@@ -31,35 +34,17 @@ export default class ModifyMineDetailScreen extends Component{
         headerRight: <View />,
     })
 
-    constructor(props) {
-        super(props);
-        form.$hooks.onSuccess = async (form) => {
-            const data = {
-                username: form.$('username').value,
-                password: form.$('password').value,
-                newPassword: form.$('newPassword').value,
-            };
-            try{
-                const result = await wantedFetch('users/modify','POST', data, 10000, 'application/json');
-                if(result.res.status_code == '201') {
-                    this.props.user.setUserName(result.res.user.username);
-                    this.props.user.setPassword(result.res.user.newPassword);
-                    this.props.navigation.navigate('MineDetail');
-                }
-            } catch(error) {
-                alert(error);
-            }
-        }
-    }
-
-    componentDidMount() {
-        form.clear();
-    }
-
     render() {
         return(
             <View style={styles.container}>
-                <Form form={form} />
+                <View style={styles.form}>
+                    <ModifyInfoItem style={styles.item} id="username" info={{title: '用户名', detail: 'chenmy'}} />
+                    <ModifyInfoItem style={styles.item} id="oldPassword" info={{title: '旧密码', detail: ''}} />
+                    <ModifyInfoItem style={styles.item} id="newPassword" info={{title: '新密码', detail: ''}} />
+                </View>
+                <TouchableOpacity style={styles.modify}>
+                    <Text style={styles.modifyText}>确认修改</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -74,4 +59,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0F0F0',
         flex: 1,
     },
+    form: {
+        flex: 1,
+    },
+    item: {
+        height: 50,
+    },
+    modify: {
+        height: 45,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'center',
+    },
+    modifyText: {
+        fontFamily: 'Roboto',
+        fontSize: 15,
+        color: '#E51C23',
+        textAlign: 'center',
+    }
 })

@@ -6,13 +6,10 @@ import {StyleSheet, Text, View, TouchableOpacity, FlatList, Modal, Image} from "
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome";
 import ImagePicker from 'react-native-image-picker';
-import {observer, inject} from 'mobx-react';
 
 import InfoItem from "./InfoItem";
 import DivideLine from "../../widget/DivideLine";
 
-@inject(['user'])
-@observer
 export default class MineDetailScreen extends Component {
     static propTypes = {
         quitPress: PropTypes.func,
@@ -125,17 +122,17 @@ export default class MineDetailScreen extends Component {
                 </TouchableOpacity>
                 <FlatList
                     data={[
-                        {title: '用户名', detail: this.props.user.getUserName()},
+                        {title: '用户名', detail: 'chenmy'},
                         {title: '账户密码', detail: '修改'},
-                        {title: '绑定手机号', detail: this.props.user.getUserPhone()},
+                        {title: '绑定手机号', detail: '137****3146'},
                     ]}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
                 />
-                <TouchableOpacity onPress={this.props.quitPress} style={styles.quit}>
-                    <Text style={styles.quitText}>退出当前账号</Text>
+                <TouchableOpacity onPress={this.props.quitPress} style={styles.bottomItem}>
+                    <Text style={[styles.bottomItemText, styles.quitText]}>退出当前账号</Text>
                 </TouchableOpacity>
-                <Modal visible={this.state.visible} transparent={this.state.transparent} onRequestClose={()=>{console.log('mineDetailModal close')}}>
+                <Modal visible={this.state.visible} transparent={this.state.transparent}>
                     <View style={[styles.modal, {backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.4)' : 'transparent'}]}>
                         <TouchableOpacity onPress={this.selectFromCarema.bind(this)} style={styles.bottomItem}>
                             <Text style={styles.bottomItemText}>拍照</Text>
@@ -185,15 +182,35 @@ const styles = StyleSheet.create({
     avatar: {
         marginRight: 5,
     },
-    quit: {
+    avatarImg: {
+        width: 20,
+        height: 20,
+        borderRadius: 20,
+    },
+    bottomItem: {
         height: 45,
         backgroundColor: '#FFFFFF',
         justifyContent: 'center',
     },
-    quitText: {
+    bottomItemText: {
         fontFamily: 'Roboto',
         fontSize: 15,
-        color: '#E51C23',
         textAlign: 'center',
-    }
+    },
+    quitText: {
+        color: '#E51C23',
+    },
+    modal: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    },
+    divideMajor: {
+        backgroundColor: '#EAEAEA',
+        height: 5,
+    },
+    divideMinor: {
+        backgroundColor: '#EAEAEA',
+        height: 2,
+    },
 })
