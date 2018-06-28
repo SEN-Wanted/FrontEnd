@@ -6,7 +6,8 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
-    FlatList
+    FlatList,
+    DeviceEventEmitter
 } from 'react-native'
 import { observer, inject, Observer } from 'mobx-react/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome'
@@ -54,6 +55,13 @@ export default class OrderScene extends Component {
         if(this.props.user.isLogin) {
             this.requestData()
         }
+        this.listener = DeviceEventEmitter.addListener('submitOrder',(e)=>{
+            this.requestData()
+        });
+    }
+    componentWillUnmount(){
+        // 移除监听
+        this.listener.remove();
     }
 
     requestData = async() => {
@@ -67,8 +75,7 @@ export default class OrderScene extends Component {
                 let orderList = response.res.orderList.map((info) => ({
                     orderID: info.orderID,
                     storeName: info.storeName,
-                    isEvaluate: info.isEvaluate,
-                    evaluationGrade: info.evaluationGrade,
+                    rating: info.rating,
                     date: info.date,
                     cost: info.cost
                 }))
@@ -77,7 +84,6 @@ export default class OrderScene extends Component {
                     hasReqOver: RequestState.Success
                 })
             }else {
-                alert(response.res.status_code)
                 this.setState({ 
                     hasReqOver: RequestState.Failue
                 })
@@ -98,15 +104,16 @@ export default class OrderScene extends Component {
         let data = {
             rating: rating
         }
+        this.refs.toast.show('test',DURATION.LENGTH_LONG)
         try {
             this.setState({visible: true})
             const response = await wantedFetch('user/'+userID+'/orders/'+id,'POST',data,10000,'application/json',token)
             if(response.res.status_code === '201') {
                 this.setState({visible: false})
-                this.refs.toast.show('评价成功')
+                this.requestData()
             }else {
                 this.setState({visible: false})
-                this.refs.toast.show('出了点小差错，请重试')
+                this.refs.toast.show('出了点小差错，请重试',DURATION.LENGTH_LONG)
             }
         } catch (error) {
             alert('' + error)

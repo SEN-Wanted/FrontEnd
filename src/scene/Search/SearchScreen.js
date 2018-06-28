@@ -20,26 +20,6 @@ export default class SearchScreen extends Component {
         refreshIconPress: PropTypes.func,
     };
 
-    constructor(props) {
-        super(props);
-    }
-
-    keyword = '';
-
-    search() {
-        const data = {
-            keyword: keyword
-        };
-        try{
-            const result = await wantedFetch('search','POST', data, 10000, 'application/json');
-            if(result.res.status_code == '201') {
-                this.props.navigation.navigate('SearchResultScene');
-            }
-        } catch(error) {
-            alert(error);
-        }
-    }
-
     static navigationOptions = ({navigation}) => ({
         headerTintColor: 'white',
         headerLeft: (
@@ -48,17 +28,41 @@ export default class SearchScreen extends Component {
             </TouchableOpacity>
         ),
         headerRight: (
-            <TouchableOpacity onPress={this.search.bind(this)}>
+            <TouchableOpacity onPress={() => navigation.state.params.searchPress()}>
                 <Text style={styles.search}>搜索</Text>
             </TouchableOpacity>
         ),
         headerTitle: (
             <View style={styles.input}>
                 <Image source={require('../../img/home/ic_search_white_36dp.png')} style={styles.searchIcon}/>
-                <TextInput placeholder="海底捞(珠影星光店)" placeholderTextColor="#FFF" underlineColorAndroid="transparent" style={styles.inputText} value={keyword}></TextInput>
+                <TextInput 
+                    placeholder="海底捞(珠影星光店)" 
+                    placeholderTextColor="#FFF" 
+                    underlineColorAndroid="transparent" 
+                    style={styles.inputText} 
+                    onChangeText={(text) => navigation.setParams({keyword:text})}
+                    value={navigation.state.params.keyword} 
+                />
             </View>
         ),
     })
+
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        this.props.navigation.setParams({
+            keyword: "",
+            searchPress: () => this.searchPress()
+        })
+    }
+
+    searchPress = async() => {
+        let keyword = this.props.navigation.state.params.keyword
+        this.props.navigation.navigate('SearchResultScene',{keyword:keyword})
+    }
+
 
     onListItemSelected = (info) => {
         this.props.navigation.navigate('RestaurantScene', {info: info})
@@ -145,6 +149,7 @@ export default class SearchScreen extends Component {
 
 const styles = StyleSheet.create({
     backButton: {
+        flex: 1,
         marginLeft: 10,
     },
     input: {

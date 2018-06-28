@@ -5,16 +5,20 @@ import {
     TouchableOpacity,
     Image,
     StyleSheet,
-    ScrollView,
+	ScrollView,
+	DeviceEventEmitter,
 } from 'react-native'
 import { observer, inject } from 'mobx-react/native'
 import Moment from 'moment'
+import Toast, {DURATION} from 'react-native-easy-toast'
 import PasswordModal from './pay-password/PasswordModal'
+import NavigationService from '../../common/NavigationService'
 import screen from '../../common/screen'
 import pxToDp from '../../common/pxToDp'
 import SingleWord from '../../widget/SingleWord'
 import SubmitFooter from './SubmitFooter'
-import wantedFetch from '../../common/WantedFetch';
+import wantedFetch from '../../common/WantedFetch'
+import WaitModal from '../../widget/WaitModal'
 
 const { width, height, botBarHeight } = screen
 
@@ -44,7 +48,10 @@ export default class SubmitOrderScene extends Component {
 	})
 
 	constructor(props:Object) {
-        super(props)
+		super(props)
+		this.state = {
+			visible: false
+		}
     }
 	
 	componentDidMount() {
@@ -57,9 +64,17 @@ export default class SubmitOrderScene extends Component {
 
 	passWordDone = (number) => {
 		if(number.toString() === '123456') {
-			this.postOrderData()
+			this.setState({visible:true})
+			if(this.props.user.isLogin) {
+				this.postOrderData()
+			} else {
+				setTimeout(()=>{
+					this.setState({visible:false})
+					this.refs.toast.show('下单成功，请稍等',DURATION.LENGTH_LONG)
+				},2000)
+			}
 		} else {
-			alert('密码错误，请重新提交')
+			this.refs.toast.show('密码错误，请重新提交',DURATION.LENGTH_LONG)
 		}
 	}
 	
@@ -69,7 +84,6 @@ export default class SubmitOrderScene extends Component {
 		let date = time.format().substring(0,10)+ time.format(' HH:mm:ss') 
 		let userID = this.props.user.userID
 		let token = this.props.user.token
-		alert(date)
 		let data = {
 			storeName: this.props.listcar.storeName,
 			foodList: this.props.listcar.states.listCar.slice(),
@@ -83,14 +97,17 @@ export default class SubmitOrderScene extends Component {
 		try{
 			//const result = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/submitOrder','POST',data)
 			const result = await wantedFetch('user/'+userID+'/orders','POST',data,10000,'application/json',token)
+			this.setState({visible:false})
 			if(result.res.status_code === '201') {
+				DeviceEventEmitter.emit('submitOrder'); //发监听
 				let info = {
 					date:new Date().toLocaleString(),
 					storeName:data.storeName
 				}
-				this.props.navigation.navigate('OrderItemScene',{info: info})
+				NavigationService.popToTop()
 			}
 		} catch (error) {
+			this.setState({visible:false})
 			alert('error' + error)
 		}
 	}
@@ -121,6 +138,8 @@ export default class SubmitOrderScene extends Component {
 		}
 		return(
 	        <View style={{flex:1, padding: 15, paddingBottom: 0, backgroundColor:'white'}}>
+				<Toast ref="toast" />
+				<WaitModal visible={this.state.visible} />
 	        	<ScrollView>
 	        		<View style={{paddingHorizontal: 20}}> 
 

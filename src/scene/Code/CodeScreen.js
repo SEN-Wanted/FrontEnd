@@ -4,6 +4,7 @@ import {IndicatorViewPager, PagerTabIndicator} from 'rn-viewpager';
 
 import QRScanner from './QRScannerScreen';
 import Payment from './PaymentScreen';
+import WaitModal from '../../widget/WaitModal'
 
 type Props = {
 
@@ -22,6 +23,10 @@ export default class CodeScreen extends PureComponent<Props, State> {
 
     constructor(props) {
         super(props);
+        this.state = {
+            waiting: false, //防止多次扫描
+            visible: false, //菊花图是否显示
+        }
     }
 
     _renderTabIndicator() {
@@ -46,16 +51,33 @@ export default class CodeScreen extends PureComponent<Props, State> {
         )
     }
 
+    barcodeReceived = (e) => {
+        this.setState({waiting: true, visible: true})  //设为true，防止下一次扫描
+        let storeInfo = e.data.split(":")
+        setTimeout(() => {
+            this.setState({waiting: false,visible: false})
+        },3000)   //3S后恢复正常
+        if(storeInfo.length > 1) {
+            let info = {
+                storeID: storeInfo[0],
+                storeName: storeInfo[1]
+            }
+            this.setState({visible: false})
+            this.props.navigation.navigate('RestaurantScene',{info:info})
+        }
+    }
+
     render() {
         return(
             <View style={{flex: 1}}>
+                <WaitModal visible={this.state.visible} />
                 <IndicatorViewPager
                     style={{flex: 1}}
                     indicator={this._renderTabIndicator()}
                     horizontalScroll={false}
                 >
                    <View>
-                        <QRScanner onPress={() => {this.props.navigation.goBack()}} />
+                        <QRScanner scanJump={this.state.waiting ? null : this.barcodeReceived} onPress={() => {this.props.navigation.goBack()}} />
                     </View>
                     <View>
                         <Payment onPress={() => {this.props.navigation.goBack()}} />

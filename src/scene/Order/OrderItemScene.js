@@ -53,16 +53,16 @@ export default class OrderItemScene extends Component {
 
     requestData = async() => {
         let orderID = this.props.navigation.state.params.info.orderID
-        alert(orderID)
         let userID = this.props.user.userID
         let token = this.props.user.token
+        alert(token)
         try {
             const json = await wantedFetch('user/'+userID+'/orders/'+orderID,'GET',{},10000,'application/json',token)
             //const json = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/order','GET')
-            if(json.res.status_code === '200'){
+            if(json.res){
+                alert(json.res.status_code)
                 let data = json.res
                 this.setState({detail: data})
-                //alert('get ok!')
             }
         }catch (error) {
             alert('error' + error)
@@ -95,7 +95,7 @@ export default class OrderItemScene extends Component {
                 >
                     <View>
                         <BillPages 
-                            message = {orderTime.date}
+                            message = {orderTime}
                         />
                     </View>
                     <View>

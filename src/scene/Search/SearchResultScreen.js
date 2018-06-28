@@ -48,7 +48,7 @@ export default class SearchResultScreen extends Component {
 
     paramsAnalysis = () => {
         let type = ''
-        if(this.props.navigation.state.params) {
+        if(this.props.navigation.state.params.index) {
             let index = this.props.navigation.state.params.index
             switch(index){
                 case 0:
@@ -68,21 +68,29 @@ export default class SearchResultScreen extends Component {
                 case 7:
                     type = '更多'; break;
             }
+            this.requestData(type,0)
+        } else if(this.props.navigation.state.params.keyword) {
+            let keyword = this.props.navigation.state.params.keyword
+            this.requestData(keyword,1)
         }
-        this.requestData(type)
     }
 
-    requestData = async(type) => {
+    requestData = async(params,query) => {
+        let way = "keyword="
+        if(query === 0) {
+            way = "type="
+        }
         try{
             this.setState({hasReqOver: RequestState.Wait})
-            const json = await wantedFetch('http://2v0683857e.iask.in:22871/search?type='+type,'GET')
+            const json = await wantedFetch('http://2v0683857e.iask.in:22871/search?'+way+params,'GET')
+
             let dataList = json.res.ListStoreData.map((info) => ({
                 icon: info.icon,
                 storeName: info.storeName,
                 storeID: info.storeid,
                 starRating: info.starRating,
                 price: info.price,
-                monthlySell: info.monthlySell,
+                monthlySell: info.monthlySale,
                 distance: info.distance,
                 isDiscount: info.isDiscount,
                 discountNumber: info.DiscountNumber,
@@ -93,14 +101,14 @@ export default class SearchResultScreen extends Component {
                 hasReqOver: RequestState.Success,
             })
         } catch (error) {
-            console.log('error' + error)
+            alert('error' + error)
             this.setState({hasReqOver: RequestState.Failue})
         }
 
     }
     
     onListItemSelected = (info) => {
-        //this.props.navigation.navigate('RestaurantScene', {info: info})
+        this.props.navigation.navigate('RestaurantScene', {info: info})
     }
 
     renderItem = (rowData)=> {
