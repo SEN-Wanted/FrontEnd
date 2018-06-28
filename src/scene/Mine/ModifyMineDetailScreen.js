@@ -34,26 +34,14 @@ export default class ModifyMineDetailScreen extends PureComponent<Props, State> 
         headerRight: <View />,
     })
 
-    renderItem = (rowData)=> {
-        return (
-            <ModifyInfoItem
-                info={rowData.item}
-            />
-        )
-    }
-
     render() {
         return(
             <View style={styles.container}>
-                <FlatList
-                    data={[
-                        {title: '用户名', detail: 'chenmy'},
-                        {title: '旧密码', detail: ''},
-                        {title: '新密码', detail: ''},
-                    ]}
-                    renderItem={this.renderItem}
-                    keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
-                />
+                <View style={styles.form}>
+                    <ModifyInfoItem style={styles.item} id="username" info={{title: '用户名', detail: 'chenmy'}} />
+                    <ModifyInfoItem style={styles.item} id="oldPassword" info={{title: '旧密码', detail: ''}} />
+                    <ModifyInfoItem style={styles.item} id="newPassword" info={{title: '新密码', detail: ''}} />
+                </View>
                 <TouchableOpacity style={styles.modify}>
                     <Text style={styles.modifyText}>确认修改</Text>
                 </TouchableOpacity>
@@ -70,6 +58,12 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#F0F0F0',
         flex: 1,
+    },
+    form: {
+        flex: 1,
+    },
+    item: {
+        height: 50,
     },
     modify: {
         height: 45,

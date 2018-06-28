@@ -2,9 +2,10 @@
  * 修改个人详细信息
  */
 import React, {PureComponent} from "react";
-import {StyleSheet, Text, TouchableOpacity, View, TextInput, Image} from "react-native";
+import {StyleSheet, View, TextInput, Image} from "react-native";
 
 type Props = {
+    id: String,
     info: Object,
 }
 
@@ -14,7 +15,7 @@ type State = {
 
 export default class ModifyInfoItem extends PureComponent<Props, State> {
     render() {
-        let {info} = this.props;
+        let {id, info} = this.props;
 
         return(
             <View style={styles.container}>
@@ -30,14 +31,12 @@ export default class ModifyInfoItem extends PureComponent<Props, State> {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#fff',
         borderWidth: 1,
         borderColor: '#bbb',
         width: 320,
-        height: 35,
         marginHorizontal: 20,
         marginVertical: 12,
     },
