@@ -63,7 +63,6 @@ export default class HomeScene extends Component {
                 discountNumber: info.discountNumber,
                 isAppOffer: info.isAppOffer,
             }))
-            //alert(''+dataList[0].icon)
             this.setState({
                 storeListdata: dataList,
                 refreshing: dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
@@ -108,6 +107,7 @@ export default class HomeScene extends Component {
                     onPress1={()=>{this.props.navigation.navigate('CodeScreen', { transition: 'forVertical' })}}
                     onPress2={()=>{this.props.navigation.navigate('SearchScene', { transition: 'forVertical' })}}
                     onPress3={()=>{this.props.navigation.navigate('MessageScreen')}} 
+                    messageCount = {""+this.props.user.messageCount}
                 />
                 <View style={styles.headerSwiper}>  
                     <Swiper style = {styles.wrapper} height={200} horizontal={true} 

@@ -38,16 +38,15 @@ export default class ForgetScene extends Component {
             visible: false
         }
         form.$hooks.onSuccess = async (form) => {
-            const data = {
-                phone: form.$('phone').value,
-                password: form.$('password').value,
-            }
+            const formData = new FormData()
+            formData.append('username', String(form.$('phone').value))
+            formData.append('password', String(form.$('password').value))
             try{
                 this.setState({visible: true})
-                const result = await wantedFetch('sign_up','POST', data,10000,'multipart/form-data')
+                const result = await wantedFetch('sign_up','POST', formData,10000,'multipart/form-data')
                 if(result.res.status_code == '201') {
                     this.props.user.setToken(result.res.token)
-                    this.props.user.setUser(result.res.user.ID, result.res.user.username)
+                    this.props.user.setUser(result.res.user.ID, result.res.user.phone, result.res.user.nickname)
                     this.props.user.setLoginStatus(true)
                     this.setState({visible: false})
                     this.jumpHome()

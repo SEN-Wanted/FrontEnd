@@ -10,6 +10,7 @@ import {
   ImageBackground,
   NetInfo,
   StatusBar,
+  DeviceEventEmitter,
 } from 'react-native';
 import {observer, inject} from 'mobx-react'
 import Toast, {DURATION} from 'react-native-easy-toast'
@@ -37,19 +38,20 @@ export default class LoginScene extends Component {
             visible: false
         }
         form.$hooks.onSuccess = async (form) => {
-            const data = {
-                phone: form.$('phone').value,
-                password: form.$('password').value,
-            }
+            const formData = new FormData()
+            formData.append('username', String(form.$('phone').value))
+            formData.append('password', String(form.$('password').value))
             try{
                 this.setState({visible: true})
-                const result = await wantedFetch('login','POST', data,10000,'multipart/form-data')
+                const result = await wantedFetch('login','POST', formData,10000,'multipart/form-data')
                 if(result.res.status_code == '201') {
-                    alert(result.res.user.id)
+                    //alert(result.res.user.phone+"   " +result.res.user.nickname)
+                    alert(result.res.token)
                     this.props.user.setToken(result.res.token)
-                    this.props.user.setUser(result.res.user.id, result.res.user.username)
+                    this.props.user.setUser(result.res.user.id, result.res.user.phone, result.res.user.nickname)
                     this.props.user.setLoginStatus(true)
                     this.setState({visible: false})
+                    DeviceEventEmitter.emit('submitOrder'); //发监听
                     //alert(""+ this.props.user.userID + " "+this.props.user.token)
                     this.jumpHome()
                 }else if(result.res.status_code == '401'){

@@ -56,10 +56,10 @@ export default  function(url, method, data = {} ,timeout = 10000, contentType='a
     const data_string = JSON.stringify(data)
     let bodyData = data_string
     if(contentType === 'multipart/form-data') {
-        const formData = new FormData()
-        formData.append('username', String(data.phone))
-        formData.append('password', String(data.password))
-        bodyData = formData
+        //const formData = new FormData()
+        //formData.append('username', String(data.phone))
+        //formData.append('password', String(data.password))
+        bodyData = data
     }
     if (method === 'GET') {
         return new Promise((resolve,reject) => {

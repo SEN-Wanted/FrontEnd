@@ -11,7 +11,8 @@ import {
 import screen from '../../common/screen'
 import pxToDp from '../../common/pxToDp'
 import SingleWord from '../../widget/SingleWord'
-//export default class BillDetails extends Component {
+
+const host = "http://2v0683857e.iask.in:22871"  //服务器地址
 type Props = {
 	info?: object 
 }
@@ -28,9 +29,8 @@ export default class BillDetails extends PureComponent<Props, State> {
 	
 
 	render(){
-		Moment.locale('zh-cn')
-		let {storeName, foodList, mealFee, ServiceFee, totalFee, offer, paymentMethod, date, orderNumber} = this.props.info
-
+		let {storeIcon, storeName, foodList, mealFee, ServiceFee, totalFee, offer, paymentMethod, date, orderNumber} = this.props.info
+		alert(storeIcon)
 		let dishesList=[];
 		let length = foodList ? foodList.length : 3
 		let isHasInfo = storeName ? true: false
@@ -57,7 +57,7 @@ export default class BillDetails extends PureComponent<Props, State> {
 
 			        <View style={[detailsStyle.displayColumn, detailsStyle.title]}>
 			        	<View style={detailsStyle.displayColumn}>
-			        		<Image source={require("../../img/payforbill/icon.png")} style={detailsStyle.iconImg}/>
+			        		<Image source={{uri: host + storeIcon}} style={detailsStyle.iconImg}/>
 				        	<Text style={{color: '#878787', marginLeft:10}}>{isHasInfo? storeName:'海底捞'}</Text>
 				        </View>
 				        <View style={{backgroundColor: '#E51C23',width:70,height:17,
