@@ -8,6 +8,7 @@ type Props = {
     onPress1?: Function,
     onPress2?: Function,
     onPress3?: Function,
+    messageCount?:string,
 }
 
 type State = {
@@ -16,7 +17,7 @@ type State = {
 const { width, height } = screen
 export default class HomeFloatTopbar extends PureComponent<Props,State> {
     render() {
-        let {onPress1, onPress2, onPress3} = this.props
+        let {onPress1, onPress2, onPress3, messageCount} = this.props
         return (
             <View style={styles.container}>
                    
@@ -39,7 +40,7 @@ export default class HomeFloatTopbar extends PureComponent<Props,State> {
                         titleStyle={styles.titleText} 
                         icon={require('../../img/home/message.png')}
                         onPress={onPress3}
-                        badge={'38'}
+                        badge={messageCount}
                     />
                   
                 </View> 

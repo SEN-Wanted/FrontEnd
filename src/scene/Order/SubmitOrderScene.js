@@ -21,7 +21,7 @@ import wantedFetch from '../../common/WantedFetch'
 import WaitModal from '../../widget/WaitModal'
 
 const { width, height, botBarHeight } = screen
-
+const host = "http://2v0683857e.iask.in:22871"  //服务器地址
 @inject(['listcar'])
 @inject(['user'])
 @observer
@@ -55,7 +55,7 @@ export default class SubmitOrderScene extends Component {
     }
 	
 	componentDidMount() {
-
+		alert(this.props.navigation.state.params.info.storeID)
 	}
 
 	submitOnPress() {
@@ -70,6 +70,7 @@ export default class SubmitOrderScene extends Component {
 			} else {
 				setTimeout(()=>{
 					this.setState({visible:false})
+					NavigationService.popToTop()
 					this.refs.toast.show('下单成功，请稍等',DURATION.LENGTH_LONG)
 				},2000)
 			}
@@ -85,6 +86,7 @@ export default class SubmitOrderScene extends Component {
 		let userID = this.props.user.userID
 		let token = this.props.user.token
 		let data = {
+			storeID: this.props.navigation.state.params.info.storeID,
 			storeName: this.props.listcar.storeName,
 			foodList: this.props.listcar.states.listCar.slice(),
 			mealFee: 3,
@@ -97,14 +99,17 @@ export default class SubmitOrderScene extends Component {
 		try{
 			//const result = await wantedFetch('http://5afbc8babc1beb0014c29e31.mockapi.io/api/submitOrder','POST',data)
 			const result = await wantedFetch('user/'+userID+'/orders','POST',data,10000,'application/json',token)
-			this.setState({visible:false})
 			if(result.res.status_code === '201') {
+				this.setState({visible:false})
 				DeviceEventEmitter.emit('submitOrder'); //发监听
 				let info = {
 					date:new Date().toLocaleString(),
 					storeName:data.storeName
 				}
 				NavigationService.popToTop()
+			} else if (result.res.status_code === '401') {
+				this.setState({visible:false})
+				this.refs.toast.show('出了点小问题，请重试',DURATION.LENGTH_LONG)
 			}
 		} catch (error) {
 			this.setState({visible:false})
@@ -145,7 +150,8 @@ export default class SubmitOrderScene extends Component {
 
 			        	<View style={[detailsStyle.displayColumn, detailsStyle.title]}>
 			        		<View style={detailsStyle.displayColumn}>
-			        			<Image source={require("../../img/payforbill/icon.png")} style={detailsStyle.iconImg}/>
+							{/*require("../../img/payforbill/icon.png")*/}
+			        			<Image source={{uri: host + this.props.navigation.state.params.info.storeIcon}} style={detailsStyle.iconImg}/>
 				        		<Text style={{color: '#878787', marginLeft: 10}}>{storeName}</Text>
 				        	</View>
 				        	<View style={{backgroundColor: '#E51C23',width:70,height:17,

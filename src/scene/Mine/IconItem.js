@@ -1,10 +1,10 @@
 /*
 * 个人信息界面图标
 */
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import {StyleSheet, Text, Image, TouchableOpacity} from "react-native";
 
-export default class IconItem extends Component {
+export default class IconItem extends PureComponent {
     render() {
         return (
             <TouchableOpacity style={styles.item}>

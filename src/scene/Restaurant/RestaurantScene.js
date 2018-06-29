@@ -106,16 +106,6 @@ export default class RestaurantScene extends Component{
         }
     }
 
-    backtitleFood = (List) => {
-        return List.map((info) => ({
-            name: info.name,
-            monthlySale: info.monthlySale,
-            like: info.like,
-            price: info.price,
-            icon: info.icon
-        }))
-    }
-
     //添加按钮进行动画函数
     _onPressHandler=(e, info)=>{
         let { pageX, pageY } = e.nativeEvent
@@ -216,8 +206,12 @@ export default class RestaurantScene extends Component{
 
     jumpSubmitOrder = () => {
         this.hidePopover()
+        let info = {
+            storeID:this.props.navigation.state.params.info.storeID,
+            storeIcon: this.props.navigation.state.params.info.icon,
+        }
         if(this.props.listcar.states.listCount != 0) {
-            this.props.navigation.navigate('SubmitOrderScene')
+            this.props.navigation.navigate('SubmitOrderScene',{info:info})
         }
     }
 

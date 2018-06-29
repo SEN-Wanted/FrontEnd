@@ -40,7 +40,7 @@ export default class MineScene extends Component {
 
     render() {
         let isLogin = this.props.user.isLogin
-        let username = this.props.user.username
+        let nickname = this.props.user.userNickName
         return (
             <View style={{backgroundColor: 'white',flex:1}}>
                 <View style={styles.panel}>
@@ -50,8 +50,12 @@ export default class MineScene extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.jumpMessage}>
                             <View style={styles.panel_header_message}>
-                                <BadgeView parentView={<Icon name="envelope" size={20} color={Colors.white_fff} />}
-                                    badgeText={"38"} badgeTextColor={"red"} badgeBackgroundColor={"white"} />
+                                <BadgeView 
+                                    parentView={<Icon name="envelope" size={20} color={Colors.white_fff} />}
+                                    badgeText={""+this.props.user.messageCount} 
+                                    badgeTextColor={"red"} 
+                                    badgeBackgroundColor={"white"} 
+                                />
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -62,7 +66,7 @@ export default class MineScene extends Component {
                         </TouchableOpacity>
                         <View>
                             <TouchableOpacity>
-                                <Text style={styles.panel_body_text}>{isLogin? username: '临时用户'}</Text>
+                                <Text style={styles.panel_body_text}>{isLogin? nickname: '临时用户'}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={isLogin? this.jumpDetail : null}>
                                 <Text style={styles.panel_body_text}>{isLogin? '个人信息 >' : '未登陆'}</Text>

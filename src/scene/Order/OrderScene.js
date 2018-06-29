@@ -22,8 +22,8 @@ import NetWorkFail from '../../widget/NetWorkFail'
 import pxToDp from '../../common/pxToDp';
 import screen from '../../common/screen'
 
-const { width, height } = screen
-
+const { width, height } = screen   //界面的尺度获取
+const host = "http://2v0683857e.iask.in:22871"  //服务器地址
 @inject(['user'])
 @observer
 export default class OrderScene extends Component {
@@ -67,7 +67,6 @@ export default class OrderScene extends Component {
     requestData = async() => {
         let userID = this.props.user.userID
         let token = this.props.user.token
-        //alert(''+token)
         try {
             this.setState({hasReqOver: RequestState.Wait})
             const response = await wantedFetch('user/'+userID+'/orders','GET',{},10000,'application/json',token)
@@ -75,15 +74,18 @@ export default class OrderScene extends Component {
                 let orderList = response.res.orderList.map((info) => ({
                     orderID: info.orderID,
                     storeName: info.storeName,
+                    icon: info.storeIcon,
                     rating: info.rating,
                     date: info.date,
                     cost: info.cost
                 }))
+                alert(orderList[0].icon)
                 this.setState({ 
                     orderList: orderList,
                     hasReqOver: RequestState.Success
                 })
-            }else {
+            }else if(response.res.status_code === '401'){
+                alert(response.res.status_code)
                 this.setState({ 
                     hasReqOver: RequestState.Failue
                 })
@@ -133,9 +135,9 @@ export default class OrderScene extends Component {
                 </View>
 
                 <View style={orderSceneStyle.devideLine} />
-
+                 {/*require("../../img/payforbill/icon.png")*/}
                 <View style={orderSceneStyle.mainView}>
-                    <Image source={require("../../img/payforbill/icon.png")} style={orderSceneStyle.iconImg}/>
+                    <Image source={{uri: host+rowData.item.icon}} style={orderSceneStyle.iconImg}/>
                     <View style={{marginLeft: 10}}>
                         <Text style={{color: '#E51C23', marginTop: 5, fontSize: pxToDp(15)}}>￥{ rowData.item.cost }</Text>
                         <Text style={{color: '#050505',marginLeft: 10, marginTop: 5, fontSize: pxToDp(11)}}>{ rowData.item.date }</Text>
@@ -175,6 +177,11 @@ export default class OrderScene extends Component {
                             data={this.state.orderList}
                             renderItem={this.renderItem}
                             keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
+                            ListEmptyComponent={()=>(
+                                <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}>
+                                    <Text>暂无数据</Text>
+                                </View>
+                            )}
                         />
                         <Toast ref="toast" />
                     </View>

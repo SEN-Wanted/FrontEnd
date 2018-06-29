@@ -3,18 +3,16 @@
  */
 import React, {Component} from "react";
 import {StyleSheet, Text, View, TouchableOpacity, FlatList, Modal, Image} from "react-native";
-import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome";
 import ImagePicker from 'react-native-image-picker';
-
+import { observer, inject} from 'mobx-react/native'
+import NavigationService from '../../common/NavigationService'
 import InfoItem from "./InfoItem";
 import DivideLine from "../../widget/DivideLine";
 
+@inject(['user'])
+@observer
 export default class MineDetailScreen extends Component {
-    static propTypes = {
-        quitPress: PropTypes.func,
-    };
-
     static navigationOptions = ({navigation}) => ({
         headerStyle: {backgroundColor:'#FFFFFF'},
         headerTintColor: 'white',
@@ -108,7 +106,13 @@ export default class MineDetailScreen extends Component {
         )
     }
 
+    onSignoutButton = () => {
+        this.props.user.setLoginStatus(false,0)
+        NavigationService.popToTop()
+    }
+
     render() {
+        let phone = this.props.user.username? this.props.user.username.substring(0,3) + "****" + this.props.user.username.substring(7,11) : 'xxxxxxx'
         return(
             <View style={styles.container}>
                 <TouchableOpacity style={styles.item} onPress={()=>{this.setState({visible: true})}}>
@@ -122,17 +126,21 @@ export default class MineDetailScreen extends Component {
                 </TouchableOpacity>
                 <FlatList
                     data={[
-                        {title: '用户名', detail: 'chenmy'},
+                        {title: '用户名', detail: this.props.user.userNickName},
                         {title: '账户密码', detail: '修改'},
-                        {title: '绑定手机号', detail: '137****3146'},
+                        {title: '绑定手机号', detail: phone},
                     ]}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
                 />
-                <TouchableOpacity onPress={this.props.quitPress} style={styles.bottomItem}>
+                <TouchableOpacity onPress={this.onSignoutButton} style={styles.bottomItem}>
                     <Text style={[styles.bottomItemText, styles.quitText]}>退出当前账号</Text>
                 </TouchableOpacity>
-                <Modal visible={this.state.visible} transparent={this.state.transparent}>
+                <Modal 
+                    visible={this.state.visible} 
+                    transparent={this.state.transparent} 
+                    onRequestClose={()=>{console.log("mineDetailModal close")}}
+                >
                     <View style={[styles.modal, {backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.4)' : 'transparent'}]}>
                         <TouchableOpacity onPress={this.selectFromCarema.bind(this)} style={styles.bottomItem}>
                             <Text style={styles.bottomItemText}>拍照</Text>

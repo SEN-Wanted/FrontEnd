@@ -10,15 +10,25 @@ class user {
     }
 
     @observable
-    userID = '10000'
+    userID = '10000'   //用户ID
 
     @observable
-    username = 'chenmy'    
+    username = '13719342427'    //用户手机号
+
+    @observable
+    userNickName = 'hasaki'   //用户昵称
 
     @action.bound
-    setUser(id, username) {
+    setNickName(nickname) {
+        this.userNickName = nickname
+    }
+
+
+    @action.bound
+    setUser(id, username, nickname) {
         this.userID = id,
         this.username = username
+        this.userNickName = nickname
     }
 
     @action.bound
@@ -63,28 +73,13 @@ class user {
     @observable
     isLogin = false
 
-    @action.bound
-    setLoginStatus(status) {
-        this.isLogin = status
-    }
-
     @observable
-    orderList = [
-        {id: 1, name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05", status: false, rating: 0},
-        {id: 2, name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05", status: false, rating: 0},
-        {id: 3, name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05", status: false, rating: 0},
-        {id: 4, name:"海底捞火锅(珠影广场)", cost:331.2, time: "2017-01-08 17:05", status: false, rating: 0},
-    ]
+    messageCount = 0
 
     @action.bound
-    evaluateOrder(id, ratingNumber){
-        this.orderList[id].status = true
-        this.orderList[id].rating = ratingNumber
-    }
-
-    @action.bound
-    getOrderMessage(id){
-
+    setLoginStatus(status,count = 10) {
+        this.isLogin = status
+        this.messageCount = count
     }
 
 
