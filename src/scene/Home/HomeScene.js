@@ -5,6 +5,7 @@ import {observer, inject} from 'mobx-react'
 import Swiper from 'react-native-swiper'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import FeaIcon from 'react-native-vector-icons/Feather'
+import Toast, {DURATION} from 'react-native-easy-toast'
 import RefreshListView, {RefreshState} from 'react-native-refresh-list-view'
 import * as Progress from 'react-native-progress'
 
@@ -68,7 +69,7 @@ export default class HomeScene extends Component {
                 refreshing: dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
             })
         } catch (error) {
-            alert('error' + error)
+            this.refs.toast.show(''+error,DURATION.LENGTH_LONG)
             this.setState({refreshing: RefreshState.Idle})
         }
 
@@ -196,6 +197,7 @@ export default class HomeScene extends Component {
                     footerNoMoreDataText= '-我是有底线的-'
                     footerEmptyDataText= '-好像什么东西都没有-'
                 />
+                <Toast ref="toast" />
             </View>      
         )
     }
