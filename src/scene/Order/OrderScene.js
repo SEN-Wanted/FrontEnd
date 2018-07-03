@@ -79,19 +79,17 @@ export default class OrderScene extends Component {
                     date: info.date,
                     cost: info.cost
                 }))
-                alert(orderList[0].icon)
                 this.setState({ 
-                    orderList: orderList,
+                    orderList: orderList.reverse(),
                     hasReqOver: RequestState.Success
                 })
             }else if(response.res.status_code === '401'){
-                alert(response.res.status_code)
                 this.setState({ 
                     hasReqOver: RequestState.Failue
                 })
             }
         } catch (error) {
-            alert('' + error)
+            //alert('' + error)
             this.setState({ hasReqOver: RequestState.Failue })
         }
     }
@@ -106,7 +104,6 @@ export default class OrderScene extends Component {
         let data = {
             rating: rating
         }
-        this.refs.toast.show('test',DURATION.LENGTH_LONG)
         try {
             this.setState({visible: true})
             const response = await wantedFetch('user/'+userID+'/orders/'+id,'POST',data,10000,'application/json',token)
@@ -118,7 +115,7 @@ export default class OrderScene extends Component {
                 this.refs.toast.show('出了点小差错，请重试',DURATION.LENGTH_LONG)
             }
         } catch (error) {
-            alert('' + error)
+            //alert('' + error)
             this.setState({visible: false})
         }
     }
@@ -173,16 +170,16 @@ export default class OrderScene extends Component {
                 return (
                     <View style={{backgroundColor: 'white', flex: 1}}>
                         <WaitModal visible={this.state.visible} />
+                        {this.state.orderList.length?
                         <FlatList
                             data={this.state.orderList}
                             renderItem={this.renderItem}
                             keyExtractor={(item, index)=> index+""}   //如果列表顺序会调整，就换为item.title
-                            ListEmptyComponent={()=>(
-                                <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}>
-                                    <Text>暂无数据</Text>
-                                </View>
-                            )}
-                        />
+                        />  :
+                        <View style={{flex: 1,alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={{fontSize: 25,color: 'black'}}>暂无数据</Text>
+                        </View>
+                        }
                         <Toast ref="toast" />
                     </View>
                 ) 

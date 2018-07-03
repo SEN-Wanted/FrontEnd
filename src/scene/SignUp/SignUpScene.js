@@ -59,7 +59,7 @@ export default class SignUpScene extends Component {
                 }
             } catch(error) {
                 this.setState({visible: false})
-                alert(error)
+                //alert(error)
             }
         }
     }

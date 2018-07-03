@@ -53,10 +53,7 @@ export default class SubmitOrderScene extends Component {
 			visible: false
 		}
     }
-	
-	componentDidMount() {
-		alert(this.props.navigation.state.params.info.storeID)
-	}
+
 
 	submitOnPress() {
         this.refs.modal.show();
@@ -108,12 +105,13 @@ export default class SubmitOrderScene extends Component {
 				}
 				NavigationService.popToTop()
 			} else if (result.res.status_code === '401') {
+				console.log(result.res.error_message)
 				this.setState({visible:false})
 				this.refs.toast.show('出了点小问题，请重试',DURATION.LENGTH_LONG)
 			}
 		} catch (error) {
 			this.setState({visible:false})
-			alert('error' + error)
+			//alert('error' + error)
 		}
 	}
 

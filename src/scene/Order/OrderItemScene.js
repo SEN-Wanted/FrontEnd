@@ -63,7 +63,7 @@ export default class OrderItemScene extends Component {
                 this.setState({detail: data})
             }
         }catch (error) {
-            alert('error' + error)
+            //alert('error' + error)
         }
     }
     
