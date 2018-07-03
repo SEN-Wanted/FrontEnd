@@ -1,0 +1,141 @@
+import React, { Component } from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+  NetInfo,
+  StatusBar,
+  DeviceEventEmitter,
+} from 'react-native';
+
+import {observer, inject} from 'mobx-react'
+import Toast, {DURATION} from 'react-native-easy-toast'
+import NavigationService from '../../common/NavigationService'
+import wantedFetch from '../../common/WantedFetch'
+import Form, {form} from './SignUpForm'
+import screen from '../../common/screen'
+import WaitModal from '../../widget/WaitModal'
+
+const { width, height } = screen
+
+
+@inject(['user'])
+@observer
+export default class SignUpScene extends Component {
+    static navigationOptions = () => {
+        return {
+            header: null,         //将首页的导航栏取消
+          
+        }
+    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: false
+        }
+        form.$hooks.onSuccess = async (form) => {
+            const formData = new FormData()
+            formData.append('username', String(form.$('phone').value))
+            formData.append('password', String(form.$('password').value))
+            try{
+                this.setState({visible: true})
+                const result = await wantedFetch('sign_up','POST', formData,10000,'multipart/form-data')
+                if(result.res.status_code == '201') {
+                    this.props.user.setToken(result.res.token)
+                    this.props.user.setUser(result.res.user.id, result.res.user.phone, result.res.user.nickname)
+                    this.props.user.setLoginStatus(true)
+                    this.setState({visible: false})
+                    DeviceEventEmitter.emit('submitOrder'); //发监听
+                    this.jumpHome()
+                }else if(result.res.status_code == '401'){
+                    this.setState({visible: false})
+                    this.refs.toast.show('该手机号已注册，请直接登录！')
+                }
+            } catch(error) {
+                this.setState({visible: false})
+                //alert(error)
+            }
+        }
+    }
+
+    componentDidMount() {
+        form.clear()
+        NetInfo.addEventListener('connectionChange',
+            (networkType) => {
+                //alert(networkType.type)
+                this.props.user.setNetworkType(networkType.type);
+            }
+        )
+    }
+
+
+    jumpHome = () => {
+        NavigationService.popToTop()
+    }
+
+    jumpLogin = () => {
+        form.clear()
+        this.props.navigation.navigate('LoginScene')
+    }
+    render() {
+        return (
+            <ImageBackground source={require('../../img/signAndLogin/login_bg.jpeg')} style={styles.imgBackground} >
+                <StatusBar translucent={true} hidden={true}/>
+                <WaitModal visible={this.state.visible} />
+                <View style={styles.container} >
+                    <Image source={require('../../img/signAndLogin/magnifier.png')} style={styles.magnifier}/>
+
+                    <Form form={form} onPress={()=>{alert(''+form.$('phone').value)}}/>
+                     
+                    <TouchableOpacity style={styles.navigate} onPress={this.jumpLogin}>
+                        <Text style={{fontSize: 15, color: 'white'}} >已注册登陆</Text>
+                    </TouchableOpacity>
+                </View>
+                <Toast ref="toast" />
+            </ImageBackground>
+        );
+    }
+}
+
+
+const styles = StyleSheet.create({
+    imgBackground: {
+        flex: 1,
+        width: null,
+        height: null,
+     // //不加这句，就是按照屏幕高度自适应
+        // //加上这句，就是按照屏幕自适应
+        // resizeMode:Image.resizeMode.contain,
+        backgroundColor:'rgba(16,16,16,0.6)',
+    },
+    container: {
+        flex: 1,
+        width: width,
+        height: height,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(16,16,16,.6)',  
+    },
+    magnifier: {
+        width: width * 0.278,
+        height: width * 0.278,
+        marginBottom: height * 0.01,
+    },
+    navigate: {
+        width: width * 0.278,
+        height: width * 0.07,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(16,16,16,.7)',
+        borderRadius: 25,
+        marginTop: height * 0.032,
+    },
+});
+
+
