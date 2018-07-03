@@ -52,7 +52,7 @@ export default class ForgetScene extends Component {
                     this.jumpHome()
                 }else if(result.res.status_code == '401'){
                     this.setState({visible: false})
-                    alert('该手机号已注册，请直接登录！')
+                    alert('出错了！')
                 }
             } catch(error) {
                 this.setState({visible: false})

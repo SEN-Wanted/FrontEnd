@@ -4,7 +4,6 @@
 import React, {Component} from "react";
 import {StyleSheet, Text, View, TouchableOpacity, FlatList, Modal, Image} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import ImagePicker from 'react-native-image-picker';
 import { observer, inject} from 'mobx-react/native'
 import NavigationService from '../../common/NavigationService'
 import InfoItem from "./InfoItem";
@@ -37,61 +36,8 @@ export default class MineDetailScreen extends Component {
         avatarSource: null,
     }
 
-    selectFromCarema() {
-        options = {
-
-        }
-
-        // Launch Camera:
-        ImagePicker.launchCamera(options, (response)=>{
-            console.log('Response = ', response);
-            if (response.didCancel) {
-                console.log('User cancelled photo picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            }
-            else {
-                let source = { uri: response.uri };
-                // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-                this.setState({
-                    avatarSource: source
-                });
-            }
-        });
-    }
     
-    selectFromImageLibrary() {
-        options = {
-
-        }
-
-        // Open Image Library:
-        ImagePicker.launchImageLibrary(options, (response)=>{
-            console.log('Response = ', response);
-            if (response.didCancel) {
-                console.log('User cancelled photo picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            }
-            else {
-                let source = { uri: response.uri };
-                // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-                this.setState({
-                    avatarSource: source
-                });
-            }
-        });
-    }
+    
 
     onListItemSelected = (info) => {
         this.props.navigation.navigate('ModifyMineDetail', {info: info});
@@ -142,11 +88,11 @@ export default class MineDetailScreen extends Component {
                     onRequestClose={()=>{console.log("mineDetailModal close")}}
                 >
                     <View style={[styles.modal, {backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.4)' : 'transparent'}]}>
-                        <TouchableOpacity onPress={this.selectFromCarema.bind(this)} style={styles.bottomItem}>
+                        <TouchableOpacity onPress={()=>{this.setState({visible: false})}} style={styles.bottomItem}>
                             <Text style={styles.bottomItemText}>拍照</Text>
                         </TouchableOpacity>
                         <DivideLine style={styles.divideMinor} />
-                        <TouchableOpacity onPress={this.selectFromImageLibrary.bind(this)} style={styles.bottomItem}>
+                        <TouchableOpacity onPress={()=>{this.setState({visible: false})}} style={styles.bottomItem}>
                             <Text style={styles.bottomItemText}>从相册选择</Text>
                         </TouchableOpacity>
                         <DivideLine style={styles.divideMajor} />

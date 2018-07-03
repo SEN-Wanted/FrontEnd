@@ -48,11 +48,11 @@ export default class SearchResultScreen extends Component {
 
     paramsAnalysis = () => {
         let type = ''
-        if(this.props.navigation.state.params.index) {
+        if(this.props.navigation.state.params.index || this.props.navigation.state.params.index == 0) {
             let index = this.props.navigation.state.params.index
             switch(index){
                 case 0:
-                    type = '甜品'; break;
+                    type = '甜点'; break;
                 case 1:
                     type = '西餐'; break;
                 case 2:
@@ -101,7 +101,7 @@ export default class SearchResultScreen extends Component {
                 hasReqOver: RequestState.Success,
             })
         } catch (error) {
-            alert('error' + error)
+            //alert('error' + error)
             this.setState({hasReqOver: RequestState.Failue})
         }
 
@@ -144,11 +144,16 @@ export default class SearchResultScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <DivideLine style={styles.divideHorizontal} />
+                {this.state.storeListdata.length?
                 <FlatList
                     data={this.state.storeListdata}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index)=> index + ""} // 如果列表顺序会调整，就换为item.title
-                />
+                /> : 
+                <View style={{flex: 1,alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontSize: 25,color: 'black'}}>暂无数据</Text>
+                </View>
+                }
             </View>
         )}
     }

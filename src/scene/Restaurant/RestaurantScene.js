@@ -101,7 +101,7 @@ export default class RestaurantScene extends Component{
                 hasReqOver: RequestState.Success
             })
         } catch (error) {
-            alert('error' + error)
+            //alert('error' + error)
             this.setState({ hasReqOver: RequestState.Failue })
         }
     }

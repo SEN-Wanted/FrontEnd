@@ -30,7 +30,6 @@ export default class BillDetails extends PureComponent<Props, State> {
 
 	render(){
 		let {storeIcon, storeName, foodList, mealFee, ServiceFee, totalFee, offer, paymentMethod, date, orderNumber} = this.props.info
-		alert(storeIcon)
 		let dishesList=[];
 		let length = foodList ? foodList.length : 3
 		let isHasInfo = storeName ? true: false

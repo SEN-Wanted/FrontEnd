@@ -45,14 +45,11 @@ export default class LoginScene extends Component {
                 this.setState({visible: true})
                 const result = await wantedFetch('login','POST', formData,10000,'multipart/form-data')
                 if(result.res.status_code == '201') {
-                    //alert(result.res.user.phone+"   " +result.res.user.nickname)
-                    alert(result.res.token)
                     this.props.user.setToken(result.res.token)
                     this.props.user.setUser(result.res.user.id, result.res.user.phone, result.res.user.nickname)
                     this.props.user.setLoginStatus(true)
                     this.setState({visible: false})
                     DeviceEventEmitter.emit('submitOrder'); //发监听
-                    //alert(""+ this.props.user.userID + " "+this.props.user.token)
                     this.jumpHome()
                 }else if(result.res.status_code == '401'){
                     this.setState({visible: false})
@@ -60,7 +57,7 @@ export default class LoginScene extends Component {
                 }
             } catch(error) {
                 this.setState({visible: false})
-                alert(error)
+                //alert(error)
             }
         }
     }
