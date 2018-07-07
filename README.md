@@ -2,6 +2,17 @@
 # FrontEnd with React-native(0.54.2)
 The place to store the codes and docs for front-end
 
+## 屏幕截图
+
+**以下为部分截图，全部截图请访问[wanted安卓APP全部截图](https://github.com/CWmaxwell/test_git2/blob/master/picture/screenShot/screenshot.md)查看**
+![Alt text](https://raw.githubusercontent.com/CWmaxwell/test_git2/master/picture/screenShot/1.jpg)
+
+![Alt text](https://raw.githubusercontent.com/CWmaxwell/test_git2/master/picture/screenShot/2.jpg)
+
+![Alt text](https://raw.githubusercontent.com/CWmaxwell/test_git2/master/picture/screenShot/3.jpg)
+
+
+
 ## 安装  
 **1.Clone the repo**
 > $ git clone https://github.com/SEN-Wanted/FrontEnd.git  
@@ -42,11 +53,11 @@ The place to store the codes and docs for front-end
 ### 1.undefined is not an object(xx手机、虚拟机出现红色屏幕)
 
 **解决方法：** 多为第三方依赖没有更新官方，需要自己手动更新，按照红色屏幕提示，找到报错文件，将以下代码
-```
+```js
 import React, {Component, PropTypes} from 'react';
 ```
 改为
-```
+```js
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 ```
@@ -76,7 +87,7 @@ doLast {
 ```
 inside def  currentBundleTask = tasks.create(...
 
-## 项目结构
+## 前端项目结构
 >|  
 >|--src：前端开发的源码  
 >|&emsp;&ensp;|--comon：公共样式或JS文件  
